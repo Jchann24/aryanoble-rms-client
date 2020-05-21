@@ -81,12 +81,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/dotenv'],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -94,14 +89,18 @@ export default {
   axios: {
     baseUrl: process.env.API_URL
   },
-  /*
-   ** Build configuration
-   */
-  build: {
-    extend(config, { isClient }) {
-      if (isClient) {
-        config.devtool = 'source-map'
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'login/', method: 'post', propertyName: 'access' },
+          user: { url: 'account/me/', method: 'get', propertyName: false },
+          logout: false
+        }
       }
     }
+  },
+  build: {
+    extend(config, { isClient }) {}
   }
 }
