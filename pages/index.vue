@@ -142,7 +142,7 @@
               </div>
             </div>
             <div class="card-body">
-              <h1>TEST</h1>
+              <h1 class="text-teal">TEST</h1>
             </div>
           </div>
         </div>
@@ -190,6 +190,7 @@
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
+  middleware: ['auth'],
   name: 'HomePage',
   data() {
     return {
@@ -222,6 +223,7 @@ export default {
     },
     async logout() {
       await this.$auth.logout()
+      this.$router.push('/login')
     }
   }
 }
