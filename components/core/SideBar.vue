@@ -1,0 +1,87 @@
+<template>
+  <nav
+    id="sidenav-main"
+    class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-light bg-white"
+  >
+    <div class="scrollbar-inner bg-transparent">
+      <!-- Brand -->
+      <div class="sidenav-header align-items-center">
+        <a class="navbar-brand" href>
+          <img src="/img/logo.png" class="navbar-brand-img" alt="..." />
+        </a>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div id="sidenav-collapse-main" class="collapse navbar-collapse">
+          <!-- Nav items -->
+          <ul class="navbar-nav mt-4">
+            <li class="nav-item">
+              <a class="nav-link" href="examples/dashboard.html">
+                <i class="ni ni-tv-2 text-default"></i>
+                <span class="nav-link-text">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/icons.html">
+                <i class="ni ni-collection text-default"></i>
+                <span class="nav-link-text">ERF</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/profile.html">
+                <i class="ni ni-folder-17 text-default"></i>
+                <span class="nav-link-text">Talent Pool</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/tables.html">
+                <i class="ni ni-single-02 text-default"></i>
+                <span class="nav-link-text">Candidates Account</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="examples/login.html">
+                <i class="ni ni-badge text-default"></i>
+                <span class="nav-link-text">Candidates Card</span>
+              </a>
+            </li>
+          </ul>
+          <hr class="my-3" />
+          <!-- Heading -->
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">API Info</span>
+          </h6>
+          <!-- Navigation -->
+          <ul class="navbar-nav mb-md-3">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"
+                target="_blank"
+              >
+                <i class="ni ni-archive-2"></i>
+                <span class="nav-link-text">DRF</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"
+                target="_blank"
+              >
+                <i class="ni ni-books"></i>
+                <span class="nav-link-text">Swagger</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<script>
+export default {
+  name: 'SideBar'
+}
+</script>
