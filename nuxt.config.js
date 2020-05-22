@@ -101,6 +101,10 @@ export default {
     }
   },
   build: {
-    extend(config, { isClient }) {}
+    extend(config, { isClient }) {
+      if (isClient) {
+        config.devtool = 'source-map'
+      }
+    }
   }
 }

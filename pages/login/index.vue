@@ -71,7 +71,7 @@
                   <div class="text-center">
                     <button
                       type="Submit"
-                      class="btn btn-default my-1"
+                      class="btn btn-primary my-1"
                       :disabled="disabled"
                       :style="buttonStyle"
                     >
@@ -88,8 +88,8 @@
     <footer id="footer-main" class="py-5">
       <div class="container">
         <div class="row align-items-center justify-content-xl-between">
-          <div class="col-xl-6">
-            <div class="copyright text-center text-xl-left text-muted">
+          <div class="col-xl-12">
+            <div class="copyright text-center text-xl-center text-muted">
               &copy; 2020
               <a
                 href="http://aryanoble.co.id"
@@ -98,11 +98,6 @@
                 >Arya Noble, Recuirment Management System</a
               >
             </div>
-          </div>
-          <div class="col-xl-6">
-            <ul
-              class="nav nav-footer justify-content-center justify-content-xl-end"
-            ></ul>
           </div>
         </div>
       </div>

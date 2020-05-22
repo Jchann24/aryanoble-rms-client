@@ -162,7 +162,7 @@
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="#!" class="dropdown-item">
+              <a class="dropdown-item" href="#" @click="logout">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>
@@ -184,6 +184,13 @@ export default {
   },
   computed: {
     ...mapGetters(['isAuthenticated', 'loggedInUser'])
+  },
+
+  methods: {
+    async logout() {
+      await this.$auth.logout()
+      this.$router.push('/login')
+    }
   }
 }
 </script>

@@ -188,7 +188,7 @@
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-  middleware: ['auth', 'group'],
+  middleware: ['auth', 'pic'],
   name: 'HomePage',
   data() {
     return {

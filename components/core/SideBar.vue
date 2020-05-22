@@ -15,36 +15,102 @@
         <div id="sidenav-collapse-main" class="collapse navbar-collapse">
           <!-- Nav items -->
           <ul class="navbar-nav mt-4">
-            <li class="nav-item">
-              <a class="nav-link" href="examples/dashboard.html">
-                <i class="ni ni-tv-2 text-default"></i>
-                <span class="nav-link-text">Dashboard</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="examples/icons.html">
-                <i class="ni ni-collection text-default"></i>
-                <span class="nav-link-text">ERF</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="examples/profile.html">
-                <i class="ni ni-folder-17 text-default"></i>
-                <span class="nav-link-text">Talent Pool</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="examples/tables.html">
-                <i class="ni ni-single-02 text-default"></i>
-                <span class="nav-link-text">Candidates Account</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="examples/login.html">
-                <i class="ni ni-badge text-default"></i>
-                <span class="nav-link-text">Candidates Card</span>
-              </a>
-            </li>
+            <div v-if="group === 1">
+              <li class="nav-item">
+                <a class="nav-link" href="examples/dashboard.html">
+                  <i class="ni ni-tv-2 text-default"></i>
+                  <span class="nav-link-text">Dashboard Admin TA</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/icons.html">
+                  <i class="ni ni-collection text-default"></i>
+                  <span class="nav-link-text">ERF</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/profile.html">
+                  <i class="ni ni-folder-17 text-default"></i>
+                  <span class="nav-link-text">Talent Pool</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/tables.html">
+                  <i class="ni ni-single-02 text-default"></i>
+                  <span class="nav-link-text">Candidates Account</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/login.html">
+                  <i class="ni ni-badge text-default"></i>
+                  <span class="nav-link-text">Candidates Card</span>
+                </a>
+              </li>
+            </div>
+            <div v-if="group === 2">
+              <li class="nav-item">
+                <a class="nav-link" href="examples/dashboard.html">
+                  <i class="ni ni-tv-2 text-default"></i>
+                  <span class="nav-link-text">Dashboard PIC TA</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/icons.html">
+                  <i class="ni ni-collection text-default"></i>
+                  <span class="nav-link-text">ERF</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/profile.html">
+                  <i class="ni ni-folder-17 text-default"></i>
+                  <span class="nav-link-text">Talent Pool</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/tables.html">
+                  <i class="ni ni-single-02 text-default"></i>
+                  <span class="nav-link-text">Candidates Account</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/login.html">
+                  <i class="ni ni-badge text-default"></i>
+                  <span class="nav-link-text">Candidates Card</span>
+                </a>
+              </li>
+            </div>
+            <div v-if="group === 3">
+              <li class="nav-item">
+                <a class="nav-link" href="examples/dashboard.html">
+                  <i class="ni ni-tv-2 text-default"></i>
+                  <span class="nav-link-text">Dashboard Division User</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/icons.html">
+                  <i class="ni ni-collection text-default"></i>
+                  <span class="nav-link-text">ERF</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/profile.html">
+                  <i class="ni ni-folder-17 text-default"></i>
+                  <span class="nav-link-text">Talent Pool</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/tables.html">
+                  <i class="ni ni-single-02 text-default"></i>
+                  <span class="nav-link-text">Candidates Account</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="examples/login.html">
+                  <i class="ni ni-badge text-default"></i>
+                  <span class="nav-link-text">Candidates Card</span>
+                </a>
+              </li>
+            </div>
           </ul>
           <hr class="my-3" />
           <!-- Heading -->
@@ -81,7 +147,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  name: 'SideBar'
+  name: 'SideBar',
+  computed: {
+    ...mapGetters(['loggedInUser']),
+    group() {
+      return this.loggedInUser.groups[0]
+    }
+  }
 }
 </script>
