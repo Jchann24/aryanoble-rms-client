@@ -28,7 +28,7 @@
             </div>
             <div class="table-responsive mb-5">
               <table class="table align-items-center table-white table-hover">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                   <tr>
                     <th scope="col" class="sort">
                       Name
@@ -74,7 +74,16 @@
                       </a>
                     </td>
                     <td>
-                      <button type="button" class="btn btn-info float-right">
+                      <button
+                        type="button"
+                        class="btn btn-info float-right"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                        @click="
+                          previewTalent(talent)
+                          setReadonly()
+                        "
+                      >
                         Details
                       </button>
                     </td>
@@ -123,6 +132,235 @@
         </div>
       </div>
     </div>
+
+    <div
+      id="modal-default"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modal-default"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal- modal-dialog-centered modal-"
+        role="document"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 id="modal-title-default" class="modal-title ml-2">
+              Talent Details
+
+              <span v-if="!readonly" class="badge badge-pill badge-success"
+                >Edit Mode</span
+              >
+            </h6>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_name">Name</label>
+                    <input
+                      id="detail_name"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.name"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_source">Source</label>
+                    <select
+                      id="detail_source"
+                      class="form-control"
+                      :disabled="readonly"
+                    >
+                      <option>{{ selectedTalent.source }}</option>
+                      <option>Kalibrr</option>
+                      <option>Jobstreet</option>
+                      <option>...</option>
+                      <option>...</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_address">Address</label>
+                    <input
+                      id="detail_address"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.address"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_applied_position"
+                      >Applied Position</label
+                    >
+                    <input
+                      id="detail_applied_position"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.applied_position"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_dob">Date of Birth</label>
+                    <input
+                      id="detail_dob"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.dob"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_email">E-mail</label>
+                    <input
+                      id="detail_email"
+                      type="email"
+                      class="form-control"
+                      :value="selectedTalent.email"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_gender">Gender</label>
+                    <input
+                      id="detail_gender"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.gender"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_last_education">Last Education</label>
+                    <input
+                      id="detail_last_education"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.last_education"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_mobile_phone">Mobile Phone</label>
+                    <input
+                      id="detail_mobile_phone"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.mobile_phone"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_nik">NIK</label>
+                    <input
+                      id="detail_nik"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.nik"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_total_working_experience"
+                      >Working Experience</label
+                    >
+                    <input
+                      id="detail_total_working_experience"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.total_working_experience"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="detail_university">University</label>
+                    <input
+                      id="detail_university"
+                      type="text"
+                      class="form-control"
+                      :value="selectedTalent.university"
+                      :readonly="readonly"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              v-if="readonly"
+              type="button"
+              class="btn btn-success mr-auto"
+              @click="readonly = !readonly"
+            >
+              Edit
+            </button>
+            <button
+              v-else
+              type="button"
+              class="btn btn-secondary mr-auto"
+              @click="readonly = !readonly"
+            >
+              Cancel Edit
+            </button>
+            <button
+              type="button"
+              class="btn btn-link  ml-auto"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -132,7 +370,9 @@ export default {
   name: 'PICPool',
   data() {
     return {
-      page: 1
+      page: 1,
+      selectedTalent: {},
+      readonly: true
     }
   },
   computed: {
@@ -156,6 +396,12 @@ export default {
     },
     previousPage() {
       this.page--
+    },
+    previewTalent(talent) {
+      this.selectedTalent = talent
+    },
+    setReadonly() {
+      this.readonly = true
     }
   }
 }
