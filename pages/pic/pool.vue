@@ -35,6 +35,9 @@
                       Last Education
                     </th>
                     <th scope="col" class="sort">
+                      Added By
+                    </th>
+                    <th scope="col" class="sort">
                       CV
                     </th>
                     <th scope="col" class="sort"></th>
@@ -50,6 +53,9 @@
                     </td>
                     <td>
                       {{ talent.last_education }}
+                    </td>
+                    <td>
+                      {{ talent.pic }}
                     </td>
                     <td>
                       <a
@@ -377,7 +383,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      TALENTS: 'pic/TALENTS'
+      TALENTS: 'talent_pool/TALENTS'
     })
   },
   created() {
@@ -385,7 +391,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getTALENTS: 'pic/GET_TALENTS'
+      getTALENTS: 'talent_pool/GET_TALENTS'
     }),
 
     getTalents(page) {

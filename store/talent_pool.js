@@ -33,12 +33,17 @@ export const actions = {
     const data = await this.$axios.$get('erf/')
     commit('SET_ERF', data)
   },
+  async GET_CARDS({ commit }) {
+    const data = await this.$axios.$get('candidate-card/')
+    commit('SET_CARD', data)
+  },
   async GET_TALENTS({ commit }, page = 1) {
     const data = await this.$axios.$get('candidate/?page=' + page)
     commit('SET_TALENT', data)
   },
-  async GET_CARDS({ commit }) {
-    const data = await this.$axios.$get('candidate-card/')
-    commit('SET_CARD', data)
+  async SAVE_TALENT({ commit }, payload) {
+    await this.$axios.$post('candidate/', payload, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
   }
 }
