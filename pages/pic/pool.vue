@@ -4,16 +4,11 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
+            <div class="col-lg-6 col-4">
               <h6 class="h2 text-white d-inline-block mb-0">Talent Pool</h6>
             </div>
-            <div class="col-lg-6 col-5 text-right">
-              <button class="btn btn-icon btn-primary" type="button">
-                <span class="btn-inner--icon">
-                  <i class="ni ni-ruler-pencil"></i>
-                </span>
-                <span class="btn-inner--text">Add New Talent</span>
-              </button>
+            <div class="col-lg-6 col-8 text-right">
+              <add-talent />
             </div>
           </div>
         </div>
@@ -28,7 +23,7 @@
             </div>
             <div class="table-responsive mb-5">
               <table class="table align-items-center table-white table-hover">
-                <thead class="thead-dark">
+                <thead class="bg-gradient-gray text-white">
                   <tr>
                     <th scope="col" class="sort">
                       Name
@@ -76,7 +71,7 @@
                     <td>
                       <button
                         type="button"
-                        class="btn btn-info float-right"
+                        class="btn btn-primary float-right"
                         data-toggle="modal"
                         data-target="#modal-default"
                         @click="
@@ -142,7 +137,7 @@
       aria-hidden="true"
     >
       <div
-        class="modal-dialog modal- modal-dialog-centered modal-"
+        class="modal-dialog modal- modal-dialog-centered modal-lg"
         role="document"
       >
         <div class="modal-content">
@@ -360,14 +355,19 @@
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import addTalent from '@/components/pic/AddTalent.vue'
 export default {
   name: 'PICPool',
+  components: {
+    addTalent
+  },
   data() {
     return {
       page: 1,

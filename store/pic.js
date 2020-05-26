@@ -33,7 +33,7 @@ export const actions = {
     const data = await this.$axios.$get('erf/')
     commit('SET_ERF', data)
   },
-  async GET_TALENTS({ commit }, page) {
+  async GET_TALENTS({ commit }, page = 1) {
     const data = await this.$axios.$get('candidate/?page=' + page)
     commit('SET_TALENT', data)
   },
