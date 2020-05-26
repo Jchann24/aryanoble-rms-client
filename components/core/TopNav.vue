@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <!-- Search form -->
-        <form
+        <!-- <form
           id="navbar-search-main"
           class="navbar-search navbar-search-light form-inline mr-sm-3"
         >
@@ -28,7 +28,7 @@
           >
             <span aria-hidden="true">×</span>
           </button>
-        </form>
+        </form> -->
         <!-- Navbar links -->
         <ul class="navbar-nav align-items-center ml-md-auto">
           <li class="nav-item d-xl-none">
