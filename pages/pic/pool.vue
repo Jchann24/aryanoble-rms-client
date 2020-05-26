@@ -101,7 +101,7 @@
                       class="page-link"
                       href="#!"
                       @click="
-                        previousPage()
+                        changePage(prev)
                         getTalents(page)
                       "
                     >
@@ -118,7 +118,7 @@
                       class="page-link"
                       href="#!"
                       @click="
-                        nextPage()
+                        changePage(next)
                         getTalents(page)
                       "
                     >
@@ -231,7 +231,7 @@
                     <label for="detail_dob">Date of Birth</label>
                     <input
                       id="detail_dob"
-                      type="text"
+                      type="date"
                       class="form-control"
                       :value="selectedTalent.dob"
                       :readonly="readonly"
@@ -311,7 +311,7 @@
                     >
                     <input
                       id="detail_total_working_experience"
-                      type="text"
+                      type="number"
                       class="form-control"
                       :value="selectedTalent.total_working_experience"
                       :readonly="readonly"
@@ -370,6 +370,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import addTalent from '@/components/pic/AddTalent.vue'
 export default {
+  middleware: ['auth', 'pic'],
   name: 'PICPool',
   components: {
     addTalent
@@ -378,7 +379,9 @@ export default {
     return {
       page: 1,
       selectedTalent: {},
-      readonly: true
+      readonly: true,
+      next: 'next',
+      prev: 'prev'
     }
   },
   computed: {
@@ -391,17 +394,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      getTALENTS: 'talent_pool/GET_TALENTS'
+      GET_TALENTS: 'talent_pool/GET_TALENTS'
     }),
 
     getTalents(page) {
-      this.getTALENTS(page)
+      this.GET_TALENTS(page)
     },
-    nextPage() {
-      this.page++
-    },
-    previousPage() {
-      this.page--
+    changePage(change) {
+      change === 'next' ? this.page++ : this.page--
     },
     previewTalent(talent) {
       this.selectedTalent = talent
