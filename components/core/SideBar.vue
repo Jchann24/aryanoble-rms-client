@@ -49,34 +49,59 @@
             </div>
             <div v-if="group === 2">
               <li class="nav-item">
-                <a class="nav-link" href="examples/dashboard.html">
+                <nuxt-link
+                  to="/pic"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-tv-2 text-default"></i>
                   <span class="nav-link-text">Dashboard PIC TA</span>
-                </a>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/icons.html">
+                <nuxt-link
+                  to="/pic/erf"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-collection text-default"></i>
                   <span class="nav-link-text">ERF</span>
-                </a>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/profile.html">
+                <nuxt-link
+                  to="/pic/pool"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-folder-17 text-default"></i>
                   <span class="nav-link-text">Talent Pool</span>
-                </a>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/tables.html">
+                <nuxt-link
+                  to="/pic/account"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-single-02 text-default"></i>
-                  <span class="nav-link-text">Candidates Account</span>
-                </a>
+                  <span class="nav-link-text">Candidate Account</span>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/login.html">
+                <nuxt-link
+                  to="/pic/candidate_cards"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-badge text-default"></i>
-                  <span class="nav-link-text">Candidates Card</span>
-                </a>
+                  <span class="nav-link-text">Candidate Cards</span>
+                </nuxt-link>
               </li>
             </div>
             <div v-if="group === 3">
@@ -158,3 +183,15 @@ export default {
   }
 }
 </script>
+
+<style lang="css" scoped>
+.active {
+  background-color: rgb(214, 214, 214);
+}
+.nav-item {
+  transition: transform 0.6s ease;
+}
+.nav-item:hover {
+  transform: scale(1.04);
+}
+</style>

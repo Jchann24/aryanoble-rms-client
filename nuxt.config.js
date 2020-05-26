@@ -25,7 +25,7 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'assets/vendor/nucleo/css/nucleo.css',
+        href: '/assets/vendor/nucleo/css/nucleo.css',
         type: 'text/css'
       },
       {
@@ -37,26 +37,26 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'assets/css/argon.css?v=1.2.0',
+        href: '/assets/css/argon.css?v=1.2.0',
         type: 'text/css'
       }
     ],
     script: [
-      { src: 'assets/vendor/jquery/dist/jquery.min.js', body: true },
+      { src: '/assets/vendor/jquery/dist/jquery.min.js', body: true },
       {
-        src: 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
+        src: '/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
         body: true
       },
-      { src: 'assets/vendor/js-cookie/js.cookie.js', body: true },
+      { src: '/assets/vendor/js-cookie/js.cookie.js', body: true },
       {
-        src: 'assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js',
+        src: '/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js',
         body: true
       },
       {
-        src: 'assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js',
+        src: '/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js',
         body: true
       },
-      { src: 'assets/js/argon.js?v=1.2.0', body: true }
+      { src: '/assets/js/argon.js?v=1.2.0', body: true }
     ]
   },
   /*
@@ -70,7 +70,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~plugins/vue-moment'],
   /*
    ** Nuxt.js dev-modules
    */

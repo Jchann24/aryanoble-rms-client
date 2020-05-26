@@ -84,7 +84,7 @@
                       <!-- Avatar -->
                       <img
                         alt="Image placeholder"
-                        src="assets/img/theme/team-1.jpg"
+                        src="/assets/img/theme/team-1.jpg"
                         class="avatar rounded-circle"
                       />
                     </div>
@@ -129,7 +129,7 @@
                 <span class="avatar avatar-sm rounded-circle">
                   <img
                     alt="Image placeholder"
-                    src="assets/img/theme/team-4.jpg"
+                    src="/assets/img/theme/team-4.jpg"
                   />
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
@@ -152,14 +152,6 @@
               <a href="#!" class="dropdown-item">
                 <i class="ni ni-settings-gear-65"></i>
                 <span>Settings</span>
-              </a>
-              <a href="#!" class="dropdown-item">
-                <i class="ni ni-calendar-grid-58"></i>
-                <span>Activity</span>
-              </a>
-              <a href="#!" class="dropdown-item">
-                <i class="ni ni-support-16"></i>
-                <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#" @click="logout">

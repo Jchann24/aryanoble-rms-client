@@ -5,7 +5,7 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Dashboard</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Dashboard PIC</h6>
             </div>
           </div>
           <!-- Card stats -->
@@ -13,91 +13,79 @@
             <div class="col-xl-3 col-md-6">
               <div class="card card-stats">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body p-4">
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Total traffic
+                        ERFS Submitted
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">350,897</span>
+                      <span class="h2 font-weight-bold mb-0">{{
+                        ERFS.count
+                      }}</span>
                     </div>
                     <div class="col-auto">
                       <div
                         class="icon icon-shape bg-gradient-red text-white rounded-circle shadow"
                       >
-                        <i class="ni ni-active-40"></i>
+                        <i class="ni ni-bullet-list-67"></i>
                       </div>
                     </div>
                   </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2">
-                      <i class="fa fa-arrow-up"></i> 3.48%
-                    </span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
                 </div>
               </div>
             </div>
             <div class="col-xl-3 col-md-6">
               <div class="card card-stats">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body p-4">
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        New users
+                        Talent Pool
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">2,356</span>
+                      <span class="h2 font-weight-bold mb-0"
+                        >{{ TALENTS.count }}
+                      </span>
                     </div>
                     <div class="col-auto">
                       <div
                         class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow"
                       >
-                        <i class="ni ni-chart-pie-35"></i>
+                        <i class="ni ni-single-02"></i>
                       </div>
                     </div>
                   </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2">
-                      <i class="fa fa-arrow-up"></i> 3.48%
-                    </span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
                 </div>
               </div>
             </div>
             <div class="col-xl-3 col-md-6">
               <div class="card card-stats">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body p-4">
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Sales
+                        Assigned Cards
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">924</span>
+                      <span class="h2 font-weight-bold mb-0">{{
+                        CARDS.count
+                      }}</span>
                     </div>
                     <div class="col-auto">
                       <div
                         class="icon icon-shape bg-gradient-green text-white rounded-circle shadow"
                       >
-                        <i class="ni ni-money-coins"></i>
+                        <i class="ni ni-single-copy-04"></i>
                       </div>
                     </div>
                   </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2">
-                      <i class="fa fa-arrow-up"></i> 3.48%
-                    </span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
                 </div>
               </div>
             </div>
             <div class="col-xl-3 col-md-6">
               <div class="card card-stats">
                 <!-- Card body -->
-                <div class="card-body">
+                <div class="card-body p-4">
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
@@ -113,12 +101,6 @@
                       </div>
                     </div>
                   </div>
-                  <p class="mt-3 mb-0 text-sm">
-                    <span class="text-success mr-2">
-                      <i class="fa fa-arrow-up"></i> 3.48%
-                    </span>
-                    <span class="text-nowrap">Since last month</span>
-                  </p>
                 </div>
               </div>
             </div>
@@ -129,39 +111,103 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
       <div class="row">
+        <!-- LATEST SUBMIT -->
         <div class="col-xl-8">
-          <div class="card">
+          <div class="card bg-white shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">
-                    Performance
+                    ERF
                   </h6>
-                  <h5 class="h3 mb-0">Total orders</h5>
+                  <h5 class="h3 mb-0">Latest Submits</h5>
                 </div>
               </div>
             </div>
-            <div class="card-body">
-              <h1 class="text-teal">TEST</h1>
+            <div class="table-responsive mb-5">
+              <table
+                class="table align-items-center table-white table-flush table-hover"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="sort">
+                      Title
+                    </th>
+                    <th scope="col" class="sort">
+                      Created At
+                    </th>
+                    <th scope="col" class="sort">
+                      Status
+                    </th>
+                    <th scope="col" class="sort">
+                      Submitted By
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr v-for="item in ERFS.results" :key="item.id">
+                    <td>
+                      {{ item.title }}
+                    </td>
+                    <td class="budget">
+                      {{
+                        item.created_at
+                          | moment('dddd, MMMM Do YYYY | hh:mm:ss')
+                      }}
+                    </td>
+                    <td>
+                      <span class="badge badge-dot mr-4">
+                        <i class="bg-warning"></i>
+                        <span class="status">pending</span>
+                      </span>
+                    </td>
+                    <td>
+                      {{ item.div_user }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+        <!-- LATEST TALENT -->
         <div class="col-xl-4">
-          <div class="card">
+          <div class="card bg-white shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">
-                    Performance
+                    Talent Pool
                   </h6>
-                  <h5 class="h3 mb-0">Total orders</h5>
+                  <h5 class="h3 mb-0">Latest New Talents</h5>
                 </div>
               </div>
             </div>
-            <div class="card-body">
-              <h1>{{ count }}</h1>
-              <h1><button @click="test">test</button></h1>
-              <h1><button @click="toggle">toggle</button></h1>
+            <div class="table-responsive mb-5">
+              <table
+                class="table align-items-center table-white table-flush table-hover"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="sort">
+                      Name
+                    </th>
+                    <th scope="col" class="sort">
+                      Source
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr v-for="item in TALENTS.results" :key="item.id">
+                    <td>
+                      {{ item.name }}
+                    </td>
+                    <td class="budget">
+                      {{ item.source }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -185,31 +231,30 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   middleware: ['auth', 'pic'],
-  name: 'HomePage',
-  data() {
-    return {
-      form: {
-        username: 'pic_ta_1',
-        password: '123123!@#'
-      }
-    }
-  },
+  name: 'PICDashboard',
 
   computed: {
-    ...mapGetters(['count'])
+    ...mapGetters({
+      ERFS: 'pic/ERFS',
+      TALENTS: 'pic/TALENTS',
+      CARDS: 'pic/CARDS'
+    })
+  },
+  created() {
+    this.getERFS()
+    this.getTALENTS()
+    this.getCARDS()
   },
   methods: {
-    ...mapMutations({
-      toggle: 'increment'
-    }),
-
-    test() {
-      this.$axios.get('erf/')
-    }
+    ...mapActions({
+      getERFS: 'pic/GET_ERFS',
+      getTALENTS: 'pic/GET_TALENTS',
+      getCARDS: 'pic/GET_CARDS'
+    })
   }
 }
 </script>

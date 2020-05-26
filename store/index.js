@@ -1,6 +1,4 @@
-export const state = () => ({
-  counter: 0
-})
+export const state = () => ({})
 
 export const getters = {
   isAuthenticated(state) {
@@ -9,15 +7,7 @@ export const getters = {
 
   loggedInUser(state) {
     return state.auth.user
-  },
-
-  count(state) {
-    return state.counter
   }
 }
 
-export const mutations = {
-  increment(state) {
-    state.counter++
-  }
-}
+export const mutations = {}
