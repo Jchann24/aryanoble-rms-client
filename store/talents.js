@@ -45,5 +45,10 @@ export const actions = {
     await this.$axios.$post('candidate/', payload, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
+  },
+  async UPDATE_TALENT({ commit }, { formData, talentId }) {
+    await this.$axios.$put(`candidate/${talentId}/`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
   }
 }

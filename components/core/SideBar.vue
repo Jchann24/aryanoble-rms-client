@@ -17,37 +17,51 @@
           <ul class="navbar-nav mt-4">
             <div v-if="group === 1">
               <li class="nav-item">
-                <a class="nav-link" href="examples/dashboard.html">
+                <nuxt-link
+                  to="/admin"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-tv-2 text-default"></i>
                   <span class="nav-link-text">Dashboard Admin TA</span>
-                </a>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/icons.html">
+                <nuxt-link
+                  to="/admin/erf"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-collection text-default"></i>
                   <span class="nav-link-text">ERF</span>
-                </a>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/profile.html">
+                <nuxt-link
+                  to="/admin/pool"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-folder-17 text-default"></i>
                   <span class="nav-link-text">Talent Pool</span>
-                </a>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/tables.html">
-                  <i class="ni ni-single-02 text-default"></i>
-                  <span class="nav-link-text">Candidates Account</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="examples/login.html">
+                <nuxt-link
+                  to="/admin/candidate_cards"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-badge text-default"></i>
-                  <span class="nav-link-text">Candidates Card</span>
-                </a>
+                  <span class="nav-link-text">Candidate Cards</span>
+                </nuxt-link>
               </li>
             </div>
-            <div v-if="group === 2">
+            <div v-else-if="group === 2">
               <li class="nav-item">
                 <nuxt-link
                   to="/pic"
@@ -104,36 +118,28 @@
                 </nuxt-link>
               </li>
             </div>
-            <div v-if="group === 3">
+            <div v-else-if="group === 3">
               <li class="nav-item">
-                <a class="nav-link" href="examples/dashboard.html">
+                <nuxt-link
+                  to="/div"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-tv-2 text-default"></i>
-                  <span class="nav-link-text">Dashboard Division User</span>
-                </a>
+                  <span class="nav-link-text">Dashboard User</span>
+                </nuxt-link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="examples/icons.html">
+                <nuxt-link
+                  to="/div/erf"
+                  tag="a"
+                  class="nav-link"
+                  exact-active-class="active"
+                >
                   <i class="ni ni-collection text-default"></i>
                   <span class="nav-link-text">ERF</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="examples/profile.html">
-                  <i class="ni ni-folder-17 text-default"></i>
-                  <span class="nav-link-text">Talent Pool</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="examples/tables.html">
-                  <i class="ni ni-single-02 text-default"></i>
-                  <span class="nav-link-text">Candidates Account</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="examples/login.html">
-                  <i class="ni ni-badge text-default"></i>
-                  <span class="nav-link-text">Candidates Card</span>
-                </a>
+                </nuxt-link>
               </li>
             </div>
           </ul>

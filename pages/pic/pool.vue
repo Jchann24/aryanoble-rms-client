@@ -146,7 +146,7 @@
         class="modal-dialog modal- modal-dialog-centered modal-lg"
         role="document"
       >
-        <div class="modal-content">
+        <div class="modal-content bg-secondary">
           <div class="modal-header">
             <h6 id="modal-title-default" class="modal-title ml-2">
               Talent Details
@@ -160,11 +160,11 @@
               class="close"
               data-dismiss="modal"
               aria-label="Close"
+              @click="clearForm"
             >
               <span aria-hidden="true">×</span>
             </button>
           </div>
-
           <div class="modal-body">
             <form>
               <div class="row">
@@ -173,9 +173,9 @@
                     <label for="detail_name">Name</label>
                     <input
                       id="detail_name"
+                      v-model="selectedTalent.name"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.name"
                       :readonly="readonly"
                     />
                   </div>
@@ -203,9 +203,9 @@
                     <label for="detail_address">Address</label>
                     <input
                       id="detail_address"
+                      v-model="selectedTalent.address"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.address"
                       :readonly="readonly"
                     />
                   </div>
@@ -217,9 +217,9 @@
                     >
                     <input
                       id="detail_applied_position"
+                      v-model="selectedTalent.applied_position"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.applied_position"
                       :readonly="readonly"
                     />
                   </div>
@@ -231,9 +231,9 @@
                     <label for="detail_dob">Date of Birth</label>
                     <input
                       id="detail_dob"
+                      v-model="selectedTalent.dob"
                       type="date"
                       class="form-control"
-                      :value="selectedTalent.dob"
                       :readonly="readonly"
                     />
                   </div>
@@ -243,9 +243,9 @@
                     <label for="detail_email">E-mail</label>
                     <input
                       id="detail_email"
+                      v-model="selectedTalent.email"
                       type="email"
                       class="form-control"
-                      :value="selectedTalent.email"
                       :readonly="readonly"
                     />
                   </div>
@@ -257,9 +257,9 @@
                     <label for="detail_gender">Gender</label>
                     <input
                       id="detail_gender"
+                      v-model="selectedTalent.gender"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.gender"
                       :readonly="readonly"
                     />
                   </div>
@@ -269,9 +269,9 @@
                     <label for="detail_last_education">Last Education</label>
                     <input
                       id="detail_last_education"
+                      v-model="selectedTalent.last_education"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.last_education"
                       :readonly="readonly"
                     />
                   </div>
@@ -283,9 +283,9 @@
                     <label for="detail_mobile_phone">Mobile Phone</label>
                     <input
                       id="detail_mobile_phone"
+                      v-model="selectedTalent.mobile_phone"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.mobile_phone"
                       :readonly="readonly"
                     />
                   </div>
@@ -295,9 +295,9 @@
                     <label for="detail_nik">NIK</label>
                     <input
                       id="detail_nik"
+                      v-model="selectedTalent.nik"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.nik"
                       :readonly="readonly"
                     />
                   </div>
@@ -311,9 +311,9 @@
                     >
                     <input
                       id="detail_total_working_experience"
+                      v-model="selectedTalent.total_working_experience"
                       type="number"
                       class="form-control"
-                      :value="selectedTalent.total_working_experience"
                       :readonly="readonly"
                     />
                   </div>
@@ -323,10 +323,25 @@
                     <label for="detail_university">University</label>
                     <input
                       id="detail_university"
+                      v-model="selectedTalent.university"
                       type="text"
                       class="form-control"
-                      :value="selectedTalent.university"
                       :readonly="readonly"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div v-if="!readonly" class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="detail_cv">Update New CV</label>
+                    <input
+                      id="detail_cv"
+                      type="file"
+                      class="form-control"
+                      accept="application/pdf"
+                      :readonly="readonly"
+                      @change="selectFile"
                     />
                   </div>
                 </div>
@@ -335,26 +350,37 @@
           </div>
 
           <div class="modal-footer">
+            <div v-if="readonly">
+              <button
+                type="button"
+                class="btn btn-success mr-auto"
+                @click="readonly = !readonly"
+              >
+                Edit
+              </button>
+            </div>
+            <div v-else>
+              <button
+                type="button"
+                class="btn btn-secondary mr-auto"
+                @click="readonly = !readonly"
+              >
+                Cancel Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-success mr-auto"
+                @click="updateTalent"
+              >
+                Save Updates
+              </button>
+            </div>
             <button
-              v-if="readonly"
-              type="button"
-              class="btn btn-success mr-auto"
-              @click="readonly = !readonly"
-            >
-              Edit
-            </button>
-            <button
-              v-else
-              type="button"
-              class="btn btn-secondary mr-auto"
-              @click="readonly = !readonly"
-            >
-              Cancel Edit
-            </button>
-            <button
+              id="close-detail"
               type="button"
               class="btn btn-link  ml-auto"
               data-dismiss="modal"
+              @click="clearForm()"
             >
               Close
             </button>
@@ -379,14 +405,16 @@ export default {
     return {
       page: 1,
       selectedTalent: {},
+      file: '',
       readonly: true,
       next: 'next',
-      prev: 'prev'
+      prev: 'prev',
+      errors: false
     }
   },
   computed: {
     ...mapGetters({
-      TALENTS: 'talent_pool/TALENTS'
+      TALENTS: 'talents/TALENTS'
     })
   },
   created() {
@@ -394,9 +422,36 @@ export default {
   },
   methods: {
     ...mapActions({
-      GET_TALENTS: 'talent_pool/GET_TALENTS'
+      GET_TALENTS: 'talents/GET_TALENTS',
+      UPDATE_TALENT: 'talents/UPDATE_TALENT'
     }),
+    clearForm() {
+      Object.assign(this.$data, this.$options.data())
+    },
+    selectFile(e) {
+      const file = e.target.files[0]
+      this.file = file
+    },
+    async updateTalent() {
+      const talentId = this.selectedTalent.id
+      const formData = new FormData()
 
+      const entries = Object.entries(this.selectedTalent)
+      for (const [formName, value] of entries) {
+        formData.append(`${formName}`, `${value}`)
+      }
+      formData.append('cv', this.file)
+
+      try {
+        await this.UPDATE_TALENT({ formData, talentId })
+        await this.GET_TALENTS()
+        document.getElementById('close-detail').click()
+        this.errors = false
+        this.clearForm()
+      } catch (err) {
+        this.errors = true
+      }
+    },
     getTalents(page) {
       this.GET_TALENTS(page)
     },
@@ -404,7 +459,8 @@ export default {
       change === 'next' ? this.page++ : this.page--
     },
     previewTalent(talent) {
-      this.selectedTalent = talent
+      const preview = talent
+      this.selectedTalent = JSON.parse(JSON.stringify(preview))
     },
     setReadonly() {
       this.readonly = true

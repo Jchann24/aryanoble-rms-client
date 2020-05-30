@@ -232,9 +232,9 @@ export default {
 
   computed: {
     ...mapGetters({
-      ERFS: 'talent_pool/ERFS',
-      TALENTS: 'talent_pool/TALENTS',
-      CARDS: 'talent_pool/CARDS'
+      ERFS: 'erfs/ERFS',
+      TALENTS: 'talents/TALENTS',
+      CARDS: 'cards/CARDS'
     })
   },
   created() {
@@ -244,9 +244,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      getERFS: 'talent_pool/GET_ERFS',
-      getTALENTS: 'talent_pool/GET_TALENTS',
-      getCARDS: 'talent_pool/GET_CARDS'
+      getERFS: 'erfs/GET_ERFS',
+      getTALENTS: 'talents/GET_TALENTS',
+      getCARDS: 'cards/GET_CARDS'
     })
   }
 }
