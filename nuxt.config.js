@@ -56,6 +56,11 @@ export default {
         src: '/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js',
         body: true
       },
+      {
+        src:
+          '/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js',
+        body: true
+      },
       { src: '/assets/js/argon.js?v=1.2.0', body: true }
     ]
   },

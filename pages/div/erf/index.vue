@@ -20,87 +20,63 @@
               <h1>Your Latest Submitted ERFs</h1>
             </div>
             <div class="table-responsive mb-5">
-              <!-- <table class="table align-items-center table-white table-hover">
+              <table class="table align-items-center table-white table-hover">
                 <thead class="bg-gradient-gray text-white">
                   <tr>
                     <th scope="col" class="sort">
-                      Name
+                      Title
                     </th>
                     <th scope="col" class="sort">
-                      Source
+                      Job Title
                     </th>
                     <th scope="col" class="sort">
-                      Last Education
+                      Division
                     </th>
                     <th scope="col" class="sort">
-                      Added By
-                    </th>
-                    <th scope="col" class="sort">
-                      CV
+                      Department
                     </th>
                     <th scope="col" class="sort"></th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="talent in ERFS.results" :key="talent.id">
+                  <tr v-for="erf in ERFS.results" :key="erf.id">
                     <td>
-                      {{ talent.name }}
+                      {{ erf.title }}
                     </td>
                     <td>
-                      {{ talent.source }}
+                      {{ erf.job_title }}
                     </td>
                     <td>
-                      {{ talent.last_education }}
+                      {{ erf.division }}
                     </td>
                     <td>
-                      {{ talent.pic }}
+                      {{ erf.department }}
                     </td>
                     <td>
-                      <a
-                        v-if="talent.cv"
-                        target="_blank"
-                        class="btn btn-secondary btn-sm"
-                        :href="talent.cv"
-                      >
-                        Preview
-                      </a>
-                      <a
-                        v-else
-                        disabled
-                        class="btn btn-secondary btn-sm disabled text-danger"
-                      >
-                        Unavailable
-                      </a>
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn btn-primary float-right"
-                        data-toggle="modal"
-                        data-target="#modal-default"
-                        @click="
-                          previewTalent(talent)
-                          setReadonly()
-                        "
-                      >
-                        Details
-                      </button>
+                      <nuxt-link :to="`/div/erf/${erf.id}`">
+                        <button
+                          type="button"
+                          class="btn btn-primary float-right"
+                        >
+                          Details
+                        </button>
+                      </nuxt-link>
                     </td>
                   </tr>
                 </tbody>
-              </table> -->
+              </table>
             </div>
-            <!-- <div v-if="TALENTS.next || TALENTS.previous" class="card-footer">
+            <div v-if="ERFS.next || ERFS.previous" class="card-footer">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="TALENTS.previous"
+                      v-if="ERFS.previous"
                       class="page-link"
                       href="#!"
                       @click="
                         changePage(prev)
-                        getTalents(page)
+                        getERFS(page)
                       "
                     >
                       <i class="fa fa-angle-left"></i>
@@ -112,12 +88,12 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="TALENTS.next"
+                      v-if="ERFS.next"
                       class="page-link"
                       href="#!"
                       @click="
                         changePage(next)
-                        getTalents(page)
+                        getERFS(page)
                       "
                     >
                       <i class="fa fa-angle-right"></i>
@@ -126,7 +102,7 @@
                   </li>
                 </ul>
               </nav>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -135,7 +111,47 @@
 </template>
 
 <script>
-export default {}
+import { mapGetters, mapActions } from 'vuex'
+export default {
+  middleware: ['auth', 'div'],
+  name: 'DivERF',
+  data() {
+    return {
+      page: 1,
+      file: '',
+      readonly: true,
+      next: 'next',
+      prev: 'prev',
+      errors: false
+    }
+  },
+  computed: {
+    ...mapGetters({
+      ERFS: 'erfs/ERFS'
+    })
+  },
+  created() {
+    this.getERFS(this.page)
+  },
+  methods: {
+    ...mapActions({
+      GET_ERFS: 'erfs/GET_ERFS'
+    }),
+    clearForm() {
+      Object.assign(this.$data, this.$options.data())
+    },
+
+    getERFS(page) {
+      this.GET_ERFS(page)
+    },
+    changePage(change) {
+      change === 'next' ? this.page++ : this.page--
+    },
+    setReadonly() {
+      this.readonly = true
+    }
+  }
+}
 </script>
 
 <style></style>
