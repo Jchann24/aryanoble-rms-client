@@ -4,6 +4,7 @@
       <div
         class="header pb-6 d-flex align-items-center"
         style="min-height: 500px; background-image: url(https://images.unsplash.com/photo-1554224155-a1487473ffd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80); background-size: cover; background-position: center top;"
+        crossorigin="anonymous"
       >
         <!-- Mask -->
         <span class="mask bg-gradient-default opacity-8"></span>
@@ -13,7 +14,7 @@
             <div class="col-lg-12 col-md-12">
               <h1 class="display-2 text-white">ERF Details</h1>
               <p class="text-white mt-0 mb-5">
-                This is your ERF Details page, you can update here if you want.
+                This is your ERF Details page.
               </p>
               <nuxt-link to="/div/erf">
                 <a href="#!" class="btn btn-neutral">Back to ERFs</a>
@@ -26,7 +27,7 @@
       <div class="container-fluid mt--6">
         <div class="row">
           <div class="col-xl-12 order-xl-1">
-            <div class="card">
+            <div class="card p-3">
               <div class="card-header">
                 <div class="row align-items-center">
                   <div class="col-8">
@@ -55,6 +56,7 @@
                             id="input-company"
                             type="text"
                             class="form-control"
+                            :readonly="readonly"
                           />
                         </div>
                       </div>
@@ -64,15 +66,12 @@
                             >Date</label
                           >
                           <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"
-                                ><i class="ni ni-calendar-grid-58"></i
-                              ></span>
-                            </div>
                             <input
+                              v-model="ERF.submit_date"
                               class="form-control"
                               placeholder="Select date"
                               type="date"
+                              :readonly="readonly"
                             />
                           </div>
                         </div>
@@ -88,8 +87,10 @@
                           >
                           <input
                             id="input-job-title"
+                            v-model="ERF.job_title"
                             type="text"
                             class="form-control"
+                            :readonly="readonly"
                           />
                         </div>
                       </div>
@@ -100,8 +101,11 @@
                           >
                           <input
                             id="input-quantity"
+                            v-model="ERF.quantity"
                             type="number"
+                            min="1"
                             class="form-control"
+                            :readonly="readonly"
                           />
                         </div>
                       </div>
@@ -114,8 +118,10 @@
                           >
                           <input
                             id="input-division"
+                            v-model="ERF.division"
                             type="text"
                             class="form-control"
+                            :readonly="readonly"
                           />
                         </div>
                       </div>
@@ -126,8 +132,10 @@
                           >
                           <input
                             id="input-branch"
+                            v-model="ERF.branch"
                             type="text"
                             class="form-control"
+                            :readonly="readonly"
                           />
                         </div>
                       </div>
@@ -142,8 +150,10 @@
                           >
                           <input
                             id="input-department"
+                            v-model="ERF.department"
                             type="text"
                             class="form-control"
+                            :readonly="readonly"
                           />
                         </div>
                       </div>
@@ -156,92 +166,393 @@
                           >
                           <input
                             id="input-work-location"
+                            v-model="ERF.work_location"
                             type="text"
                             class="form-control"
+                            :readonly="readonly"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                   <hr class="my-4" />
-                  <!-- Address -->
-                  <h6 class="heading-small text-muted mb-4">
-                    Contact information
-                  </h6>
+                  <!-- Choices -->
+                  <h6 class="heading-small text-muted mb-4">Choices</h6>
                   <div class="pl-lg-4">
                     <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <div class="form-group">
                           <label class="form-control-label" for="input-address"
-                            >Address</label
+                            >Employee Status</label
                           >
-                          <input
-                            id="input-address"
-                            class="form-control"
-                            placeholder="Home Address"
-                            value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                            type="text"
-                          />
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-employee-status-1"
+                              v-model="ERF.employee_status"
+                              type="radio"
+                              name="status-radio"
+                              class="custom-control-input"
+                              value="Permanent"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-employee-status-1"
+                              >Permanent</label
+                            >
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-employee-status-2"
+                              v-model="ERF.employee_status"
+                              type="radio"
+                              name="status-radio"
+                              class="custom-control-input"
+                              value="Contract"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-employee-status-2"
+                              >Contract</label
+                            >
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-employee-status-3"
+                              v-model="ERF.employee_status"
+                              type="radio"
+                              name="status-radio"
+                              class="custom-control-input"
+                              value="Outsource / Internship"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-employee-status-3"
+                              >Outsource / Internship</label
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-address"
+                            >Purpose</label
+                          >
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-purpose-1"
+                              v-model="ERF.purpose"
+                              type="radio"
+                              name="purpose-radio"
+                              class="custom-control-input"
+                              value="New Position"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-purpose-1"
+                              >New Position</label
+                            >
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-purpose-2"
+                              v-model="ERF.purpose"
+                              type="radio"
+                              name="purpose-radio"
+                              class="custom-control-input"
+                              value="Additional"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-purpose-2"
+                              >Additional</label
+                            >
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-purpose-3"
+                              v-model="ERF.purpose"
+                              type="radio"
+                              name="purpose-radio"
+                              class="custom-control-input"
+                              value="Replacement"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-purpose-3"
+                              >Replacement</label
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label" for="input-city"
-                            >City</label
+                          <label class="form-control-label" for="input-address"
+                            >Working - hours</label
                           >
-                          <input
-                            id="input-city"
-                            type="text"
-                            class="form-control"
-                            placeholder="City"
-                            value="New York"
-                          />
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-working-hours-1"
+                              v-model="ERF.working_hours"
+                              type="radio"
+                              name="working-hours-radio"
+                              class="custom-control-input"
+                              value="Full-time"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-working-hours-1"
+                              >Full - time</label
+                            >
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-working-hours-2"
+                              v-model="ERF.working_hours"
+                              type="radio"
+                              name="working-hours-radio"
+                              class="custom-control-input"
+                              value="Part-time"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-working-hours-2"
+                              >Part - time</label
+                            >
+                          </div>
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label" for="input-country"
-                            >Country</label
+                          <label class="form-control-label" for="input-address"
+                            >Position</label
                           >
-                          <input
-                            id="input-country"
-                            type="text"
-                            class="form-control"
-                            placeholder="Country"
-                            value="United States"
-                          />
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-position-1"
+                              v-model="ERF.position"
+                              type="radio"
+                              name="position-radio"
+                              class="custom-control-input"
+                              value="Leader"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-position-1"
+                              >Leader (Section Head - up)</label
+                            >
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-position-2"
+                              v-model="ERF.position"
+                              type="radio"
+                              name="position-radio"
+                              class="custom-control-input"
+                              value="Non-leader"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-position-2"
+                              >Non - leader</label
+                            >
+                          </div>
                         </div>
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label" for="input-country"
-                            >Postal code</label
+                          <label class="form-control-label" for="input-address"
+                            >Planning</label
                           >
-                          <input
-                            id="input-postal-code"
-                            type="number"
-                            class="form-control"
-                            placeholder="Postal code"
-                          />
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-planning-1"
+                              v-model="ERF.planning"
+                              type="radio"
+                              name="planning-radio"
+                              class="custom-control-input"
+                              value="Planned"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-planning-1"
+                              >Planned (Based on MPP)</label
+                            >
+                          </div>
+                          <div class="custom-control custom-radio">
+                            <input
+                              id="radio-planning-2"
+                              v-model="ERF.planning"
+                              type="radio"
+                              name="planning-radio"
+                              class="custom-control-input"
+                              value="Not Planned"
+                              :disabled="readonly"
+                            />
+                            <label
+                              class="custom-control-label"
+                              for="radio-planning-2"
+                              >Not Planned</label
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <hr class="my-4" />
-                  <!-- Description -->
-                  <h6 class="heading-small text-muted mb-4">About me</h6>
+                  <!-- Business justification -->
+                  <h6 class="heading-small text-muted mb-4">
+                    Business Justification
+                  </h6>
                   <div class="pl-lg-4">
                     <div class="form-group">
-                      <label class="form-control-label">About Me</label>
+                      <label class="form-control-label"
+                        >Business situation & additional reasons
+                        explanation</label
+                      >
                       <textarea
+                        v-model="ERF.business_justification"
                         rows="4"
                         class="form-control"
-                        placeholder="A few words about you ..."
+                        :readonly="readonly"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <hr class="my-4" />
+                  <!-- Technical Competencies -->
+                  <h6 class="heading-small text-muted mb-4">
+                    Technical Competencies
+                  </h6>
+                  <div class="pl-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label"
+                        >Specific Technical Competencies</label
                       >
-A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea
-                      >
+                      <textarea
+                        v-model="ERF.technical_competencies"
+                        rows="4"
+                        class="form-control"
+                        :readonly="readonly"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <hr class="my-4" />
+                  <!-- Additional Requirements -->
+                  <h6 class="heading-small text-muted mb-4">
+                    Additional Requirements
+                  </h6>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-address"
+                          >Gender</label
+                        >
+                        <div class="custom-control custom-radio">
+                          <input
+                            id="radio-gender-1"
+                            v-model="ERF.sex"
+                            type="radio"
+                            name="gender-radio"
+                            class="custom-control-input"
+                            value="Male"
+                            :disabled="readonly"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="radio-gender-1"
+                            >Male</label
+                          >
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input
+                            id="radio-gender-2"
+                            v-model="ERF.sex"
+                            type="radio"
+                            name="gender-radio"
+                            class="custom-control-input"
+                            value="Female"
+                            :disabled="readonly"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="radio-gender-2"
+                            >Female</label
+                          >
+                        </div>
+                        <div class="custom-control custom-radio">
+                          <input
+                            id="radio-gender-3"
+                            v-model="ERF.sex"
+                            type="radio"
+                            name="gender-radio"
+                            class="custom-control-input"
+                            value="Male / Female"
+                            :disabled="readonly"
+                          />
+                          <label
+                            class="custom-control-label"
+                            for="radio-gender-3"
+                            >Male / Female</label
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-age-range"
+                          >Age Range</label
+                        >
+                        <input
+                          id="input-age-range"
+                          v-model="ERF.age_range"
+                          type="text"
+                          class="form-control"
+                          :readonly="readonly"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-education"
+                          >Education</label
+                        >
+                        <input
+                          id="input-education"
+                          v-model="ERF.education"
+                          type="text"
+                          class="form-control"
+                          :readonly="readonly"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-min-exp"
+                          >Minimum Experience</label
+                        >
+                        <input
+                          id="input-min-exp"
+                          v-model="ERF.min_experience"
+                          type="number"
+                          min="0"
+                          class="form-control"
+                          :readonly="readonly"
+                        />
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -258,6 +569,13 @@ A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'ERFDetail',
+
+  data() {
+    return {
+      readonly: true
+    }
+  },
+
   computed: {
     ...mapGetters({
       ERF: 'erfs/ERF'
