@@ -89,7 +89,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/dotenv'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/dotenv'],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -98,13 +98,30 @@ export default {
     baseUrl: process.env.API_URL
   },
   auth: {
+    localStorage: false,
     strategies: {
       local: {
+        scheme: 'refresh',
+        token: {
+          property: 'access',
+          maxAge: 1800
+        },
+        refreshToken: {
+          property: 'refresh',
+          data: 'refresh',
+          maxAge: 2000
+        },
+        user: {
+          property: false,
+          // autoFetch: true
+        },
         endpoints: {
-          login: { url: 'login/', method: 'post', propertyName: 'access' },
-          user: { url: 'account/me/', method: 'get', propertyName: false },
+          login: { url: 'login/', method: 'post' },
+          refresh: { url: 'refresh/', method: 'post' },
+          user: { url: 'account/me/', method: 'get' },
           logout: false
-        }
+        },
+        tokenType: 'Bearer'
       }
     }
   },

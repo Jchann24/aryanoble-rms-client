@@ -7,11 +7,21 @@
             <div class="col-lg-6 col-4">
               <h6 class="h2 text-white d-inline-block mb-0">ERF</h6>
             </div>
-            <div class="col-lg-6 col-8 text-right"></div>
+            <div class="col-lg-6 col-8 text-right">
+              <nuxt-link to="/div/erf/create">
+                <button class="btn btn-icon btn-primary" type="button">
+                  <span class="btn-inner--icon"
+                    ><i class="ni ni-archive-2"></i
+                  ></span>
+                  <span class="btn-inner--text">Add New ERF</span>
+                </button>
+              </nuxt-link>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    ww
     <div class="container-fluid mt--5">
       <div class="row">
         <div class="col-12">

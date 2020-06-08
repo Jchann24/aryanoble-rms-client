@@ -12,9 +12,9 @@
         <div class="container-fluid d-flex align-items-center">
           <div class="row">
             <div class="col-lg-12 col-md-12">
-              <h1 class="display-2 text-white">ERF Details</h1>
+              <h1 class="display-2 text-white">New ERF</h1>
               <p class="text-white mt-0 mb-5">
-                This is your ERF Details page.
+                Please fill all the fields.
               </p>
               <nuxt-link to="/div/erf">
                 <a href="#!" class="btn btn-neutral">Back to ERFs</a>
@@ -33,19 +33,31 @@
                   <div class="col-8">
                     <h3 class="mb-0">Employee Request Form</h3>
                   </div>
-                  <div class="col-4 text-right">
-                    <a href="#!" class="btn btn-sm btn-danger"
-                      >Request to Close</a
-                    >
-                  </div>
                 </div>
               </div>
               <div class="card-body">
-                <form>
+                <form @submit.prevent="save()">
                   <h6 class="heading-small text-muted mb-4">
                     Position Information
                   </h6>
                   <div class="pl-lg-4">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-title"
+                            >ERF Title</label
+                          >
+                          <input
+                            id="input-title"
+                            v-model="ERF.title"
+                            type="text"
+                            class="form-control"
+                            :readonly="readonly"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
                     <div class="row">
                       <div class="col-lg-6">
                         <div class="form-group">
@@ -58,6 +70,7 @@
                             type="text"
                             class="form-control"
                             :readonly="readonly"
+                            required
                           />
                         </div>
                       </div>
@@ -73,6 +86,7 @@
                               placeholder="Select date"
                               type="date"
                               :readonly="readonly"
+                              required
                             />
                           </div>
                         </div>
@@ -92,6 +106,7 @@
                             type="text"
                             class="form-control"
                             :readonly="readonly"
+                            required
                           />
                         </div>
                       </div>
@@ -107,6 +122,7 @@
                             min="1"
                             class="form-control"
                             :readonly="readonly"
+                            required
                           />
                         </div>
                       </div>
@@ -123,6 +139,7 @@
                             type="text"
                             class="form-control"
                             :readonly="readonly"
+                            required
                           />
                         </div>
                       </div>
@@ -137,6 +154,7 @@
                             type="text"
                             class="form-control"
                             :readonly="readonly"
+                            required
                           />
                         </div>
                       </div>
@@ -155,6 +173,7 @@
                             type="text"
                             class="form-control"
                             :readonly="readonly"
+                            required
                           />
                         </div>
                       </div>
@@ -171,6 +190,7 @@
                             type="text"
                             class="form-control"
                             :readonly="readonly"
+                            required
                           />
                         </div>
                       </div>
@@ -428,6 +448,7 @@
                         rows="4"
                         class="form-control"
                         :readonly="readonly"
+                        required
                       ></textarea>
                     </div>
                   </div>
@@ -446,6 +467,7 @@
                         rows="4"
                         class="form-control"
                         :readonly="readonly"
+                        required
                       ></textarea>
                     </div>
                   </div>
@@ -521,6 +543,7 @@
                           type="text"
                           class="form-control"
                           :readonly="readonly"
+                          required
                         />
                       </div>
                     </div>
@@ -537,6 +560,7 @@
                           type="text"
                           class="form-control"
                           :readonly="readonly"
+                          required
                         />
                       </div>
                     </div>
@@ -552,8 +576,26 @@
                           min="0"
                           class="form-control"
                           :readonly="readonly"
+                          required
                         />
                       </div>
+                    </div>
+                  </div>
+                  <div v-if="errors" class="row">
+                    <div class="col-12">
+                      <div class="alert alert-danger" role="alert">
+                        <strong>Danger!</strong>
+                        <div v-for="(error, name) in errors" :key="name">
+                          <strong>{{ name }}</strong> : {{ error.join(' ') }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 text-right">
+                      <button type="submit" class="btn btn-success">
+                        Submit
+                      </button>
                     </div>
                   </div>
                 </form>
@@ -567,29 +609,27 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
-  name: 'ERFDetail',
+  name: 'ERFCreate',
 
   data() {
     return {
-      readonly: true
+      readonly: false,
+      ERF: {},
+      errors: null
     }
-  },
-
-  computed: {
-    ...mapGetters({
-      ERF: 'erfs/ERF'
-    })
-  },
-
-  created() {
-    this.getERF(this.$route.params.id)
   },
   methods: {
     ...mapActions({
-      getERF: 'erfs/GET_ERF'
-    })
+      saveERF: 'erfs/SAVE_ERF'
+    }),
+
+    save() {
+      this.saveERF(this.ERF)
+        .then(() => this.$router.push('/div/erf/'))
+        .catch((err) => (this.errors = err.response.data))
+    }
   }
 }
 </script>
