@@ -67,7 +67,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#ffb64f' },
   /*
    ** Global CSS
    */
@@ -112,7 +112,7 @@ export default {
           maxAge: 2000
         },
         user: {
-          property: false,
+          property: false
           // autoFetch: true
         },
         endpoints: {

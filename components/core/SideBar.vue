@@ -32,7 +32,7 @@
                   to="/admin/erf"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-collection text-default"></i>
                   <span class="nav-link-text">ERF</span>
@@ -43,7 +43,7 @@
                   to="/admin/pool"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-folder-17 text-default"></i>
                   <span class="nav-link-text">Talent Pool</span>
@@ -54,7 +54,7 @@
                   to="/admin/candidate_cards"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-badge text-default"></i>
                   <span class="nav-link-text">Candidate Cards</span>
@@ -78,7 +78,7 @@
                   to="/pic/erf"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-collection text-default"></i>
                   <span class="nav-link-text">ERF</span>
@@ -89,7 +89,7 @@
                   to="/pic/pool"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-folder-17 text-default"></i>
                   <span class="nav-link-text">Talent Pool</span>
@@ -100,7 +100,7 @@
                   to="/pic/account"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-single-02 text-default"></i>
                   <span class="nav-link-text">Candidate Account</span>
@@ -111,7 +111,7 @@
                   to="/pic/candidate_cards"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-badge text-default"></i>
                   <span class="nav-link-text">Candidate Cards</span>
@@ -135,7 +135,7 @@
                   to="/div/erf"
                   tag="a"
                   class="nav-link"
-                  exact-active-class="active"
+                  active-class="active"
                 >
                   <i class="ni ni-collection text-default"></i>
                   <span class="nav-link-text">ERF</span>

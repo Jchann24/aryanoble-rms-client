@@ -4,37 +4,38 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-4">
-              <h6 class="h2 text-white d-inline-block mb-0">ERF</h6>
-            </div>
-            <div class="col-lg-6 col-8 text-right">
-              <nuxt-link to="/div/erf/create">
-                <button class="btn btn-icon btn-primary" type="button">
-                  <span class="btn-inner--icon"
-                    ><i class="ni ni-archive-2"></i
-                  ></span>
-                  <span class="btn-inner--text">Add New ERF</span>
-                </button>
-              </nuxt-link>
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">
+                Employee Request Form
+              </h6>
             </div>
           </div>
+          <!-- Card stats -->
         </div>
       </div>
     </div>
+    <!-- Page content -->
     <div class="container-fluid mt--5">
       <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h1>Your Latest Submitted ERFs</h1>
+        <!-- LATEST SUBMIT -->
+        <div class="col-xl-12">
+          <div class="card bg-white shadow">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">
+                    All
+                  </h6>
+                  <h5 class="h3 mb-0">Latest ERFs</h5>
+                </div>
+              </div>
             </div>
             <div class="table-responsive mb-5">
-              <table class="table align-items-center table-white table-hover">
-                <thead class="bg-gradient-gray text-white">
+              <table
+                class="table align-items-center table-white table-flush table-hover"
+              >
+                <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort">
-                      Title
-                    </th>
                     <th scope="col" class="sort">
                       Job Title
                     </th>
@@ -42,32 +43,52 @@
                       Division
                     </th>
                     <th scope="col" class="sort">
+                      Position
+                    </th>
+                    <th scope="col" class="sort">
                       Department
                     </th>
-                    <th scope="col" class="sort"></th>
+                    <th scope="col" class="sort">
+                      Submitted At
+                    </th>
+                    <th scope="col" class="sort">
+                      Submitted By
+                    </th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="erf in ERFS.results" :key="erf.id">
+                  <tr v-for="item in ERFS.results" :key="item.id">
                     <td>
-                      {{ erf.title }}
+                      {{ item.job_title }}
                     </td>
                     <td>
-                      {{ erf.job_title }}
+                      {{ item.division }}
                     </td>
                     <td>
-                      {{ erf.division }}
+                      {{ item.position }}
                     </td>
                     <td>
-                      {{ erf.department }}
+                      {{ item.department }}
+                    </td>
+                    <td class="budget">
+                      {{
+                        item.created_at
+                          | moment('dddd, MMMM Do YYYY | hh:mm:ss')
+                      }}
                     </td>
                     <td>
-                      <nuxt-link :to="`/div/erf/${erf.id}`">
+                      {{ item.div_user }}
+                    </td>
+                    <td>
+                      <nuxt-link :to="`/pic/erf/${item.id}`">
                         <button
                           type="button"
-                          class="btn btn-primary float-right"
+                          class="btn btn-icon btn-primary"
+                          data-toggle="modal"
+                          data-target="#modal-add-talent"
                         >
-                          Details
+                          <span class="btn-inner--text">Details</span>
                         </button>
                       </nuxt-link>
                     </td>
@@ -82,7 +103,7 @@
                     <a
                       v-if="ERFS.previous"
                       class="page-link"
-                      href="#!"
+                      href="javascript:"
                       @click="
                         changePage(prev)
                         getERFS(page)
@@ -99,7 +120,7 @@
                     <a
                       v-if="ERFS.next"
                       class="page-link"
-                      href="#!"
+                      href="javascript:"
                       @click="
                         changePage(next)
                         getERFS(page)
@@ -121,17 +142,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
-  middleware: ['auth', 'div'],
-  name: 'DivERF',
+  middleware: ['auth', 'pic'],
+  name: 'PICDashboard',
+  components: {},
   data() {
     return {
       page: 1,
-      file: '',
-      readonly: true,
-      next: 'next',
       prev: 'prev',
-      errors: false
+      next: 'next'
     }
   },
   computed: {
@@ -146,21 +166,12 @@ export default {
     ...mapActions({
       GET_ERFS: 'erfs/GET_ERFS'
     }),
-    clearForm() {
-      Object.assign(this.$data, this.$options.data())
-    },
-
     getERFS(page) {
       this.GET_ERFS(page)
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--
-    },
-    setReadonly() {
-      this.readonly = true
     }
   }
 }
 </script>
-
-<style></style>

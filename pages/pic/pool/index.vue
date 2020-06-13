@@ -99,7 +99,7 @@
                     <a
                       v-if="TALENTS.previous"
                       class="page-link"
-                      href="#!"
+                      href="javascript:"
                       @click="
                         changePage(prev)
                         getTalents(page)
@@ -116,7 +116,7 @@
                     <a
                       v-if="TALENTS.next"
                       class="page-link"
-                      href="#!"
+                      href="javascript:"
                       @click="
                         changePage(next)
                         getTalents(page)
