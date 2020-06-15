@@ -36,6 +36,6 @@ export const actions = {
     commit('SET_CANDIDATE_CARD', data)
   },
   async UPDATE_CANDIDATE_CARD({ commit }, { payload, cardId }) {
-    await this.$axios.$put(`candidate-card/${cardId}/`, payload)
+    await this.$axios.$patch(`candidate-card/${cardId}/`, payload)
   }
 }

@@ -8,6 +8,15 @@
               <h6 class="h2 text-white d-inline-block mb-0">
                 Candidate Cards
               </h6>
+              <p class="text-white">
+                All Created Candidate Cards by PIC TAs
+              </p>
+              <ul class="text-white">
+                <li>
+                  Click Not Assigned button to assign Candidate Account to the
+                  Card.
+                </li>
+              </ul>
             </div>
           </div>
           <!-- Card stats -->
@@ -63,8 +72,9 @@
                       <button
                         type="button"
                         data-toggle="modal"
-                        data-target="#exampleModal"
+                        data-target="#modal-assign"
                         class="btn btn-sm btn-outline-danger"
+                        @click="GET_CANDIDATE_ACCOUNTS(), selectCard(item.id)"
                       >
                         Not Assigned
                       </button>
@@ -135,7 +145,7 @@
     </div>
     <!-- Modal -->
     <div
-      id="exampleModal"
+      id="modal-assign"
       class="modal fade"
       tabindex="-1"
       role="dialog"
@@ -145,7 +155,9 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">Modal title</h5>
+            <h5 id="exampleModalLabel" class="modal-title">
+              Assign Candidate Account to this Candidate Card
+            </h5>
             <button
               type="button"
               class="close"
@@ -156,17 +168,79 @@
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <div class="row">
+              <div class="col-12 px-3">
+                <div
+                  v-if="searchAlert"
+                  class="alert alert-success"
+                  role="alert"
+                >
+                  <strong>Searched!</strong> Username list has been updated!
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3 px-3">
+              <input
+                v-model="searchInput"
+                type="text"
+                class="form-control"
+                placeholder="Search username ..."
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-primary"
+                  type="button"
+                  :disabled="disabled"
+                  @click="searchAccounts"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <label for="username-select">Usernames</label>
+
+                  <select
+                    id="username-select"
+                    v-model="selectedAccount"
+                    class="form-control"
+                  >
+                    <option
+                      v-for="item in CANDIDATE_ACCOUNTS.results"
+                      :key="item.id"
+                      :value="item.username"
+                      >{{ item.username }}</option
+                    >
+                  </select>
+                  <p>
+                    <small class="text-warning"
+                      >If you cannot find the username, please use the search
+                      above.</small
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer pt-0">
             <button
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
+              @click="clearForm"
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              :disabled="disableSave"
+              @click="patchCandidateCard"
+            >
+              Save changes
+            </button>
           </div>
         </div>
       </div>
@@ -183,21 +257,61 @@ export default {
     return {
       page: 1,
       prev: 'prev',
-      next: 'next'
+      next: 'next',
+      selectedCard: 0,
+      selectedAccount: '',
+      searchInput: '',
+      searchAlert: false
     }
   },
   computed: {
     ...mapGetters({
-      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS'
-    })
+      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS',
+      CANDIDATE_ACCOUNTS: 'candidate-accounts/CANDIDATE_ACCOUNTS'
+    }),
+    disabled() {
+      return this.searchInput === ''
+    },
+    disableSave() {
+      return this.selectedAccount === ''
+    }
   },
   created() {
     this.GET_CANDIDATE_CARDS(this.page)
   },
   methods: {
     ...mapActions({
-      GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS'
+      GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS',
+      GET_CANDIDATE_ACCOUNTS: 'candidate-accounts/GET_CANDIDATE_ACCOUNTS',
+      SEARCH_CANDIDATE_ACCOUNTS: 'candidate-accounts/SEARCH_CANDIDATE_ACCOUNTS',
+      UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD'
     }),
+    selectCard(id) {
+      this.selectedCard = id
+    },
+    clearForm() {
+      Object.assign(this.$data, this.$options.data())
+    },
+    patchCandidateCard() {
+      const payload = {
+        candidate: this.selectedAccount
+      }
+      const cardId = this.selectedCard
+      this.UPDATE_CANDIDATE_CARD({ payload, cardId }).then(() => {
+        this.GET_CANDIDATE_CARDS().then(() => {
+          document.getElementById('modal-assign').click()
+        })
+      })
+    },
+    searchAccounts() {
+      this.SEARCH_CANDIDATE_ACCOUNTS(this.searchInput)
+        .then((this.searchAlert = true))
+        .then(
+          setTimeout(() => {
+            this.searchAlert = false
+          }, 1000 * 10)
+        )
+    },
     getCandidateCards(page) {
       this.GET_CANDIDATE_CARDS(page)
     },

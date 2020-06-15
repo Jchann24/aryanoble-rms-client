@@ -8,6 +8,12 @@
               <h6 class="h2 text-white d-inline-block mb-0">
                 Employee Request Form
               </h6>
+              <p class="text-white">
+                These are submitted ERFs from various division users.
+              </p>
+              <ul class="text-white">
+                <li>Details to view ERF</li>
+              </ul>
             </div>
           </div>
           <!-- Card stats -->

@@ -13,7 +13,14 @@
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <h1 class="display-2 text-white">ERF Details</h1>
-              <p class="text-white mt-0 mb-5">Created by {{ ERF.div_user }}</p>
+              <p class="text-white mt-0 mb-2">Created by {{ ERF.div_user }}</p>
+              <ul class="text-white">
+                <li>Make candidate card to process this ERF.</li>
+                <li>
+                  Once candidate card created, you can view the card from
+                  Candidate Cards Section
+                </li>
+              </ul>
               <nuxt-link to="/pic/erf">
                 <a href="javascript:;" class="btn btn-neutral">Back to ERFs</a>
               </nuxt-link>
@@ -39,7 +46,7 @@
                       @click="newCard"
                       >Make Candidate Card</a
                     >
-                    <a href="#!" class="btn btn-sm btn-danger">Close ERF</a>
+                    <!-- <a href="#!" class="btn btn-sm btn-danger">Close ERF</a> -->
                   </div>
                 </div>
               </div>

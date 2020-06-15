@@ -23,7 +23,7 @@
                 </li>
               </ul>
               <p class="text-white">
-                Once you created account for the talent. The talent will receive
+                Once you created account for the talent. He / She will receive
                 the username and password to access the platform. Talent who has
                 account can access this application.
               </p>
