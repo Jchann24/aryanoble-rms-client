@@ -86,7 +86,7 @@
                       <!-- Avatar -->
                       <img
                         alt="Image placeholder"
-                        src="/img/top-nav/identification.png"
+                        src="/img/top-nav/candidate-cards-notification.png"
                         class="avatar rounded-circle"
                       />
                     </div>
@@ -131,7 +131,7 @@
                 <span class="avatar avatar-sm rounded-circle">
                   <img
                     alt="Image placeholder"
-                    src="/assets/img/theme/team-4.jpg"
+                    src="/img/top-nav/pic-avatar.png"
                   />
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">

@@ -158,11 +158,7 @@
                 </div>
               </div>
             </div>
-            <div class="card-body">
-              <h1>{{ count }}</h1>
-              <h1><button @click="test">test</button></h1>
-              <h1><button @click="toggle">toggle</button></h1>
-            </div>
+            <div class="card-body"></div>
           </div>
         </div>
       </div>
@@ -185,8 +181,6 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
-
 export default {
   middleware: ['auth', 'group'],
   name: 'HomePage',
@@ -199,14 +193,8 @@ export default {
     }
   },
 
-  computed: {
-    ...mapGetters(['count'])
-  },
+  computed: {},
   methods: {
-    ...mapMutations({
-      toggle: 'increment'
-    }),
-
     test() {
       this.$axios.get('erf/')
     }

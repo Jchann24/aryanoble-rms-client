@@ -97,13 +97,13 @@
               </li>
               <li class="nav-item">
                 <nuxt-link
-                  to="/pic/account"
+                  to="/pic/candidate_accounts"
                   tag="a"
                   class="nav-link"
                   active-class="active"
                 >
                   <i class="ni ni-single-02 text-default"></i>
-                  <span class="nav-link-text">Candidate Account</span>
+                  <span class="nav-link-text">Candidate Accounts</span>
                 </nuxt-link>
               </li>
               <li class="nav-item">

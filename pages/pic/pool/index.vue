@@ -6,6 +6,27 @@
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-4">
               <h6 class="h2 text-white d-inline-block mb-0">Talent Pool</h6>
+              <p class="text-white">These are talents from various sources.</p>
+              <ul class="text-white">
+                <li>
+                  Add new talent to create more.
+                </li>
+                <li>
+                  Details to view details / update the selected talent.
+                </li>
+                <li>
+                  Create account to create account for the selected talent.
+                </li>
+                <li>
+                  Account details to see the account username and email for the
+                  selected talent.
+                </li>
+              </ul>
+              <p class="text-white">
+                Once you created account for the talent. The talent will receive
+                the username and password to access the platform. Talent who has
+                account can access this application.
+              </p>
             </div>
             <div class="col-lg-6 col-8 text-right">
               <add-talent />
@@ -95,9 +116,11 @@
                             <button
                               type="button"
                               class="btn btn-success float-right"
-                              disabled
+                              data-toggle="modal"
+                              data-target="#modal-account-detail"
+                              @click="previewAccount(talent.candidate_account)"
                             >
-                              Account Created
+                              Account Details
                             </button>
                           </div>
                           <div v-else>
@@ -508,6 +531,81 @@
       </div>
     </div>
     <!-- END MODAL CREATE ACCOUNT -->
+    <!-- MODAL DETAIL ACCOUNT -->
+    <div
+      id="modal-account-detail"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalcreateLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-secondary">
+          <div class="modal-header">
+            <h5 id="modalcreateLabel" class="modal-title">
+              Account Detail
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body px-5">
+            <div class="row">
+              <div class="col-6 text-left">
+                <h4>
+                  <strong>Name:</strong>
+                </h4>
+              </div>
+              <div class="col-6">
+                {{
+                  CANDIDATE_ACCOUNT.first_name +
+                    ' ' +
+                    CANDIDATE_ACCOUNT.last_name
+                }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 text-left">
+                <h4>
+                  <strong>Username:</strong>
+                </h4>
+              </div>
+              <div class="col-6">
+                {{ CANDIDATE_ACCOUNT.username }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 text-left">
+                <h4>
+                  <strong>E-mail:</strong>
+                </h4>
+              </div>
+              <div class="col-6">
+                {{ CANDIDATE_ACCOUNT.email }}
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              id="close-create"
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              @click="clearForm"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL DETAIL ACCOUNT -->
   </div>
 </template>
 
@@ -546,9 +644,12 @@ export default {
       GET_TALENTS: 'talents/GET_TALENTS',
       UPDATE_TALENT: 'talents/UPDATE_TALENT',
       PATCH_TALENT: 'talents/PATCH_TALENT',
-      CREATE_ACCOUNT: 'candidate-accounts/SAVE_CANDIDATE_ACCOUNT'
+      CREATE_ACCOUNT: 'candidate-accounts/SAVE_CANDIDATE_ACCOUNT',
+      GET_CANDIDATE_ACCOUNT: 'candidate-accounts/GET_CANDIDATE_ACCOUNT'
     }),
-
+    previewAccount(account) {
+      this.GET_CANDIDATE_ACCOUNT(account)
+    },
     createAccount() {
       this.loading = true
       const form = {
