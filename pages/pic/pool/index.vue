@@ -25,22 +25,22 @@
               <table class="table align-items-center table-white table-hover">
                 <thead class="bg-gradient-gray text-white">
                   <tr>
-                    <th scope="col" class="sort">
+                    <th scope="col">
                       Name
                     </th>
-                    <th scope="col" class="sort">
+                    <th scope="col">
                       Source
                     </th>
-                    <th scope="col" class="sort">
+                    <th scope="col">
                       Last Education
                     </th>
-                    <th scope="col" class="sort">
+                    <th scope="col">
                       Added By
                     </th>
-                    <th scope="col" class="sort">
+                    <th scope="col">
                       CV
                     </th>
-                    <th scope="col" class="sort"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -75,18 +75,44 @@
                       </a>
                     </td>
                     <td>
-                      <button
-                        type="button"
-                        class="btn btn-primary float-right"
-                        data-toggle="modal"
-                        data-target="#modal-default"
-                        @click="
-                          previewTalent(talent)
-                          setReadonly()
-                        "
-                      >
-                        Details
-                      </button>
+                      <div class="row">
+                        <div class="col-6 pr-0">
+                          <button
+                            type="button"
+                            class="btn btn-primary float-right"
+                            data-toggle="modal"
+                            data-target="#modal-default"
+                            @click="
+                              previewTalent(talent)
+                              setReadonly()
+                            "
+                          >
+                            Details
+                          </button>
+                        </div>
+                        <div class="col-6 text-left">
+                          <div v-if="talent.candidate_account">
+                            <button
+                              type="button"
+                              class="btn btn-success float-right"
+                              disabled
+                            >
+                              Account Created
+                            </button>
+                          </div>
+                          <div v-else>
+                            <button
+                              type="button"
+                              class="btn btn-warning float-right"
+                              data-toggle="modal"
+                              data-target="#modal-create"
+                              @click="previewTalent(talent)"
+                            >
+                              Create Account
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -134,6 +160,7 @@
       </div>
     </div>
 
+    <!-- MODAL EDIT -->
     <div
       id="modal-default"
       class="modal fade"
@@ -389,6 +416,98 @@
       </div>
       <Footer />
     </div>
+    <!-- END MODAL EDIT -->
+
+    <!-- MODAL CREATE ACCOUNT -->
+    <div
+      id="modal-create"
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalcreateLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-secondary">
+          <div class="modal-header">
+            <h5 id="modalcreateLabel" class="modal-title">
+              Create Account for This Talent
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="px-3 py-2 bg-secondary">
+              <label for="create_name">Name</label>
+              <input
+                id="create_name"
+                v-model="selectedTalent.name"
+                type="text"
+                class="form-control form-control-alternative"
+              />
+            </div>
+            <div class="px-3 py-2 bg-secondary">
+              <label for="create_username">Username</label>
+              <input
+                id="create_username"
+                v-model="selectedTalent.username"
+                type="text"
+                class="form-control form-control-alternative"
+              />
+            </div>
+            <div class="px-3 py-2 bg-secondary">
+              <label for="create_email">Email</label>
+              <input
+                id="create_email"
+                v-model="selectedTalent.email"
+                type="email"
+                class="form-control form-control-alternative"
+              />
+            </div>
+            <div class="px-3 py-2 bg-secondary">
+              <label for="create_password">Default Password</label>
+              <input
+                id="create_password"
+                v-model="selectedTalent.password"
+                type="password"
+                class="form-control form-control-alternative"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              id="close-create"
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+              @click="clearForm"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              :disabled="loading"
+              @click="createAccount"
+            >
+              <div v-if="loading">
+                Creating...
+              </div>
+              <div v-else>
+                Create Account
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END MODAL CREATE ACCOUNT -->
   </div>
 </template>
 
@@ -409,12 +528,14 @@ export default {
       readonly: true,
       next: 'next',
       prev: 'prev',
-      errors: false
+      errors: false,
+      loading: false
     }
   },
   computed: {
     ...mapGetters({
-      TALENTS: 'talents/TALENTS'
+      TALENTS: 'talents/TALENTS',
+      CANDIDATE_ACCOUNT: 'candidate-accounts/CANDIDATE_ACCOUNT'
     })
   },
   created() {
@@ -423,8 +544,42 @@ export default {
   methods: {
     ...mapActions({
       GET_TALENTS: 'talents/GET_TALENTS',
-      UPDATE_TALENT: 'talents/UPDATE_TALENT'
+      UPDATE_TALENT: 'talents/UPDATE_TALENT',
+      PATCH_TALENT: 'talents/PATCH_TALENT',
+      CREATE_ACCOUNT: 'candidate-accounts/SAVE_CANDIDATE_ACCOUNT'
     }),
+
+    createAccount() {
+      this.loading = true
+      const form = {
+        username: this.selectedTalent.username,
+        email: this.selectedTalent.email,
+        first_name: this.selectedTalent.name,
+        last_name: 'Candidate',
+        password: this.selectedTalent.password
+      }
+      const talentId = this.selectedTalent.id
+
+      this.CREATE_ACCOUNT(form)
+        .then(() => {
+          const accountId = {
+            candidate_account: this.CANDIDATE_ACCOUNT.id
+          }
+
+          this.PATCH_TALENT({ accountId, talentId })
+            .then(() => document.getElementById('modal-create').click())
+            .then(
+              setTimeout(() => {
+                this.GET_TALENTS(this.page)
+              }, 1500)
+            )
+
+            .catch((err) => alert(err))
+            .finally(() => (this.loading = false))
+        })
+        .catch((err) => alert(err))
+        .finally(() => (this.loading = false))
+    },
     clearForm() {
       Object.assign(this.$data, this.$options.data())
     },

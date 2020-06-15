@@ -17,11 +17,11 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        ERFS Submitted
+                        Submitted
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">{{
-                        ERFS.count
-                      }}</span>
+                      <span class="h2 font-weight-bold mb-0"
+                        >{{ ERFS.count }} ERFs</span
+                      >
                     </div>
                     <div class="col-auto">
                       <div
@@ -41,10 +41,10 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Talent Pool
+                        Pool
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ TALENTS.count }}
+                        >{{ TALENTS.count }} Talents
                       </span>
                     </div>
                     <div class="col-auto">
@@ -65,11 +65,11 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Assigned Cards
+                        Cards
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">{{
-                        CARDS.count
-                      }}</span>
+                      <span class="h2 font-weight-bold mb-0"
+                        >{{ CARDS.count }} Candidates</span
+                      >
                     </div>
                     <div class="col-auto">
                       <div
@@ -89,15 +89,15 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Performance
+                        Group
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">49,65%</span>
+                      <span class="h2 font-weight-bold mb-0">PIC TA</span>
                     </div>
                     <div class="col-auto">
                       <div
                         class="icon icon-shape bg-gradient-info text-white rounded-circle shadow"
                       >
-                        <i class="ni ni-chart-bar-32"></i>
+                        <i class="ni ni-building"></i>
                       </div>
                     </div>
                   </div>
@@ -137,9 +137,6 @@
                       Created At
                     </th>
                     <th scope="col" class="sort">
-                      Status
-                    </th>
-                    <th scope="col" class="sort">
                       Submitted By
                     </th>
                   </tr>
@@ -149,17 +146,11 @@
                     <td>
                       {{ item.title }}
                     </td>
-                    <td class="budget">
+                    <td>
                       {{
                         item.created_at
                           | moment('dddd, MMMM Do YYYY | hh:mm:ss')
                       }}
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <i class="bg-warning"></i>
-                        <span class="status">pending</span>
-                      </span>
                     </td>
                     <td>
                       {{ item.div_user }}
@@ -202,7 +193,7 @@
                     <td>
                       {{ item.name }}
                     </td>
-                    <td class="budget">
+                    <td>
                       {{ item.source }}
                     </td>
                   </tr>
@@ -234,7 +225,7 @@ export default {
     ...mapGetters({
       ERFS: 'erfs/ERFS',
       TALENTS: 'talents/TALENTS',
-      CARDS: 'cards/CARDS'
+      CARDS: 'candidate-cards/CANDIDATE_CARDS'
     })
   },
   created() {
@@ -246,7 +237,7 @@ export default {
     ...mapActions({
       getERFS: 'erfs/GET_ERFS',
       getTALENTS: 'talents/GET_TALENTS',
-      getCARDS: 'cards/GET_CARDS'
+      getCARDS: 'candidate-cards/GET_CANDIDATE_CARDS'
     })
   }
 }

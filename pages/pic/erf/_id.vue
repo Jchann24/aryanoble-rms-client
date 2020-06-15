@@ -13,9 +13,7 @@
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <h1 class="display-2 text-white">ERF Details</h1>
-              <p class="text-white mt-0 mb-5">
-                This is your ERF Details page.
-              </p>
+              <p class="text-white mt-0 mb-5">Created by {{ ERF.div_user }}</p>
               <nuxt-link to="/pic/erf">
                 <a href="javascript:;" class="btn btn-neutral">Back to ERFs</a>
               </nuxt-link>

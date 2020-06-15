@@ -163,7 +163,7 @@ export default {
   computed: {
     ...mapGetters({
       ERFS: 'erfs/ERFS',
-      CARDS: 'cards/CARDS'
+      CARDS: 'candidate-cards/CANDIDATE_CARDS'
     })
   },
   created() {
@@ -173,7 +173,7 @@ export default {
   methods: {
     ...mapActions({
       getERFS: 'erfs/GET_ERFS',
-      getCARDS: 'cards/GET_CARDS'
+      getCARDS: 'candidate-cards/GET_CANDIDATE_CARDS'
     })
   }
 }

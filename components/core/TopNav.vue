@@ -72,19 +72,21 @@
               <!-- Dropdown header -->
               <div class="px-3 py-3">
                 <h6 class="text-sm text-muted m-0">
-                  You have
-                  <strong class="text-primary">13</strong> notifications.
+                  <strong class="text-primary">NOTICES</strong>.
                 </h6>
               </div>
               <!-- List group -->
               <div class="list-group list-group-flush">
-                <a href="#!" class="list-group-item list-group-item-action">
+                <a
+                  v-if="NOT_ASSIGNED !== 0"
+                  class="list-group-item list-group-item-action"
+                >
                   <div class="row align-items-center">
                     <div class="col-auto">
                       <!-- Avatar -->
                       <img
                         alt="Image placeholder"
-                        src="/assets/img/theme/team-1.jpg"
+                        src="/img/top-nav/identification.png"
                         class="avatar rounded-circle"
                       />
                     </div>
@@ -93,25 +95,25 @@
                         class="d-flex justify-content-between align-items-center"
                       >
                         <div>
-                          <h4 class="mb-0 text-sm"></h4>
-                        </div>
-                        <div class="text-right text-muted">
-                          <small>2 hrs ago</small>
+                          <h5 class="mb-0 text-sm">
+                            You have
+                            <strong class="text-primary">{{
+                              NOT_ASSIGNED
+                            }}</strong>
+                            Candidate Cards not assigned.
+                          </h5>
                         </div>
                       </div>
-                      <p class="text-sm mb-0">
-                        Let's meet at Starbucks at 11:30. Wdyt?
-                      </p>
                     </div>
                   </div>
                 </a>
               </div>
               <!-- View all -->
-              <a
+              <!-- <a
                 href="#!"
                 class="dropdown-item text-center text-primary font-weight-bold py-3"
                 >View all</a
-              >
+              > -->
             </div>
           </li>
         </ul>
@@ -167,7 +169,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'TopNav',
@@ -175,10 +177,20 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'loggedInUser'])
+    ...mapGetters({
+      isAuthenticated: 'isAuthenticated',
+      loggedInUser: 'loggedInUser',
+      NOT_ASSIGNED: 'navbar/NOT_ASSIGNED'
+    })
+  },
+  created() {
+    this.GET_NOT_ASSIGNED()
   },
 
   methods: {
+    ...mapActions({
+      GET_NOT_ASSIGNED: 'navbar/GET_NOT_ASSIGNED'
+    }),
     async logout() {
       await this.$auth.logout()
       this.$router.push('/login')

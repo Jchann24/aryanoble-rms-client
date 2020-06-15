@@ -222,7 +222,7 @@
                     </button>
                     <button
                       type="button"
-                      class="btn btn-outline-primary my-4"
+                      class="btn btn-outline-danger my-4"
                       data-dismiss="modal"
                       aria-label="Close"
                       @click="
