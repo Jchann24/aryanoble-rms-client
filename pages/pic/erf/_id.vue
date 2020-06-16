@@ -42,7 +42,7 @@
                   <div class="col-6 text-right px-0">
                     <a
                       href="javascript:;"
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-primary"
                       @click="newCard"
                       >Make Candidate Card</a
                     >
@@ -579,7 +579,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  middleware: 'pic',
+  middleware: ['auth', 'pic'],
   name: 'ERFDetail',
 
   data() {

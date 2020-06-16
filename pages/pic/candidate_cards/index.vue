@@ -185,6 +185,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Search username ..."
+                @keydown.enter="searchAccounts"
               />
               <div class="input-group-append">
                 <button
@@ -252,7 +253,7 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   middleware: ['auth', 'pic'],
-  name: 'CandidateCards',
+  name: 'PICCandidateCards',
   data() {
     return {
       page: 1,

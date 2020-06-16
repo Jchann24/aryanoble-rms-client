@@ -151,7 +151,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   middleware: ['auth', 'pic'],
-  name: 'PICDashboard',
+  name: 'PICErf',
   components: {},
   data() {
     return {

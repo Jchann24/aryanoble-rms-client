@@ -183,457 +183,41 @@
       </div>
     </div>
 
-    <!-- MODAL EDIT -->
-    <div
-      id="modal-default"
-      class="modal fade"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="modal-default"
-      aria-hidden="true"
-    >
-      <div
-        class="modal-dialog modal- modal-dialog-centered modal-lg"
-        role="document"
-      >
-        <div class="modal-content bg-secondary">
-          <div class="modal-header">
-            <h6 id="modal-title-default" class="modal-title ml-2">
-              Talent Details
-
-              <span v-if="!readonly" class="badge badge-pill badge-success"
-                >Edit Mode</span
-              >
-            </h6>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              @click="clearForm"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_name">Name</label>
-                    <input
-                      id="detail_name"
-                      v-model="selectedTalent.name"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_source">Source</label>
-                    <select
-                      id="detail_source"
-                      class="form-control"
-                      :disabled="readonly"
-                    >
-                      <option>{{ selectedTalent.source }}</option>
-                      <option>Kalibrr</option>
-                      <option>Jobstreet</option>
-                      <option>...</option>
-                      <option>...</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_address">Address</label>
-                    <input
-                      id="detail_address"
-                      v-model="selectedTalent.address"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_applied_position"
-                      >Applied Position</label
-                    >
-                    <input
-                      id="detail_applied_position"
-                      v-model="selectedTalent.applied_position"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_dob">Date of Birth</label>
-                    <input
-                      id="detail_dob"
-                      v-model="selectedTalent.dob"
-                      type="date"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_email">E-mail</label>
-                    <input
-                      id="detail_email"
-                      v-model="selectedTalent.email"
-                      type="email"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_gender">Gender</label>
-                    <input
-                      id="detail_gender"
-                      v-model="selectedTalent.gender"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_last_education">Last Education</label>
-                    <input
-                      id="detail_last_education"
-                      v-model="selectedTalent.last_education"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_mobile_phone">Mobile Phone</label>
-                    <input
-                      id="detail_mobile_phone"
-                      v-model="selectedTalent.mobile_phone"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_nik">NIK</label>
-                    <input
-                      id="detail_nik"
-                      v-model="selectedTalent.nik"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_total_working_experience"
-                      >Working Experience</label
-                    >
-                    <input
-                      id="detail_total_working_experience"
-                      v-model="selectedTalent.total_working_experience"
-                      type="number"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-group">
-                    <label for="detail_university">University</label>
-                    <input
-                      id="detail_university"
-                      v-model="selectedTalent.university"
-                      type="text"
-                      class="form-control"
-                      :readonly="readonly"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div v-if="!readonly" class="row">
-                <div class="col-12">
-                  <div class="form-group">
-                    <label for="detail_cv">Update New CV</label>
-                    <input
-                      id="detail_cv"
-                      type="file"
-                      class="form-control"
-                      accept="application/pdf"
-                      :readonly="readonly"
-                      @change="selectFile"
-                    />
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="modal-footer">
-            <div v-if="readonly">
-              <button
-                type="button"
-                class="btn btn-success mr-auto"
-                @click="readonly = !readonly"
-              >
-                Edit
-              </button>
-            </div>
-            <div v-else>
-              <button
-                type="button"
-                class="btn btn-secondary mr-auto"
-                @click="readonly = !readonly"
-              >
-                Cancel Edit
-              </button>
-              <button
-                type="button"
-                class="btn btn-success mr-auto"
-                @click="updateTalent"
-              >
-                Save Updates
-              </button>
-            </div>
-            <button
-              id="close-detail"
-              type="button"
-              class="btn btn-link  ml-auto"
-              data-dismiss="modal"
-              @click="clearForm()"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </div>
-    <!-- END MODAL EDIT -->
-
-    <!-- MODAL CREATE ACCOUNT -->
-    <div
-      id="modal-create"
-      class="modal fade"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="modalcreateLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-secondary">
-          <div class="modal-header">
-            <h5 id="modalcreateLabel" class="modal-title">
-              Create Account for This Talent
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="px-3 py-2 bg-secondary">
-              <label for="create_name">Name</label>
-              <input
-                id="create_name"
-                v-model="selectedTalent.name"
-                type="text"
-                class="form-control form-control-alternative"
-              />
-            </div>
-            <div class="px-3 py-2 bg-secondary">
-              <label for="create_username">Username</label>
-              <input
-                id="create_username"
-                v-model="selectedTalent.username"
-                type="text"
-                class="form-control form-control-alternative"
-              />
-            </div>
-            <div class="px-3 py-2 bg-secondary">
-              <label for="create_email">Email</label>
-              <input
-                id="create_email"
-                v-model="selectedTalent.email"
-                type="email"
-                class="form-control form-control-alternative"
-              />
-            </div>
-            <div class="px-3 py-2 bg-secondary">
-              <label for="create_password">Default Password</label>
-              <input
-                id="create_password"
-                v-model="selectedTalent.password"
-                type="password"
-                class="form-control form-control-alternative"
-              />
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              id="close-create"
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              @click="clearForm"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-success"
-              :disabled="loading"
-              @click="createAccount"
-            >
-              <div v-if="loading">
-                Creating...
-              </div>
-              <div v-else>
-                Create Account
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- END MODAL CREATE ACCOUNT -->
-    <!-- MODAL DETAIL ACCOUNT -->
-    <div
-      id="modal-account-detail"
-      class="modal fade"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="modalcreateLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-secondary">
-          <div class="modal-header">
-            <h5 id="modalcreateLabel" class="modal-title">
-              Account Detail
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body px-5">
-            <div class="row">
-              <div class="col-6 text-left">
-                <h4>
-                  <strong>Name:</strong>
-                </h4>
-              </div>
-              <div class="col-6">
-                {{
-                  CANDIDATE_ACCOUNT.first_name +
-                    ' ' +
-                    CANDIDATE_ACCOUNT.last_name
-                }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6 text-left">
-                <h4>
-                  <strong>Username:</strong>
-                </h4>
-              </div>
-              <div class="col-6">
-                {{ CANDIDATE_ACCOUNT.username }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6 text-left">
-                <h4>
-                  <strong>E-mail:</strong>
-                </h4>
-              </div>
-              <div class="col-6">
-                {{ CANDIDATE_ACCOUNT.email }}
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              id="close-create"
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              @click="clearForm"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- MODAL DETAIL ACCOUNT -->
+    <!-- MODALS -->
+    <modal-edit :selected-talent="selectedTalent" />
+    <modal-create-account :selected-talent="selectedTalent" :page="page" />
+    <modal-candidate-detail />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import addTalent from '@/components/pic/AddTalent.vue'
+
+import addTalent from '@/components/pic/pool/AddTalent.vue'
+import modalEdit from '@/components/pic/pool/ModalEdit.vue'
+import modalCreateAccount from '@/components/pic/pool/ModalCreateAccount.vue'
+import modalCandidateDetail from '@/components/pic/pool/ModalCandidateDetail.vue'
+
 export default {
   middleware: ['auth', 'pic'],
   name: 'PICPool',
   components: {
-    addTalent
+    addTalent,
+    modalEdit,
+    modalCreateAccount,
+    modalCandidateDetail
   },
   data() {
     return {
       page: 1,
       selectedTalent: {},
-      file: '',
-      readonly: true,
       next: 'next',
-      prev: 'prev',
-      errors: false,
-      loading: false
+      prev: 'prev'
     }
   },
   computed: {
     ...mapGetters({
-      TALENTS: 'talents/TALENTS',
-      CANDIDATE_ACCOUNT: 'candidate-accounts/CANDIDATE_ACCOUNT'
+      TALENTS: 'talents/TALENTS'
     })
   },
   created() {
@@ -642,71 +226,10 @@ export default {
   methods: {
     ...mapActions({
       GET_TALENTS: 'talents/GET_TALENTS',
-      UPDATE_TALENT: 'talents/UPDATE_TALENT',
-      PATCH_TALENT: 'talents/PATCH_TALENT',
-      CREATE_ACCOUNT: 'candidate-accounts/SAVE_CANDIDATE_ACCOUNT',
       GET_CANDIDATE_ACCOUNT: 'candidate-accounts/GET_CANDIDATE_ACCOUNT'
     }),
     previewAccount(account) {
       this.GET_CANDIDATE_ACCOUNT(account)
-    },
-    createAccount() {
-      this.loading = true
-      const form = {
-        username: this.selectedTalent.username,
-        email: this.selectedTalent.email,
-        first_name: this.selectedTalent.name,
-        last_name: 'Candidate',
-        password: this.selectedTalent.password
-      }
-      const talentId = this.selectedTalent.id
-
-      this.CREATE_ACCOUNT(form)
-        .then(() => {
-          const accountId = {
-            candidate_account: this.CANDIDATE_ACCOUNT.id
-          }
-
-          this.PATCH_TALENT({ accountId, talentId })
-            .then(() => document.getElementById('modal-create').click())
-            .then(
-              setTimeout(() => {
-                this.GET_TALENTS(this.page)
-              }, 1500)
-            )
-
-            .catch((err) => alert(err))
-            .finally(() => (this.loading = false))
-        })
-        .catch((err) => alert(err))
-        .finally(() => (this.loading = false))
-    },
-    clearForm() {
-      Object.assign(this.$data, this.$options.data())
-    },
-    selectFile(e) {
-      const file = e.target.files[0]
-      this.file = file
-    },
-    async updateTalent() {
-      const talentId = this.selectedTalent.id
-      const formData = new FormData()
-
-      const entries = Object.entries(this.selectedTalent)
-      for (const [formName, value] of entries) {
-        formData.append(`${formName}`, `${value}`)
-      }
-      formData.append('cv', this.file)
-
-      try {
-        await this.UPDATE_TALENT({ formData, talentId })
-        await this.GET_TALENTS()
-        document.getElementById('close-detail').click()
-        this.errors = false
-        this.clearForm()
-      } catch (err) {
-        this.errors = true
-      }
     },
     getTalents(page) {
       this.GET_TALENTS(page)
@@ -717,9 +240,6 @@ export default {
     previewTalent(talent) {
       const preview = talent
       this.selectedTalent = JSON.parse(JSON.stringify(preview))
-    },
-    setReadonly() {
-      this.readonly = true
     }
   }
 }

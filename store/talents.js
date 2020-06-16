@@ -1,5 +1,6 @@
 export const state = () => ({
-  talents: {}
+  talents: {},
+  talent: {}
 })
 
 export const getters = {
@@ -10,6 +11,9 @@ export const getters = {
 
 export const mutations = {
   SET_TALENT(state, payload) {
+    state.talent = payload
+  },
+  SET_TALENTS(state, payload) {
     state.talents = payload
   }
 }
@@ -17,7 +21,7 @@ export const mutations = {
 export const actions = {
   async GET_TALENTS({ commit }, page = 1) {
     const data = await this.$axios.$get('candidate/?page=' + page)
-    commit('SET_TALENT', data)
+    commit('SET_TALENTS', data)
   },
   async SAVE_TALENT({ commit }, payload) {
     await this.$axios.$post('candidate/', payload, {
