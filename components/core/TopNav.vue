@@ -4,31 +4,6 @@
   >
     <div class="container-fluid">
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
-        <!-- Search form -->
-        <!-- <form
-          id="navbar-search-main"
-          class="navbar-search navbar-search-light form-inline mr-sm-3"
-        >
-          <div class="form-group mb-0">
-            <div class="input-group input-group-alternative input-group-merge">
-              <div class="input-group-prepend">
-                <span class="input-group-text">
-                  <i class="fas fa-search"></i>
-                </span>
-              </div>
-              <input class="form-control" placeholder="Search" type="text" />
-            </div>
-          </div>
-          <button
-            type="button"
-            class="close"
-            data-action="search-close"
-            data-target="#navbar-search-main"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">×</span>
-          </button>
-        </form> -->
         <!-- Navbar links -->
         <ul class="navbar-nav align-items-center ml-md-auto">
           <li class="nav-item d-xl-none">
@@ -108,12 +83,6 @@
                   </div>
                 </a>
               </div>
-              <!-- View all -->
-              <!-- <a
-                href="#!"
-                class="dropdown-item text-center text-primary font-weight-bold py-3"
-                >View all</a
-              > -->
             </div>
           </li>
         </ul>
@@ -128,11 +97,8 @@
               aria-expanded="false"
             >
               <div class="media align-items-center">
-                <span class="avatar avatar-sm rounded-circle">
-                  <img
-                    alt="Image placeholder"
-                    src="/img/top-nav/pic-avatar.png"
-                  />
+                <span class="avatar rounded-circle">
+                  <img alt="Image placeholder" :src="avatar" />
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span
@@ -145,16 +111,8 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-header noti-title">
-                <h6 class="text-overflow m-0">Welcome!</h6>
+                <h6 class="text-overflow m-0">Arya Noble</h6>
               </div>
-              <a href="#!" class="dropdown-item">
-                <i class="ni ni-single-02"></i>
-                <span>My profile</span>
-              </a>
-              <a href="#!" class="dropdown-item">
-                <i class="ni ni-settings-gear-65"></i>
-                <span>Settings</span>
-              </a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#" @click="logout">
                 <i class="ni ni-user-run"></i>
@@ -181,10 +139,28 @@ export default {
       isAuthenticated: 'isAuthenticated',
       loggedInUser: 'loggedInUser',
       NOT_ASSIGNED: 'navbar/NOT_ASSIGNED'
-    })
+    }),
+    avatar() {
+      const defaultAvatar = '/img/logo-white.png'
+      const picAvatar = '/img/top-nav/admin-avatar.png'
+      const adminAvatar = '/img/top-nav/pic-avatar.png'
+      const userAvatar = '/img/top-nav/div-user-avatar.png'
+
+      if (this.loggedInUser.groups[0] === 1) {
+        return picAvatar
+      } else if (this.loggedInUser.groups[0] === 2) {
+        return adminAvatar
+      } else if (this.loggedInUser.groups[0] === 3) {
+        return userAvatar
+      } else {
+        return defaultAvatar
+      }
+    }
   },
   created() {
-    this.GET_NOT_ASSIGNED()
+    if (this.loggedInUser.groups[0] === 2) {
+      this.GET_NOT_ASSIGNED()
+    }
   },
 
   methods: {
@@ -193,7 +169,7 @@ export default {
     }),
     async logout() {
       await this.$auth.logout()
-      this.$router.push('/login')
+      window.location.reload(true)
     }
   }
 }

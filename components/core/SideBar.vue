@@ -6,7 +6,7 @@
     <div class="scrollbar-inner bg-transparent">
       <!-- Brand -->
       <div class="sidenav-header align-items-center">
-        <a class="navbar-brand" href>
+        <a id="navbar-home" class="navbar-brand" href>
           <img
             src="/img/logo.png"
             class="navbar-brand-img"
