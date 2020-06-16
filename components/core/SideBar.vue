@@ -7,7 +7,11 @@
       <!-- Brand -->
       <div class="sidenav-header align-items-center">
         <a class="navbar-brand" href>
-          <img src="/img/logo.png" class="navbar-brand-img" alt="..." />
+          <img
+            src="/img/logo.png"
+            class="navbar-brand-img"
+            alt="AryaNobleLogo"
+          />
         </a>
       </div>
       <div class="navbar-inner">
@@ -16,161 +20,16 @@
           <!-- Nav items -->
           <ul class="navbar-nav mt-4">
             <div v-if="group === 1">
-              <li class="nav-item">
-                <nuxt-link
-                  to="/admin"
-                  tag="a"
-                  class="nav-link"
-                  exact-active-class="active"
-                >
-                  <i class="ni ni-tv-2 text-default"></i>
-                  <span class="nav-link-text">Dashboard Admin TA</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/admin/erf"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-collection text-default"></i>
-                  <span class="nav-link-text">ERF</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/admin/pool"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-folder-17 text-default"></i>
-                  <span class="nav-link-text">Talent Pool</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/admin/candidate_cards"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-badge text-default"></i>
-                  <span class="nav-link-text">Candidate Cards</span>
-                </nuxt-link>
-              </li>
+              <sidebar-admin />
             </div>
             <div v-else-if="group === 2">
-              <li class="nav-item">
-                <nuxt-link
-                  to="/pic"
-                  tag="a"
-                  class="nav-link"
-                  exact-active-class="active"
-                >
-                  <i class="ni ni-tv-2 text-default"></i>
-                  <span class="nav-link-text">Dashboard PIC TA</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/pic/erf"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-collection text-default"></i>
-                  <span class="nav-link-text">ERF</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/pic/pool"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-folder-17 text-default"></i>
-                  <span class="nav-link-text">Talent Pool</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/pic/candidate_accounts"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-single-02 text-default"></i>
-                  <span class="nav-link-text">Candidate Accounts</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/pic/candidate_cards"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-badge text-default"></i>
-                  <span class="nav-link-text">Candidate Cards</span>
-                </nuxt-link>
-              </li>
+              <sidebar-pic />
             </div>
             <div v-else-if="group === 3">
-              <li class="nav-item">
-                <nuxt-link
-                  to="/div"
-                  tag="a"
-                  class="nav-link"
-                  exact-active-class="active"
-                >
-                  <i class="ni ni-tv-2 text-default"></i>
-                  <span class="nav-link-text">Dashboard User</span>
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/div/erf"
-                  tag="a"
-                  class="nav-link"
-                  active-class="active"
-                >
-                  <i class="ni ni-collection text-default"></i>
-                  <span class="nav-link-text">ERF</span>
-                </nuxt-link>
-              </li>
+              <sidebar-user />
             </div>
           </ul>
           <hr class="my-3" />
-          <!-- Heading -->
-          <h6 class="navbar-heading p-0 text-muted">
-            <span class="docs-normal">API Info</span>
-          </h6>
-          <!-- Navigation -->
-          <ul class="navbar-nav mb-md-3">
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"
-                target="_blank"
-              >
-                <i class="ni ni-archive-2"></i>
-                <span class="nav-link-text">DRF</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html"
-                target="_blank"
-              >
-                <i class="ni ni-books"></i>
-                <span class="nav-link-text">Swagger</span>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
@@ -179,8 +38,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+import sidebarPic from '@/components/pic/sidebar/pic.vue'
+import sidebarUser from '@/components/div_user/sidebar/user.vue'
+import sidebarAdmin from '@/components/admin/sidebar/admin.vue'
+
 export default {
   name: 'SideBar',
+  components: {
+    sidebarPic,
+    sidebarUser,
+    sidebarAdmin
+  },
   computed: {
     ...mapGetters(['loggedInUser']),
     group() {
