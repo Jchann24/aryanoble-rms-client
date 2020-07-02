@@ -107,9 +107,7 @@
                         No Suggestion
                       </button>
                     </td>
-                    <td>
-                      {{ item.status.state }}
-                    </td>
+                    <td>{{ item.status.id }} - {{ item.status.state }}</td>
                     <td>
                       {{ item.erf.div_user }}
                     </td>
@@ -175,108 +173,7 @@
       </div>
     </div>
     <!-- Modal -->
-    <div
-      id="modal-assign"
-      class="modal fade"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">
-              Assign Candidate Account to this Candidate Card
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-12 px-3">
-                <div
-                  v-if="searchAlert"
-                  class="alert alert-success"
-                  role="alert"
-                >
-                  <strong>Searched!</strong> Username list has been updated!
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3 px-3">
-              <input
-                v-model="searchInput"
-                type="text"
-                class="form-control"
-                placeholder="Search username ..."
-                @keydown.enter="searchAccounts"
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-primary"
-                  type="button"
-                  :disabled="disabled"
-                  @click="searchAccounts"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <label for="username-select">Usernames</label>
-
-                  <select
-                    id="username-select"
-                    v-model="selectedAccount"
-                    class="form-control"
-                  >
-                    <option
-                      v-for="item in CANDIDATE_ACCOUNTS.results"
-                      :key="item.id"
-                      :value="item.username"
-                      >{{ item.username }}</option
-                    >
-                  </select>
-                  <p>
-                    <small class="text-warning"
-                      >If you cannot find the username, please use the search
-                      above.</small
-                    >
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer pt-0">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              @click="clearForm"
-            >
-              Close
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              :disabled="disableSave"
-              @click="patchCandidateCard"
-            >
-              Save changes
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <modal-assign :selected-card="selectedCard" />
     <modal-suggest :selected-card="selectedCard" />
   </div>
 </template>
@@ -284,36 +181,27 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
-import ModalSuggest from '@/components/pic/candidate_cards/ModalSuggest.vue'
+import ModalSuggest from '@/components/pic/candidate_cards/ModalSuggest'
+import ModalAssign from '@/components/pic/candidate_cards/ModalAssign'
 export default {
   middleware: ['auth', 'pic'],
   name: 'PICCandidateCards',
   components: {
-    ModalSuggest
+    ModalSuggest,
+    ModalAssign
   },
   data() {
     return {
       page: 1,
       prev: 'prev',
       next: 'next',
-      selectedCard: 0,
-      selectedAccount: '',
-      searchInput: '',
-      searchAlert: false
+      selectedCard: 0
     }
   },
   computed: {
     ...mapGetters({
-      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS',
-      CANDIDATE_ACCOUNTS: 'candidate-accounts/CANDIDATE_ACCOUNTS',
-      TALENTS: 'talents/TALENTS'
-    }),
-    disabled() {
-      return this.searchInput === ''
-    },
-    disableSave() {
-      return this.selectedAccount === ''
-    }
+      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS'
+    })
   },
   created() {
     this.GET_CANDIDATE_CARDS(this.page)
@@ -322,37 +210,10 @@ export default {
     ...mapActions({
       GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS',
       GET_CANDIDATE_ACCOUNTS: 'candidate-accounts/GET_CANDIDATE_ACCOUNTS',
-      SEARCH_CANDIDATE_ACCOUNTS: 'candidate-accounts/SEARCH_CANDIDATE_ACCOUNTS',
-      UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD',
       GET_TALENTS: 'talents/GET_TALENTS'
     }),
     selectCard(id) {
       this.selectedCard = id
-    },
-    clearForm() {
-      Object.assign(this.$data, this.$options.data())
-    },
-    async patchCandidateCard() {
-      const payload = {
-        candidate: this.selectedAccount,
-        status: 4
-      }
-      const cardId = this.selectedCard
-
-      try {
-        await this.UPDATE_CANDIDATE_CARD({ payload, cardId })
-        await this.GET_CANDIDATE_CARDS()
-        document.getElementById('modal-assign').click()
-      } catch (e) {
-        alert(e)
-      }
-    },
-    async searchAccounts() {
-      await this.SEARCH_CANDIDATE_ACCOUNTS(this.searchInput)
-      this.searchAlert = true
-      setTimeout(() => {
-        this.searchAlert = false
-      }, 1000 * 10)
     },
     getCandidateCards(page) {
       this.GET_CANDIDATE_CARDS(page)

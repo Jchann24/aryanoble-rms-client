@@ -1,17 +1,17 @@
 <template>
   <div
-    id="modal-suggest"
+    id="modal-assign"
     class="modal fade"
     tabindex="-1"
     role="dialog"
-    aria-labelledby="modal-suggest-label"
+    aria-labelledby="exampleModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="modal-suggest-label" class="modal-title">
-            Suggest this Card a Talent
+          <h5 id="exampleModalLabel" class="modal-title">
+            Assign Candidate Account to this Candidate Card
           </h5>
           <button
             type="button"
@@ -36,14 +36,14 @@
               type="text"
               class="form-control"
               placeholder="Search username ..."
-              @keydown.enter="searchTalents"
+              @keydown.enter="searchAccounts"
             />
             <div class="input-group-append">
               <button
                 class="btn btn-outline-primary"
                 type="button"
                 :disabled="disabled"
-                @click="searchTalents"
+                @click="searchAccounts"
               >
                 Search
               </button>
@@ -52,18 +52,18 @@
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <label for="username-select">Talent Name</label>
+                <label for="username-select">Usernames</label>
 
                 <select
                   id="username-select"
-                  v-model="selectedTalent"
+                  v-model="selectedAccount"
                   class="form-control"
                 >
                   <option
-                    v-for="item in TALENTS.results"
+                    v-for="item in CANDIDATE_ACCOUNTS.results"
                     :key="item.id"
-                    :value="item.id"
-                    >{{ item.name }}</option
+                    :value="item.username"
+                    >{{ item.username }}</option
                   >
                 </select>
                 <p>
@@ -100,9 +100,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
-  name: 'PICModalSuggest',
+  name: 'PICModalAssign',
   props: {
     selectedCard: {
       type: Number,
@@ -111,51 +111,46 @@ export default {
   },
   data() {
     return {
-      searchAlert: false,
       searchInput: '',
-      selectedTalent: ''
+      searchAlert: false,
+      selectedAccount: ''
     }
   },
   computed: {
-    ...mapGetters({
-      TALENTS: 'talents/TALENTS'
-    }),
     disabled() {
       return this.searchInput === ''
     },
     disableSave() {
-      return this.selectedTalent === ''
+      return this.selectedAccount === ''
     }
   },
-
   methods: {
     ...mapActions({
-      SEARCH_TALENTS: 'talents/SEARCH_TALENTS',
-      UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD',
-      GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS'
+      GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS',
+      SEARCH_CANDIDATE_ACCOUNTS: 'candidate-accounts/SEARCH_CANDIDATE_ACCOUNTS',
+      UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD'
     }),
+    async searchAccounts() {
+      await this.SEARCH_CANDIDATE_ACCOUNTS(this.searchInput)
+      this.searchAlert = true
+      setTimeout(() => {
+        this.searchAlert = false
+      }, 1000 * 10)
+    },
     clearForm() {
       Object.assign(this.$data, this.$options.data())
     },
-    searchTalents() {
-      this.SEARCH_TALENTS(this.searchInput)
-        .then((this.searchAlert = true))
-        .then(
-          setTimeout(() => {
-            this.searchAlert = false
-          }, 1000 * 10)
-        )
-    },
     async patchCandidateCard() {
       const payload = {
-        talent: this.selectedTalent,
-        status: 2
+        candidate: this.selectedAccount,
+        status: 4
       }
       const cardId = this.selectedCard
+
       try {
         await this.UPDATE_CANDIDATE_CARD({ payload, cardId })
         await this.GET_CANDIDATE_CARDS()
-        document.getElementById('modal-suggest').click()
+        document.getElementById('modal-assign').click()
       } catch (e) {
         alert(e)
       }
