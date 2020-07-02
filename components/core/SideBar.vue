@@ -28,6 +28,9 @@
             <div v-else-if="group === 3">
               <sidebar-user />
             </div>
+            <div v-else-if="loggedInUser.groups.length === 0">
+              <sidebar-candidate />
+            </div>
           </ul>
           <hr class="my-3" />
         </div>
@@ -42,13 +45,15 @@ import { mapGetters } from 'vuex'
 import sidebarPic from '@/components/pic/sidebar/pic.vue'
 import sidebarUser from '@/components/div_user/sidebar/user.vue'
 import sidebarAdmin from '@/components/admin/sidebar/admin.vue'
+import sidebarCandidate from '@/components/candidate/sidebar/candidate.vue'
 
 export default {
   name: 'SideBar',
   components: {
     sidebarPic,
     sidebarUser,
-    sidebarAdmin
+    sidebarAdmin,
+    sidebarCandidate
   },
   computed: {
     ...mapGetters(['loggedInUser']),

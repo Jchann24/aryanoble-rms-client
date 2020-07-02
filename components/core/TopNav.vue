@@ -140,7 +140,7 @@ export default {
       NOT_ASSIGNED: 'navbar/NOT_ASSIGNED'
     }),
     avatar() {
-      const defaultAvatar = '/img/logo-white.png'
+      const defaultAvatar = '/img/top-nav/candidate-avatar.png'
       const picAvatar = '/img/top-nav/admin-avatar.png'
       const adminAvatar = '/img/top-nav/pic-avatar.png'
       const userAvatar = '/img/top-nav/div-user-avatar.png'

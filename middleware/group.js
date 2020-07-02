@@ -5,7 +5,7 @@ export default function({ app, redirect }) {
     return redirect('/pic')
   } else if (app.$auth.user.groups[0] === 3) {
     return redirect('/div')
-  } else {
-    return true
+  } else if (app.$auth.user.groups.length === 0) {
+    return redirect('/candidate')
   }
 }
