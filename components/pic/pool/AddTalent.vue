@@ -261,7 +261,8 @@ export default {
         mobile_phone: '',
         nik: '',
         total_working_experience: null,
-        university: ''
+        university: '',
+        candidate_account: ''
       },
       file: null,
       error_alert: false
@@ -276,8 +277,8 @@ export default {
       this.file = file
     },
     ...mapActions({
-      SAVE_TALENT: 'talent_pool/SAVE_TALENT',
-      GET_TALENTS: 'talent_pool/GET_TALENTS'
+      SAVE_TALENT: 'talents/SAVE_TALENT',
+      GET_TALENTS: 'talents/GET_TALENTS'
     }),
     async saveTalent() {
       const formData = new FormData()

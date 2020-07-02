@@ -12,7 +12,7 @@
         <div class="container-fluid d-flex align-items-center">
           <div class="row">
             <div class="col-lg-12 col-md-12">
-              <h1 class="display-2 text-white">New ERF</h1>
+              <h1 class="display-2 text-white">New Employee Request Form</h1>
               <p class="text-white mt-0 mb-5">
                 Please fill all the fields.
               </p>
@@ -611,7 +611,8 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
-  name: 'ERFCreate',
+  middleware: ['auth', 'div'],
+  name: 'DivERFCreate',
 
   data() {
     return {
@@ -625,10 +626,13 @@ export default {
       saveERF: 'erfs/SAVE_ERF'
     }),
 
-    save() {
-      this.saveERF(this.ERF)
-        .then(() => this.$router.push('/div/erf/'))
-        .catch((err) => (this.errors = err.response.data))
+    async save() {
+      try {
+        await this.saveERF(this.ERF)
+        this.$router.push('/div/erf/')
+      } catch (e) {
+        this.errors = e.response.data
+      }
     }
   }
 }

@@ -52,36 +52,35 @@
               </div>
               <!-- List group -->
               <div class="list-group list-group-flush">
-                <a
-                  v-if="NOT_ASSIGNED !== 0"
-                  class="list-group-item list-group-item-action"
-                >
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <img
-                        alt="Image placeholder"
-                        src="/img/top-nav/candidate-cards-notification.png"
-                        class="avatar rounded-circle"
-                      />
-                    </div>
-                    <div class="col ml--2">
-                      <div
-                        class="d-flex justify-content-between align-items-center"
-                      >
-                        <div>
-                          <h5 class="mb-0 text-sm">
-                            You have
-                            <strong class="text-primary">{{
-                              NOT_ASSIGNED
-                            }}</strong>
-                            Candidate Cards not assigned.
-                          </h5>
+                <nuxt-link v-if="NOT_ASSIGNED !== 0" to="/pic/candidate_cards">
+                  <a class="list-group-item list-group-item-action">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <!-- Avatar -->
+                        <img
+                          alt="Image placeholder"
+                          src="/img/top-nav/candidate-cards-notification.png"
+                          class="avatar rounded-circle"
+                        />
+                      </div>
+                      <div class="col ml--2">
+                        <div
+                          class="d-flex justify-content-between align-items-center"
+                        >
+                          <div>
+                            <h5 class="mb-0 text-sm">
+                              You have
+                              <strong class="text-primary">{{
+                                NOT_ASSIGNED
+                              }}</strong>
+                              Candidate Cards not assigned.
+                            </h5>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </nuxt-link>
               </div>
             </div>
           </li>

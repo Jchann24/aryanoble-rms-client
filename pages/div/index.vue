@@ -6,7 +6,7 @@
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
               <h6 class="h2 text-white d-inline-block mb-0">
-                Dashboard Div User
+                Dashboard Division User
               </h6>
             </div>
           </div>
@@ -19,11 +19,11 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        ERFS Submitted
+                        ERFS
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">{{
-                        ERFS.count
-                      }}</span>
+                      <span class="h2 font-weight-bold mb-0"
+                        >{{ ERFS.count }} Submitted</span
+                      >
                     </div>
                     <div class="col-auto">
                       <div
@@ -43,11 +43,11 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
-                        Assigned Cards
+                        Cards
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">{{
-                        CARDS.count
-                      }}</span>
+                      <span class="h2 font-weight-bold mb-0"
+                        >{{ CARDS.count }} Responses
+                      </span>
                     </div>
                     <div class="col-auto">
                       <div
@@ -64,8 +64,62 @@
         </div>
       </div>
     </div>
-    <!-- Page content -->
     <div class="container-fluid mt--6">
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <div class="card bg-dark text-white border-0">
+            <img
+              class="card-img"
+              src="https://source.unsplash.com/collection/460289/1600x900/?orientation=landscape"
+              loading="lazy"
+              alt="Quote Image"
+              style="max-height: 200px; min-height: 200px; object-fit: cover; filter:brightness(40%);"
+              crossorigin="anonymous"
+            />
+            <div class="card-img-overlay d-flex align-items-center px-xl-4">
+              <div>
+                <h5 class="h2 card-title text-white mb-2">Quote of the Day</h5>
+                <div v-if="quote">
+                  <p class="card-text">
+                    {{ quote.content }}
+                  </p>
+                  <p class="card-text text-sm font-weight-bold">
+                    {{ quote.author }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 align-self-center">
+          <div class="card bg-gradient-primary">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5
+                    class="card-title text-uppercase text-muted mb-0 text-white"
+                  >
+                    GROUP
+                  </h5>
+                  <span class="h2 font-weight-bold mb-0 text-white"
+                    >DIVISION USER</span
+                  >
+                </div>
+                <div class="col-auto">
+                  <div
+                    class="icon icon-shape bg-white text-dark rounded-circle shadow"
+                  >
+                    <i class="ni ni-building"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt-1">
       <div class="row">
         <!-- LATEST SUBMIT -->
         <div class="col-xl-8">
@@ -77,6 +131,11 @@
                     ERF
                   </h6>
                   <h5 class="h3 mb-0">Your Latest Submits</h5>
+                </div>
+                <div class="col text-right">
+                  <nuxt-link to="/div/erf">
+                    <button class="btn btn-sm btn-primary">See all</button>
+                  </nuxt-link>
                 </div>
               </div>
             </div>
@@ -126,20 +185,51 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-4 mt-xl--5">
           <div class="card bg-white shadow">
             <div class="card-header bg-transparent">
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-uppercase text-muted ls-1 mb-1">
-                    Notices
+                    Latest Cards
                   </h6>
-                  <h5 class="h3 mb-0">Updates</h5>
+                  <h5 class="h3 mb-0">Your ERF Suggestions</h5>
+                </div>
+                <div class="col text-right">
+                  <nuxt-link to="/div/candidate_cards">
+                    <button class="btn btn-sm btn-primary">See all</button>
+                  </nuxt-link>
                 </div>
               </div>
             </div>
-            <div class="card-body">
-              <h1>test</h1>
+            <div class="table-responsive mb-5">
+              <table
+                class="table align-items-center table-white table-flush table-hover"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="sort">
+                      ERF Title
+                    </th>
+                    <th scope="col" class="sort">
+                      Talent Suggestion
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr v-for="item in CARDS.results" :key="item.id">
+                    <td>
+                      {{ item.erf.title }}
+                    </td>
+                    <td v-if="item.talent">
+                      {{ item.talent.name }}
+                    </td>
+                    <td v-else>
+                      <span class="text-danger">Not Assigned</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -156,12 +246,16 @@ import { mapGetters, mapActions } from 'vuex'
 import Footer from '@/components/core/Footer.vue'
 
 export default {
-  middleware: ['auth'],
+  middleware: ['auth', 'div'],
   name: 'DivUserDashboard',
   components: {
     Footer
   },
-
+  data() {
+    return {
+      quote: null
+    }
+  },
   computed: {
     ...mapGetters({
       ERFS: 'erfs/ERFS',
@@ -171,12 +265,18 @@ export default {
   created() {
     this.getERFS()
     this.getCARDS()
+    this.getQuote()
   },
   methods: {
     ...mapActions({
       getERFS: 'erfs/GET_ERFS',
       getCARDS: 'candidate-cards/GET_CANDIDATE_CARDS'
-    })
+    }),
+
+    async getQuote() {
+      const res = await this.$axios.$get('https://api.quotable.io/random')
+      this.quote = res
+    }
   }
 }
 </script>

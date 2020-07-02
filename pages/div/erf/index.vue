@@ -5,7 +5,16 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-4">
-              <h6 class="h2 text-white d-inline-block mb-0">ERF</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">
+                Employee Request Form
+              </h6>
+              <p class="text-white">
+                These are your submitted ERFs.
+              </p>
+              <ul class="text-white">
+                <li>Add new ERF to request new employee.</li>
+                <li>Details button to see your ERF details.</li>
+              </ul>
             </div>
             <div class="col-lg-6 col-8 text-right">
               <nuxt-link to="/div/erf/create">

@@ -6,14 +6,12 @@
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
               <h6 class="h2 text-white d-inline-block mb-0">
-                Employee Request Form
+                Candidate Accounts
               </h6>
               <p class="text-white">
-                These are submitted ERFs from various division users.
+                These are created accounts for candidates, who can use this
+                platform.
               </p>
-              <ul class="text-white">
-                <li>Details to view ERF</li>
-              </ul>
             </div>
           </div>
           <!-- Card stats -->
@@ -32,7 +30,7 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">
                     All
                   </h6>
-                  <h5 class="h3 mb-0">Latest ERFs</h5>
+                  <h5 class="h3 mb-0">Latest Candidate Accounts</h5>
                 </div>
               </div>
             </div>
@@ -43,76 +41,54 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort">
-                      ERF Title
+                      Name
                     </th>
                     <th scope="col" class="sort">
-                      Job Title
+                      Username
                     </th>
                     <th scope="col" class="sort">
-                      Division
+                      E-mail
                     </th>
                     <th scope="col" class="sort">
-                      Department
+                      Created At
                     </th>
-                    <th scope="col" class="sort">
-                      Submitted At
-                    </th>
-                    <th scope="col" class="sort">
-                      Submitted By
-                    </th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in ERFS.results" :key="item.id">
+                  <tr v-for="item in CANDIDATE_ACCOUNTS.results" :key="item.id">
                     <td>
-                      {{ item.title }}
+                      {{ item.first_name }}
                     </td>
                     <td>
-                      {{ item.job_title }}
+                      {{ item.username }}
                     </td>
                     <td>
-                      {{ item.division }}
-                    </td>
-                    <td>
-                      {{ item.department }}
+                      {{ item.email }}
                     </td>
                     <td class="budget">
                       {{
-                        item.created_at
+                        item.date_joined
                           | moment('dddd, MMMM Do YYYY | hh:mm:ss')
                       }}
-                    </td>
-                    <td>
-                      {{ item.div_user }}
-                    </td>
-                    <td>
-                      <nuxt-link :to="`/pic/erf/${item.id}`">
-                        <button
-                          type="button"
-                          class="btn btn-icon btn-primary"
-                          data-toggle="modal"
-                          data-target="#modal-add-talent"
-                        >
-                          <span class="btn-inner--text">Details</span>
-                        </button>
-                      </nuxt-link>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div v-if="ERFS.next || ERFS.previous" class="card-footer">
+            <div
+              v-if="CANDIDATE_ACCOUNTS.next || CANDIDATE_ACCOUNTS.previous"
+              class="card-footer"
+            >
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="ERFS.previous"
+                      v-if="CANDIDATE_ACCOUNTS.previous"
                       class="page-link"
                       href="javascript:"
                       @click="
                         changePage(prev)
-                        getERFS(page)
+                        getCandidateAccounts(page)
                       "
                     >
                       <i class="fa fa-angle-left"></i>
@@ -124,12 +100,12 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="ERFS.next"
+                      v-if="CANDIDATE_ACCOUNTS.next"
                       class="page-link"
                       href="javascript:"
                       @click="
                         changePage(next)
-                        getERFS(page)
+                        getCandidateAccounts(page)
                       "
                     >
                       <i class="fa fa-angle-right"></i>
@@ -147,12 +123,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  middleware: ['auth', 'pic'],
-  name: 'PICErf',
-  components: {},
+  middleware: ['auth', 'admin'],
+  name: 'AdminCandidateAccounts',
   data() {
     return {
       page: 1,
@@ -162,18 +136,18 @@ export default {
   },
   computed: {
     ...mapGetters({
-      ERFS: 'erfs/ERFS'
+      CANDIDATE_ACCOUNTS: 'candidate-accounts/CANDIDATE_ACCOUNTS'
     })
   },
   created() {
-    this.getERFS(this.page)
+    this.GET_CANDIDATE_ACCOUNTS(this.page)
   },
   methods: {
     ...mapActions({
-      GET_ERFS: 'erfs/GET_ERFS'
+      GET_CANDIDATE_ACCOUNTS: 'candidate-accounts/GET_CANDIDATE_ACCOUNTS'
     }),
-    getERFS(page) {
-      this.GET_ERFS(page)
+    getCandidateAccounts(page) {
+      this.GET_CANDIDATE_ACCOUNTS(page)
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--
@@ -181,3 +155,5 @@ export default {
   }
 }
 </script>
+
+<style></style>

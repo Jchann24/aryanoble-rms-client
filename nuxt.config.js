@@ -89,7 +89,13 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/dotenv'],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/toast',
+    'nuxt-material-design-icons'
+  ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

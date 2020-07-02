@@ -580,7 +580,7 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   middleware: ['auth', 'pic'],
-  name: 'ERFDetail',
+  name: 'PICERFDetail',
 
   data() {
     return {
@@ -588,7 +588,9 @@ export default {
       card: {
         erf: parseInt(this.$route.params.id),
         candidate: '',
-        status: 'OPEN'
+        status: 1,
+        talent: '',
+        interview_detail: ''
       }
     }
   },

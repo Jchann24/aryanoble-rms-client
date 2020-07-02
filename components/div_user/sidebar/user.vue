@@ -12,6 +12,17 @@
         <span class="nav-link-text">ERF</span>
       </nuxt-link>
     </li>
+    <li class="nav-item">
+      <nuxt-link
+        to="/div/candidate_cards"
+        tag="a"
+        class="nav-link"
+        active-class="active"
+      >
+        <i class="ni ni-badge text-default"></i>
+        <span class="nav-link-text">Candidate Cards</span>
+      </nuxt-link>
+    </li>
   </div>
 </template>
 

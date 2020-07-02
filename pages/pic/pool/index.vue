@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-4">
+            <div class="col-lg-6 col-7">
               <h6 class="h2 text-white d-inline-block mb-0">Talent Pool</h6>
               <p class="text-white">These are talents from various sources.</p>
               <ul class="text-white">
@@ -28,7 +28,7 @@
                 account can access this application.
               </p>
             </div>
-            <div class="col-lg-6 col-8 text-right">
+            <div class="col-lg-6 col-5 text-right">
               <add-talent />
             </div>
           </div>
@@ -61,6 +61,7 @@
                     <th scope="col">
                       CV
                     </th>
+                    <th scope="col"></th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -96,45 +97,38 @@
                       </a>
                     </td>
                     <td>
-                      <div class="row">
-                        <div class="col-6 pr-0">
-                          <button
-                            type="button"
-                            class="btn btn-primary float-right"
-                            data-toggle="modal"
-                            data-target="#modal-default"
-                            @click="
-                              previewTalent(talent)
-                              setReadonly()
-                            "
-                          >
-                            Details
-                          </button>
-                        </div>
-                        <div class="col-6 text-left">
-                          <div v-if="talent.candidate_account">
-                            <button
-                              type="button"
-                              class="btn btn-success float-right"
-                              data-toggle="modal"
-                              data-target="#modal-account-detail"
-                              @click="previewAccount(talent.candidate_account)"
-                            >
-                              Account Details
-                            </button>
-                          </div>
-                          <div v-else>
-                            <button
-                              type="button"
-                              class="btn btn-warning float-right"
-                              data-toggle="modal"
-                              data-target="#modal-create"
-                              @click="previewTalent(talent)"
-                            >
-                              Create Account
-                            </button>
-                          </div>
-                        </div>
+                      <button
+                        type="button"
+                        class="btn btn-primary float-right"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                        @click="previewTalent(talent)"
+                      >
+                        Details
+                      </button>
+                    </td>
+                    <td>
+                      <div v-if="talent.candidate_account">
+                        <button
+                          type="button"
+                          class="btn btn-success float-right"
+                          data-toggle="modal"
+                          data-target="#modal-account-detail"
+                          @click="previewAccount(talent.candidate_account)"
+                        >
+                          Account Details
+                        </button>
+                      </div>
+                      <div v-else>
+                        <button
+                          type="button"
+                          class="btn btn-warning float-right"
+                          data-toggle="modal"
+                          data-target="#modal-create"
+                          @click="previewTalent(talent)"
+                        >
+                          Create Account
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -220,6 +214,7 @@ export default {
       TALENTS: 'talents/TALENTS'
     })
   },
+  watch: {},
   created() {
     this.getTalents(this.page)
   },
@@ -240,6 +235,9 @@ export default {
     previewTalent(talent) {
       const preview = talent
       this.selectedTalent = JSON.parse(JSON.stringify(preview))
+      if (this.selectedTalent.candidate_account === null) {
+        this.selectedTalent.candidate_account = ''
+      }
     }
   }
 }

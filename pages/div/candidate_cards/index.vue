@@ -16,11 +16,6 @@
                   Click No Suggestion button to provide Talent Suggestion from
                   Talent Pool.
                 </li>
-                <li>
-                  If the User accepts the suggestion. Click Not Assigned button
-                  to assign Candidate Account to the Card. (Please firstly
-                  create the account for the talent)
-                </li>
               </ul>
             </div>
           </div>
@@ -63,12 +58,13 @@
                       Status
                     </th>
                     <th scope="col" class="sort">
-                      ERF By
+                      PIC
                     </th>
+
+                    <th></th>
                     <th scope="col" class="sort">
                       Created At
                     </th>
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -79,52 +75,53 @@
                     <td v-if="item.candidate">
                       {{ item.candidate.username }}
                     </td>
-                    <td v-else-if="item.status.id !== 3">
-                      <span class="text-danger">Cannot Assign Account</span>
-                    </td>
                     <td v-else>
-                      <button
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#modal-assign"
-                        class="btn btn-sm btn-outline-danger"
-                        @click="GET_CANDIDATE_ACCOUNTS(), selectCard(item.id)"
-                      >
+                      <span class="text-uppercase text-danger">
                         Not Assigned
-                      </button>
+                      </span>
                     </td>
                     <td v-if="item.talent">
-                      {{ item.talent.name }}
+                      <span class="text-uppercase">{{ item.talent.name }}</span>
+                    </td>
+                    <td v-else>
+                      <span class="text-uppercase text-info">
+                        No Suggestion
+                      </span>
+                    </td>
+                    <td class="text-uppercase">
+                      <span class="badge-md badge-warning">
+                        {{ item.status.state }}
+                      </span>
+                    </td>
+                    <td>
+                      {{ item.pic }}
+                    </td>
+
+                    <td v-if="item.talent">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-primary"
+                        data-toggle="modal"
+                        data-target="#modal-suggestion-detail"
+                        @click="selectSuggestion(item)"
+                      >
+                        Details & Response
+                      </button>
                     </td>
                     <td v-else>
                       <button
                         type="button"
-                        data-toggle="modal"
-                        data-target="#modal-suggest"
-                        class="btn btn-sm btn-outline-info"
-                        @click="GET_TALENTS(), selectCard(item.id)"
+                        class="btn btn-sm btn-primary"
+                        disabled
                       >
-                        No Suggestion
+                        Details & Response
                       </button>
-                    </td>
-                    <td>
-                      {{ item.status.state }}
-                    </td>
-                    <td>
-                      {{ item.erf.div_user }}
                     </td>
                     <td class="budget">
                       {{
                         item.created_at
                           | moment('dddd, MMMM Do YYYY | hh:mm:ss')
                       }}
-                    </td>
-                    <td>
-                      <!-- <nuxt-link> -->
-                      <button type="button" class="btn btn-icon btn-primary">
-                        <span class="btn-inner--text">Details</span>
-                      </button>
-                      <!-- </nuxt-link> -->
                     </td>
                   </tr>
                 </tbody>
@@ -174,146 +171,173 @@
         </div>
       </div>
     </div>
-    <!-- Modal -->
     <div
-      id="modal-assign"
+      v-if="selectedSuggestion"
+      id="modal-suggestion-detail"
       class="modal fade"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="modal-suggestion-detail"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+      <div
+        class="modal-dialog modal- modal-dialog-centered modal-"
+        role="document"
+      >
+        <div class="modal-content bg-transparent shadow-none">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">
-              Assign Candidate Account to this Candidate Card
-            </h5>
+            <h6
+              id="modal-title-suggestion-detail"
+              class="modal-title text-primary"
+            >
+              Talent Suggestion Details
+            </h6>
             <button
               type="button"
               class="close"
               data-dismiss="modal"
               aria-label="Close"
             >
-              <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true" class="text-white">×</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-12 px-3">
-                <div
-                  v-if="searchAlert"
-                  class="alert alert-success"
-                  role="alert"
-                >
-                  <strong>Searched!</strong> Username list has been updated!
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3 px-3">
-              <input
-                v-model="searchInput"
-                type="text"
-                class="form-control"
-                placeholder="Search username ..."
-                @keydown.enter="searchAccounts"
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-primary"
-                  type="button"
-                  :disabled="disabled"
-                  @click="searchAccounts"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-            <div class="container">
-              <div class="row">
-                <div class="col-12">
-                  <label for="username-select">Usernames</label>
 
-                  <select
-                    id="username-select"
-                    v-model="selectedAccount"
-                    class="form-control"
-                  >
-                    <option
-                      v-for="item in CANDIDATE_ACCOUNTS.results"
-                      :key="item.id"
-                      :value="item.username"
-                      >{{ item.username }}</option
-                    >
-                  </select>
-                  <p>
-                    <small class="text-warning"
-                      >If you cannot find the username, please use the search
-                      above.</small
-                    >
-                  </p>
+          <div class="modal-body py-0">
+            <div
+              class="card card-pricing bg-gradient-primary border-0 text-center mb-4"
+            >
+              <div class="card-header bg-transparent">
+                <h3 class="text-uppercase ls-1 text-white py-3 mb-0">
+                  {{ selectedSuggestion.talent.source }}
+                </h3>
+                <h5 class="text-white text-uppercase">
+                  {{ selectedSuggestion.status.state }}
+                </h5>
+              </div>
+              <div class="card-body px-lg-3">
+                <div class="display-4 text-white">
+                  {{ selectedSuggestion.talent.name }}
                 </div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12">
+                      <table class="table table-borderless my-3">
+                        <tbody class="text-white text-left">
+                          <tr>
+                            <td>DOB :</td>
+                            <td>
+                              {{ selectedSuggestion.talent.dob }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>GENDER :</td>
+                            <td>
+                              {{ selectedSuggestion.talent.gender }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              LAST EDUCATION :
+                            </td>
+                            <td>
+                              {{ selectedSuggestion.talent.last_education }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              UNIVERSITY :
+                            </td>
+                            <td>
+                              {{ selectedSuggestion.talent.university }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              WORKING EXPERIENCE :
+                            </td>
+                            <td>
+                              {{
+                                selectedSuggestion.talent
+                                  .total_working_experience
+                              }}
+                              Years
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              APPLIED POSITION :
+                            </td>
+                            <td>
+                              {{ selectedSuggestion.talent.applied_position }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  type="button"
+                  :href="selectedSuggestion.talent.cv"
+                  target="_blank"
+                  class="btn btn-secondary mb-3"
+                >
+                  Preview CV
+                </a>
               </div>
             </div>
           </div>
+
           <div class="modal-footer pt-0">
             <button
+              v-if="selectedSuggestion.status.id < 3"
               type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              @click="clearForm"
+              class="btn bg-success text-white mr-auto"
+              @click="action(3)"
             >
-              Close
+              Proceed this Talent
             </button>
             <button
+              v-if="selectedSuggestion.status.id < 3"
               type="button"
-              class="btn btn-primary"
-              :disabled="disableSave"
-              @click="patchCandidateCard"
+              class="btn bg-danger text-white mr-auto"
+              @click="action(100)"
             >
-              Save changes
+              Decline this Talent
+            </button>
+            <button
+              id="close-detail-modal"
+              type="button"
+              class="btn bg-gradient-primary text-white  ml-auto"
+              data-dismiss="modal"
+            >
+              Close
             </button>
           </div>
         </div>
       </div>
     </div>
-    <modal-suggest :selected-card="selectedCard" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 
-import ModalSuggest from '@/components/pic/candidate_cards/ModalSuggest.vue'
 export default {
-  middleware: ['auth', 'pic'],
-  name: 'PICCandidateCards',
-  components: {
-    ModalSuggest
-  },
+  middleware: ['auth', 'div'],
+  name: 'DIVCandidateCards',
   data() {
     return {
       page: 1,
       prev: 'prev',
       next: 'next',
-      selectedCard: 0,
-      selectedAccount: '',
-      searchInput: '',
-      searchAlert: false
+      selectedSuggestion: null
     }
   },
   computed: {
     ...mapGetters({
-      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS',
-      CANDIDATE_ACCOUNTS: 'candidate-accounts/CANDIDATE_ACCOUNTS',
-      TALENTS: 'talents/TALENTS'
-    }),
-    disabled() {
-      return this.searchInput === ''
-    },
-    disableSave() {
-      return this.selectedAccount === ''
-    }
+      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS'
+    })
   },
   created() {
     this.GET_CANDIDATE_CARDS(this.page)
@@ -321,44 +345,29 @@ export default {
   methods: {
     ...mapActions({
       GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS',
-      GET_CANDIDATE_ACCOUNTS: 'candidate-accounts/GET_CANDIDATE_ACCOUNTS',
-      SEARCH_CANDIDATE_ACCOUNTS: 'candidate-accounts/SEARCH_CANDIDATE_ACCOUNTS',
-      UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD',
-      GET_TALENTS: 'talents/GET_TALENTS'
+      UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD'
     }),
-    selectCard(id) {
-      this.selectedCard = id
-    },
-    clearForm() {
-      Object.assign(this.$data, this.$options.data())
-    },
-    async patchCandidateCard() {
-      const payload = {
-        candidate: this.selectedAccount,
-        status: 4
-      }
-      const cardId = this.selectedCard
-
-      try {
-        await this.UPDATE_CANDIDATE_CARD({ payload, cardId })
-        await this.GET_CANDIDATE_CARDS()
-        document.getElementById('modal-assign').click()
-      } catch (e) {
-        alert(e)
-      }
-    },
-    async searchAccounts() {
-      await this.SEARCH_CANDIDATE_ACCOUNTS(this.searchInput)
-      this.searchAlert = true
-      setTimeout(() => {
-        this.searchAlert = false
-      }, 1000 * 10)
-    },
     getCandidateCards(page) {
       this.GET_CANDIDATE_CARDS(page)
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--
+    },
+    selectSuggestion(item) {
+      this.selectedSuggestion = item
+    },
+    async action(status) {
+      const payload = {
+        status
+      }
+      const cardId = this.selectedSuggestion.id
+      try {
+        await this.UPDATE_CANDIDATE_CARD({ payload, cardId })
+        await this.getCandidateCards()
+        document.getElementById('close-detail-modal').click()
+      } catch (e) {
+        alert(e)
+      }
     }
   }
 }

@@ -95,7 +95,7 @@
                 href="http://aryanoble.co.id"
                 class="font-weight-bold ml-1 text-primary"
                 target="_blank"
-                >Arya Noble, Recuirment Management System</a
+                >Arya Noble, Recruitment Management System</a
               >
             </div>
           </div>

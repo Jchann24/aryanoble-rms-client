@@ -52,9 +52,6 @@
                     <th scope="col" class="sort">
                       Created At
                     </th>
-                    <th scope="col" class="sort">
-                      Last Login At
-                    </th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -73,15 +70,6 @@
                         item.date_joined
                           | moment('dddd, MMMM Do YYYY | hh:mm:ss')
                       }}
-                    </td>
-                    <td v-if="item.last_login" class="budget">
-                      {{
-                        item.last_login
-                          | moment('dddd, MMMM Do YYYY | hh:mm:ss')
-                      }}
-                    </td>
-                    <td v-else>
-                      <span class="text-danger">No login information</span>
                     </td>
                   </tr>
                 </tbody>

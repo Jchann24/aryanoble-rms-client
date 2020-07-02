@@ -569,7 +569,8 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'ERFDetail',
+  middleware: ['auth', 'div'],
+  name: 'DivERFDetail',
 
   data() {
     return {

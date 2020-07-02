@@ -12,20 +12,14 @@
       </nuxt-link>
     </li>
     <li class="nav-item">
-      <nuxt-link to="/admin/erf" tag="a" class="nav-link" active-class="active">
-        <i class="ni ni-collection text-default"></i>
-        <span class="nav-link-text">ERF</span>
-      </nuxt-link>
-    </li>
-    <li class="nav-item">
       <nuxt-link
-        to="/admin/pool"
+        to="/admin/candidate_accounts"
         tag="a"
         class="nav-link"
         active-class="active"
       >
-        <i class="ni ni-folder-17 text-default"></i>
-        <span class="nav-link-text">Talent Pool</span>
+        <i class="ni ni-single-02 text-default"></i>
+        <span class="nav-link-text">Candidate Accounts</span>
       </nuxt-link>
     </li>
     <li class="nav-item">

@@ -35,5 +35,10 @@ export const actions = {
   },
   async PATCH_TALENT({ commit }, { accountId, talentId }) {
     await this.$axios.$patch(`candidate/${talentId}/`, accountId)
+  },
+
+  async SEARCH_TALENTS({ commit }, search) {
+    const data = await this.$axios.$get(`candidate/?search=${search}`)
+    commit('SET_TALENTS', data)
   }
 }

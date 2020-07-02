@@ -124,7 +124,7 @@ export default {
       CREATE_ACCOUNT: 'candidate-accounts/SAVE_CANDIDATE_ACCOUNT',
       PATCH_TALENT: 'talents/PATCH_TALENT'
     }),
-    createAccount() {
+    async createAccount() {
       this.loading = true
       const form = {
         username: this.selectedTalent.username,
@@ -134,29 +134,22 @@ export default {
         password: this.selectedTalent.password
       }
       const talentId = this.selectedTalent.id
-
-      this.CREATE_ACCOUNT(form)
-        .then(() => {
-          const accountId = {
-            candidate_account: this.CANDIDATE_ACCOUNT.id
-          }
-
-          this.PATCH_TALENT({ accountId, talentId })
-            .then(
-              () => document.getElementById('modal-create').click(),
-              (this.errors = false)
-            )
-            .then(
-              setTimeout(() => {
-                this.GET_TALENTS(this.page)
-              }, 1500)
-            )
-
-            .catch(() => (this.errors = true))
-            .finally(() => (this.loading = false))
-        })
-        .catch(() => (this.errors = true))
-        .finally(() => (this.loading = false))
+      try {
+        await this.CREATE_ACCOUNT(form)
+        const accountId = {
+          candidate_account: this.CANDIDATE_ACCOUNT.id
+        }
+        await this.PATCH_TALENT({ accountId, talentId })
+        document.getElementById('modal-create').click()
+        this.errors = false
+        setTimeout(() => {
+          this.GET_TALENTS(this.page)
+        }, 1500)
+      } catch (e) {
+        this.errors = true
+      } finally {
+        this.loading = false
+      }
     },
     clearForm() {
       Object.assign(this.$data, this.$options.data())
