@@ -2,7 +2,7 @@
   <div>
     <li class="nav-item">
       <nuxt-link
-        to="/admin"
+        to="/candidate"
         tag="a"
         class="nav-link"
         exact-active-class="active"

@@ -10,7 +10,7 @@
     />
     <div class="card-img-overlay d-flex align-items-center px-xl-4">
       <div>
-        <h5 class="h2 card-title text-white mb-2">Quote of the Day</h5>
+        <h5 class="h2 card-title text-white mb-2">Quote</h5>
         <div v-if="quote">
           <p class="card-text">
             {{ quote.content }}
@@ -37,7 +37,9 @@ export default {
   },
   methods: {
     async getQuote() {
-      const res = await this.$axios.$get('https://api.quotable.io/random')
+      const res = await this.$axios.$get(
+        'https://api.quotable.io/random?maxLength=200'
+      )
       this.quote = res
     }
   }
