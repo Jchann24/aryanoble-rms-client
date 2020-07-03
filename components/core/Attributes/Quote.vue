@@ -38,7 +38,7 @@ export default {
   methods: {
     async getQuote() {
       const res = await this.$axios.$get(
-        'https://api.quotable.io/random?maxLength=200'
+        'https://api.quotable.io/random?maxLength=150'
       )
       this.quote = res
     }
