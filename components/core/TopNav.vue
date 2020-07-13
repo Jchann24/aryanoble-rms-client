@@ -145,11 +145,11 @@ export default {
       const adminAvatar = '/img/top-nav/pic-avatar.png'
       const userAvatar = '/img/top-nav/div-user-avatar.png'
 
-      if (this.loggedInUser.groups[0] === 1) {
+      if (this.loggedInUser.group_id === 3) {
         return picAvatar
-      } else if (this.loggedInUser.groups[0] === 2) {
+      } else if (this.loggedInUser.group_id === 2) {
         return adminAvatar
-      } else if (this.loggedInUser.groups[0] === 3) {
+      } else if (this.loggedInUser.group_id === 4) {
         return userAvatar
       } else {
         return defaultAvatar
@@ -157,7 +157,7 @@ export default {
     }
   },
   created() {
-    if (this.loggedInUser.groups[0] === 2) {
+    if (this.loggedInUser.group_id === 0) {
       this.GET_NOT_ASSIGNED()
     }
   },

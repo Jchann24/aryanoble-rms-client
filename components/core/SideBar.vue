@@ -19,16 +19,16 @@
         <div id="sidenav-collapse-main" class="collapse navbar-collapse">
           <!-- Nav items -->
           <ul class="navbar-nav mt-4">
-            <div v-if="group === 1">
+            <div v-if="group === 2">
               <sidebar-admin />
             </div>
-            <div v-else-if="group === 2">
+            <div v-else-if="group === 3">
               <sidebar-pic />
             </div>
-            <div v-else-if="group === 3">
+            <div v-else-if="group === 4">
               <sidebar-user />
             </div>
-            <div v-else-if="loggedInUser.groups.length === 0">
+            <div v-else-if="group === 5">
               <sidebar-candidate />
             </div>
           </ul>
@@ -58,7 +58,7 @@ export default {
   computed: {
     ...mapGetters(['loggedInUser']),
     group() {
-      return this.loggedInUser.groups[0]
+      return this.loggedInUser.group_id
     }
   }
 }
