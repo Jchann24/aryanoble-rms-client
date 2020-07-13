@@ -44,10 +44,10 @@
                 </div>
                 <form role="form" class="mt-4" @submit.prevent="login">
                   <div class="form-group px-3 mb-0">
-                    <label for="username"><small>Username</small></label>
+                    <label for="email"><small>E-mail</small></label>
                     <input
-                      id="username"
-                      v-model="username"
+                      id="email"
+                      v-model="email"
                       type="text"
                       class="form-control"
                       autocomplete="off"
@@ -111,18 +111,18 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: '',
+      email: '',
       password: '',
       errors: null
     }
   },
   computed: {
     disabled() {
-      return this.username === '' || this.password === ''
+      return this.email === '' || this.password === ''
     },
     buttonStyle() {
       const styleName = 'pointer-events: none;'
-      if (this.username === '' || this.password === '') {
+      if (this.email === '' || this.password === '') {
         return styleName
       } else {
         return false
@@ -142,7 +142,7 @@ export default {
       this.$auth
         .loginWith('local', {
           data: {
-            username: this.username,
+            email: this.email,
             password: this.password
           }
         })

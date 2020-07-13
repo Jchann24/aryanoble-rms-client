@@ -109,11 +109,11 @@ export default {
       local: {
         scheme: 'refresh',
         token: {
-          property: 'access',
+          property: 'access_token',
           maxAge: 1800
         },
         refreshToken: {
-          property: 'refresh',
+          property: 'access_token',
           data: 'refresh',
           maxAge: 2000
         },
@@ -124,7 +124,7 @@ export default {
         endpoints: {
           login: { url: 'login/', method: 'post' },
           refresh: { url: 'refresh/', method: 'post' },
-          user: { url: 'account/me/', method: 'get' },
+          user: { url: 'me/', method: 'get' },
           logout: false
         },
         tokenType: 'Bearer'
