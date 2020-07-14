@@ -16,7 +16,7 @@ export const mutations = {
 
 export const actions = {
   async SAVE_INTERVIEW_DETAIL({ commit }, payload) {
-    const data = await this.$axios.$post('interview-detail/', payload)
+    const data = await this.$axios.$post('interview-details/', payload)
     commit('SET_INTERVIEW_DETAIL', data)
   }
 }

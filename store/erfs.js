@@ -23,15 +23,15 @@ export const mutations = {
 
 export const actions = {
   async GET_ERFS({ commit }, page = 1) {
-    const data = await this.$axios.$get('erf/?page=' + page)
+    const data = await this.$axios.$get('erfs/?page=' + page)
     commit('SET_ERFS', data)
   },
   async GET_ERF({ commit }, id) {
-    const data = await this.$axios.$get(`erf/${id}/`)
+    const data = await this.$axios.$get(`erfs/${id}/`)
     commit('SET_ERF', data)
   },
   async SAVE_ERF({ commit }, payload) {
-    await this.$axios.$post('erf/', payload)
+    await this.$axios.$post('erfs/', payload)
   },
   async UPDATE_TALENT({ commit }, { payload, talentId }) {
     await this.$axios.$put(`candidate/${talentId}/`, payload)

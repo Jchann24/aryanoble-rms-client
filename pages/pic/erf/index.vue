@@ -64,7 +64,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in ERFS.results" :key="item.id">
+                  <tr v-for="item in ERFS.data" :key="item.id">
                     <td>
                       {{ item.title }}
                     </td>
@@ -84,7 +84,7 @@
                       }}
                     </td>
                     <td>
-                      {{ item.div_user }}
+                      {{ item.div_user.name }}
                     </td>
                     <td>
                       <nuxt-link :to="`/pic/erf/${item.id}`">

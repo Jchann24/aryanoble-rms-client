@@ -20,25 +20,25 @@ export const mutations = {
 
 export const actions = {
   async GET_TALENTS({ commit }, page = 1) {
-    const data = await this.$axios.$get('candidate/?page=' + page)
+    const data = await this.$axios.$get('talents/?page=' + page)
     commit('SET_TALENTS', data)
   },
   async SAVE_TALENT({ commit }, payload) {
-    await this.$axios.$post('candidate/', payload, {
+    await this.$axios.$post('talents/', payload, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
   async UPDATE_TALENT({ commit }, { formData, talentId }) {
-    await this.$axios.$put(`candidate/${talentId}/`, formData, {
+    await this.$axios.$put(`talents/${talentId}/`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },
   async PATCH_TALENT({ commit }, { accountId, talentId }) {
-    await this.$axios.$patch(`candidate/${talentId}/`, accountId)
+    await this.$axios.$patch(`talents/${talentId}/`, accountId)
   },
 
   async SEARCH_TALENTS({ commit }, search) {
-    const data = await this.$axios.$get(`candidate/?search=${search}`)
+    const data = await this.$axios.$get(`talents/?search=${search}`)
     commit('SET_TALENTS', data)
   }
 }

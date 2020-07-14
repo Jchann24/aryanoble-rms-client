@@ -8,6 +8,7 @@
               <h6 class="h2 text-white d-inline-block mb-0">Dashboard PIC</h6>
             </div>
           </div>
+
           <!-- Card stats -->
           <div class="row">
             <div class="col-xl-3 col-md-6">
@@ -15,13 +16,18 @@
                 <!-- Card body -->
                 <div class="card-body p-4">
                   <div class="row">
-                    <div class="col">
+                    <div v-if="ERFS.meta" class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Submitted
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ ERFS.count }} ERFs</span
+                        >{{ ERFS.meta.total }} ERFs</span
                       >
+                    </div>
+                    <div v-else class="col">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-heading />
+                      </content-placeholders>
                     </div>
                     <div class="col-auto">
                       <div
@@ -39,13 +45,18 @@
                 <!-- Card body -->
                 <div class="card-body p-4">
                   <div class="row">
-                    <div class="col">
+                    <div v-if="TALENTS.meta" class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Pool
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ TALENTS.count }} Talents
+                        >{{ TALENTS.meta.total }} Talents
                       </span>
+                    </div>
+                    <div v-else class="col">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-heading />
+                      </content-placeholders>
                     </div>
                     <div class="col-auto">
                       <div
@@ -63,13 +74,18 @@
                 <!-- Card body -->
                 <div class="card-body p-4">
                   <div class="row">
-                    <div class="col">
+                    <div v-if="CARDS.meta" class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Cards
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ CARDS.count }} Candidates</span
+                        >{{ CARDS.meta.total }} Candidates</span
                       >
+                    </div>
+                    <div v-else class="col">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-heading />
+                      </content-placeholders>
                     </div>
                     <div class="col-auto">
                       <div
@@ -124,7 +140,7 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="ERFS.data" class="table-responsive mb-5">
               <table
                 class="table align-items-center table-white table-flush table-hover"
               >
@@ -142,7 +158,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in ERFS.results" :key="item.id">
+                  <tr v-for="item in ERFS.data" :key="item.id">
                     <td>
                       {{ item.title }}
                     </td>
@@ -153,11 +169,17 @@
                       }}
                     </td>
                     <td>
-                      {{ item.div_user }}
+                      {{ item.div_user.name }}
                     </td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div v-else class="col my-4 mx-auto py-2 px-5">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
             </div>
           </div>
         </div>
@@ -174,7 +196,7 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="TALENTS.data" class="table-responsive mb-5">
               <table
                 class="table align-items-center table-white table-flush table-hover"
               >
@@ -189,7 +211,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in TALENTS.results" :key="item.id">
+                  <tr v-for="item in TALENTS.data" :key="item.id">
                     <td>
                       {{ item.name }}
                     </td>
@@ -199,6 +221,12 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div v-else class="col my-4 mx-auto py-2 px-5">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
             </div>
           </div>
         </div>

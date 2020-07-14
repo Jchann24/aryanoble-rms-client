@@ -77,7 +77,8 @@ export default {
    */
   plugins: [
     '~/plugins/vue-moment',
-    { src: '~/plugins/objectToForm', mode: 'client' }
+    { src: '~/plugins/objectToForm', mode: 'client' },
+    { src: '~/plugins/skeletonLoader', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -110,12 +111,12 @@ export default {
         scheme: 'refresh',
         token: {
           property: 'access_token',
-          maxAge: 1800
+          maxAge: 60 * 60 * 24
         },
         refreshToken: {
           property: 'access_token',
-          data: 'refresh',
-          maxAge: 2000
+          data: 'access_token',
+          maxAge: 60 * 60 * 24
         },
         user: {
           property: false

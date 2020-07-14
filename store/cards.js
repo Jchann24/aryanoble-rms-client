@@ -16,7 +16,7 @@ export const mutations = {
 
 export const actions = {
   async GET_CARDS({ commit }) {
-    const data = await this.$axios.$get('candidate-card/')
+    const data = await this.$axios.$get('candidate-cards/')
     commit('SET_CARD', data)
   }
 }
