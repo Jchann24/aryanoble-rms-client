@@ -13,7 +13,9 @@
           <div class="row">
             <div class="col-lg-12 col-md-12">
               <h1 class="display-2 text-white">ERF Details</h1>
-              <p class="text-white mt-0 mb-2">Created by {{ ERF.div_user }}</p>
+              <p v-if="ERF" class="text-white mt-0 mb-2">
+                Created by {{ ERF.div_user.name }}
+              </p>
               <ul class="text-white">
                 <li>Make candidate card to process this ERF.</li>
                 <li>
@@ -78,10 +80,10 @@
                           >
                           <div class="input-group">
                             <input
-                              v-model="ERF.submit_date"
+                              v-model="ERF.created_at"
                               class="form-control"
                               placeholder="Select date"
-                              type="date"
+                              type="datetime-local"
                               :readonly="readonly"
                             />
                           </div>
@@ -315,7 +317,7 @@
                               type="radio"
                               name="working-hours-radio"
                               class="custom-control-input"
-                              value="Full-time"
+                              value="Full-Time"
                               :disabled="readonly"
                             />
                             <label
@@ -331,7 +333,7 @@
                               type="radio"
                               name="working-hours-radio"
                               class="custom-control-input"
-                              value="Part-time"
+                              value="Part-Time"
                               :disabled="readonly"
                             />
                             <label
@@ -520,14 +522,28 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-age-range"
-                          >Age Range</label
+                          >Age Range From</label
                         >
                         <input
                           id="input-age-range"
-                          v-model="ERF.age_range"
+                          v-model="ERF.age_range_from"
+                          type="text"
+                          class="form-control"
+                          :readonly="readonly"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-age-range"
+                          >Age Range To</label
+                        >
+                        <input
+                          id="input-age-range"
+                          v-model="ERF.age_range_to"
                           type="text"
                           class="form-control"
                           :readonly="readonly"
@@ -597,8 +613,11 @@ export default {
 
   computed: {
     ...mapGetters({
-      ERF: 'erfs/ERF'
-    })
+      getErf: 'erfs/ERF'
+    }),
+    ERF() {
+      return this.getErf.data
+    }
   },
 
   created() {

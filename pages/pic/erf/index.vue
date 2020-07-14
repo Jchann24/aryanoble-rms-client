@@ -36,7 +36,7 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="ERFS.data" class="table-responsive mb-5">
               <table
                 class="table align-items-center table-white table-flush table-hover"
               >
@@ -101,6 +101,12 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div v-else class="col my-4 mx-4">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
             </div>
             <div v-if="ERFS.next || ERFS.previous" class="card-footer">
               <nav aria-label="Page navigation example">
