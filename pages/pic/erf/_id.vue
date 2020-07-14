@@ -601,13 +601,7 @@ export default {
   data() {
     return {
       readonly: true,
-      card: {
-        erf: parseInt(this.$route.params.id),
-        candidate: '',
-        status: 1,
-        talent: '',
-        interview_detail: ''
-      }
+      erf_id: parseInt(this.$route.params.id)
     }
   },
 
@@ -632,7 +626,10 @@ export default {
     }),
 
     newCard() {
-      this.createCard(this.card)
+      const payload = {
+        erf_id: this.erf_id
+      }
+      this.createCard(payload)
         .then(() => this.$router.push('/pic/candidate_cards'))
         .catch((err) => alert(err))
     }

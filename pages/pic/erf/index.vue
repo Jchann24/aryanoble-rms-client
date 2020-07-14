@@ -108,12 +108,12 @@
                 <content-placeholders-text :lines="5" />
               </content-placeholders>
             </div>
-            <div v-if="ERFS.next || ERFS.previous" class="card-footer">
+            <div v-if="ERFS.links || ERFS.links" class="card-footer">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="ERFS.previous"
+                      v-if="ERFS.links.prev && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -130,7 +130,7 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="ERFS.next"
+                      v-if="ERFS.links.next && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -163,7 +163,8 @@ export default {
     return {
       page: 1,
       prev: 'prev',
-      next: 'next'
+      next: 'next',
+      loading: false
     }
   },
   computed: {
@@ -178,8 +179,15 @@ export default {
     ...mapActions({
       GET_ERFS: 'erfs/GET_ERFS'
     }),
-    getERFS(page) {
-      this.GET_ERFS(page)
+    async getERFS(page) {
+      this.loading = true
+      try {
+        await this.GET_ERFS(page)
+      } catch (e) {
+        this.page--
+      } finally {
+        this.loading = false
+      }
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--
