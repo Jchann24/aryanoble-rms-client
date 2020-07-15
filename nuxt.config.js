@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   /*
    ** Headers of the page
    */
@@ -78,7 +78,8 @@ export default {
   plugins: [
     '~/plugins/vue-moment',
     { src: '~/plugins/objectToForm', mode: 'client' },
-    { src: '~/plugins/skeletonLoader', mode: 'client' }
+    { src: '~/plugins/skeletonLoader', mode: 'client' },
+    { src: '~/plugins/vue-spinner', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules

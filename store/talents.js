@@ -29,7 +29,7 @@ export const actions = {
     })
   },
   async UPDATE_TALENT({ commit }, { formData, talentId }) {
-    await this.$axios.$put(`talents/${talentId}/`, formData, {
+    await this.$axios.$post(`talents/${talentId}?method=_PUT`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
   },

@@ -10,7 +10,7 @@
       <span class="btn-inner--icon">
         <i class="ni ni-ruler-pencil"></i>
       </span>
-      <span class="btn-inner--text">Add New Talent</span>
+      <span class="btn-inner--text">Add Talent</span>
     </button>
     <div
       id="modal-add-talent"

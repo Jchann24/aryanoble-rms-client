@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
+            <div class="col-lg-6 col-12">
               <h6 class="h2 text-white d-inline-block mb-0">Talent Pool</h6>
               <p class="text-white">These are talents from various sources.</p>
               <ul class="text-white">
@@ -28,7 +28,7 @@
                 account can access this application.
               </p>
             </div>
-            <div class="col-lg-6 col-5 text-right">
+            <div class="col-lg-6 col-12 text-right">
               <add-talent />
             </div>
           </div>
@@ -42,7 +42,7 @@
             <div class="card-header">
               <h1>Talents</h1>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="TALENTS.data" class="table-responsive mb-5">
               <table class="table align-items-center table-white table-hover">
                 <thead class="bg-gradient-gray text-white">
                   <tr>
@@ -62,11 +62,10 @@
                       CV
                     </th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="talent in TALENTS.results" :key="talent.id">
+                  <tr v-for="talent in TALENTS.data" :key="talent.id">
                     <td>
                       {{ talent.name }}
                     </td>
@@ -77,7 +76,7 @@
                       {{ talent.last_education }}
                     </td>
                     <td>
-                      {{ talent.pic }}
+                      {{ talent.pic.name }}
                     </td>
                     <td>
                       <a
@@ -96,51 +95,54 @@
                         Unavailable
                       </a>
                     </td>
-                    <td>
+                    <td class="text-nowrap text-right">
                       <button
                         type="button"
-                        class="btn btn-primary float-right"
+                        class="btn btn-primary mr-3"
                         data-toggle="modal"
                         data-target="#modal-default"
                         @click="previewTalent(talent)"
                       >
                         Details
                       </button>
-                    </td>
-                    <td>
-                      <div v-if="talent.candidate_account">
-                        <button
-                          type="button"
-                          class="btn btn-success float-right"
-                          data-toggle="modal"
-                          data-target="#modal-account-detail"
-                          @click="previewAccount(talent.candidate_account)"
-                        >
-                          Account Details
-                        </button>
-                      </div>
-                      <div v-else>
-                        <button
-                          type="button"
-                          class="btn btn-warning float-right"
-                          data-toggle="modal"
-                          data-target="#modal-create"
-                          @click="previewTalent(talent)"
-                        >
-                          Create Account
-                        </button>
-                      </div>
+                      <button
+                        v-if="talent.candidate_account"
+                        type="button"
+                        class="btn btn-success"
+                        data-toggle="modal"
+                        data-target="#modal-account-detail"
+                        @click="previewAccount(talent.candidate_account)"
+                      >
+                        Account Details
+                      </button>
+                      <button
+                        v-else
+                        type="button"
+                        class="btn btn-warning"
+                        data-toggle="modal"
+                        data-target="#modal-create"
+                        @click="previewTalent(talent)"
+                      >
+                        Create Account
+                      </button>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div v-if="TALENTS.next || TALENTS.previous" class="card-footer">
+            <div v-else class="col my-4 mx-4">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
+            </div>
+            <div v-if="TALENTS.links || TALENTS.links" class="card-footer">
+              <div ref="loadingContainer"></div>
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="TALENTS.previous"
+                      v-if="TALENTS.links.prev && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -157,7 +159,7 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="TALENTS.next"
+                      v-if="TALENTS.links.next && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -206,7 +208,8 @@ export default {
       page: 1,
       selectedTalent: {},
       next: 'next',
-      prev: 'prev'
+      prev: 'prev',
+      loading: false
     }
   },
   computed: {
@@ -226,8 +229,19 @@ export default {
     previewAccount(account) {
       this.GET_CANDIDATE_ACCOUNT(account)
     },
-    getTalents(page) {
-      this.GET_TALENTS(page)
+    async getTalents(page) {
+      this.loading = true
+      const loader = this.$loading.show({
+        container: this.$refs.loadingContainer
+      })
+      try {
+        await this.GET_TALENTS(page)
+      } catch (e) {
+        this.page--
+      } finally {
+        this.loading = false
+        loader.hide()
+      }
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--

@@ -3,6 +3,8 @@
     id="modal-default"
     class="modal fade"
     tabindex="-1"
+    data-backdrop="static"
+    data-keyboard="false"
     role="dialog"
     aria-labelledby="modal-default"
     aria-hidden="true"
@@ -210,6 +212,9 @@
               </div>
             </div>
           </form>
+          <div v-if="errors" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+          </div>
         </div>
 
         <div class="modal-footer">
@@ -217,7 +222,7 @@
             <button
               type="button"
               class="btn btn-success mr-auto"
-              @click="readonly = !readonly"
+              @click="readonly = false"
             >
               Edit
             </button>
@@ -226,7 +231,7 @@
             <button
               type="button"
               class="btn btn-secondary mr-auto"
-              @click="readonly = !readonly"
+              @click="readonly = true"
             >
               Cancel Edit
             </button>
@@ -269,7 +274,8 @@ export default {
       readonly: true,
       errors: false,
       loading: false,
-      file: ''
+      file: null,
+      errorMessage: ''
     }
   },
   methods: {
@@ -282,6 +288,7 @@ export default {
       this.file = file
     },
     async updateTalent() {
+      this.$delete(this.selectedTalent, 'cv')
       const talentId = this.selectedTalent.id
       const formData = new FormData()
 
@@ -289,7 +296,9 @@ export default {
       for (const [formName, value] of entries) {
         formData.append(`${formName}`, `${value}`)
       }
-      formData.append('cv', this.file)
+      if (this.file) {
+        formData.append('cv', this.file)
+      }
 
       try {
         await this.UPDATE_TALENT({ formData, talentId })
@@ -298,6 +307,7 @@ export default {
         this.errors = false
         this.clearForm()
       } catch (err) {
+        this.errorMessage = err.response.data.message
         this.errors = true
       }
     },

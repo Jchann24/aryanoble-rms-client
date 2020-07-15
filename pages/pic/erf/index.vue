@@ -109,6 +109,7 @@
               </content-placeholders>
             </div>
             <div v-if="ERFS.links || ERFS.links" class="card-footer">
+              <div ref="loadingContainer"></div>
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
@@ -181,12 +182,16 @@ export default {
     }),
     async getERFS(page) {
       this.loading = true
+      const loader = this.$loading.show({
+        container: this.$refs.loadingContainer
+      })
       try {
         await this.GET_ERFS(page)
       } catch (e) {
         this.page--
       } finally {
         this.loading = false
+        loader.hide()
       }
     },
     changePage(change) {
