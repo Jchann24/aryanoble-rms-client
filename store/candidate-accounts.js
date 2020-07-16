@@ -23,25 +23,25 @@ export const mutations = {
 
 export const actions = {
   async GET_CANDIDATE_ACCOUNTS({ commit }, page = 1) {
-    const data = await this.$axios.$get('candidate-account/?page=' + page)
+    const data = await this.$axios.$get('users/?page=' + page)
     commit('SET_CANDIDATE_ACCOUNTS', data)
   },
 
   async SAVE_CANDIDATE_ACCOUNT({ commit }, payload) {
-    const data = await this.$axios.$post('candidate-account/', payload)
+    const data = await this.$axios.$post('register/', payload)
     commit('SET_CANDIDATE_ACCOUNT', data)
   },
 
   async GET_CANDIDATE_ACCOUNT({ commit }, id) {
-    const data = await this.$axios.$get(`candidate-account/${id}/`)
+    const data = await this.$axios.$get(`users/${id}/`)
     commit('SET_CANDIDATE_ACCOUNT', data)
   },
   async UPDATE_CANDIDATE_ACCOUNT({ commit }, { payload, accountId }) {
-    await this.$axios.$put(`candidate-account/${accountId}/`, payload)
+    await this.$axios.$put(`users/${accountId}/`, payload)
   },
 
   async SEARCH_CANDIDATE_ACCOUNTS({ commit }, search) {
-    const data = await this.$axios.$get(`candidate-account/?search=${search}`)
+    const data = await this.$axios.$get(`users/?search=${search}`)
     commit('SET_CANDIDATE_ACCOUNTS', data)
   }
 }

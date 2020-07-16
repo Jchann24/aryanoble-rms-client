@@ -22,39 +22,17 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body px-5">
-          <div class="row">
-            <div class="col-6 text-left">
-              <h4>
-                <strong>Name:</strong>
-              </h4>
-            </div>
-            <div class="col-6">
-              {{
-                CANDIDATE_ACCOUNT.first_name + ' ' + CANDIDATE_ACCOUNT.last_name
-              }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6 text-left">
-              <h4>
-                <strong>Username:</strong>
-              </h4>
-            </div>
-            <div class="col-6">
-              {{ CANDIDATE_ACCOUNT.username }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6 text-left">
-              <h4>
-                <strong>E-mail:</strong>
-              </h4>
-            </div>
-            <div class="col-6">
-              {{ CANDIDATE_ACCOUNT.email }}
-            </div>
-          </div>
+        <div v-if="CANDIDATE_ACCOUNT.data" class="modal-body">
+          <table class="table table-borderless">
+            <tr>
+              <th>Name :</th>
+              <th>{{ CANDIDATE_ACCOUNT.data.name }}</th>
+            </tr>
+            <tr>
+              <th>Email :</th>
+              <th>{{ CANDIDATE_ACCOUNT.data.email }}</th>
+            </tr>
+          </table>
         </div>
         <div class="modal-footer">
           <button

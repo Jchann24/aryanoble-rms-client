@@ -106,12 +106,12 @@
                         Details
                       </button>
                       <button
-                        v-if="talent.candidate_account"
+                        v-if="talent.candidate"
                         type="button"
                         class="btn btn-success"
                         data-toggle="modal"
                         data-target="#modal-account-detail"
-                        @click="previewAccount(talent.candidate_account)"
+                        @click="previewAccount(talent.candidate.id)"
                       >
                         Account Details
                       </button>
