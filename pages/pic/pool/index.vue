@@ -136,7 +136,7 @@
                 <content-placeholders-text :lines="5" />
               </content-placeholders>
             </div>
-            <div v-if="TALENTS.links || TALENTS.links" class="card-footer">
+            <div v-if="TALENTS.links" class="card-footer">
               <div ref="loadingContainer"></div>
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
