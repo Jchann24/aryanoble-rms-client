@@ -17,13 +17,18 @@
                 <!-- Card body -->
                 <div class="card-body p-4">
                   <div class="row">
-                    <div class="col">
+                    <div v-if="ERFS.meta" class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         ERFS
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ ERFS.count }} Submitted</span
+                        >{{ ERFS.meta.total }} Submitted</span
                       >
+                    </div>
+                    <div v-else class="col">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-heading />
+                      </content-placeholders>
                     </div>
                     <div class="col-auto">
                       <div
@@ -41,13 +46,18 @@
                 <!-- Card body -->
                 <div class="card-body p-4">
                   <div class="row">
-                    <div class="col">
+                    <div v-if="CARDS.meta" class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Cards
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ CARDS.count }} Responses
+                        >{{ CARDS.meta.total }} Responses
                       </span>
+                    </div>
+                    <div v-else class="col">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-heading />
+                      </content-placeholders>
                     </div>
                     <div class="col-auto">
                       <div
@@ -129,16 +139,10 @@
                     <th scope="col" class="sort">
                       Created At
                     </th>
-                    <th scope="col" class="sort">
-                      Status
-                    </th>
-                    <th scope="col" class="sort">
-                      Submitted By
-                    </th>
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in ERFS.results" :key="item.id">
+                  <tr v-for="item in ERFS.data" :key="item.id">
                     <td>
                       {{ item.title }}
                     </td>
@@ -147,15 +151,6 @@
                         item.created_at
                           | moment('dddd, MMMM Do YYYY | hh:mm:ss')
                       }}
-                    </td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <i class="bg-warning"></i>
-                        <span class="status">pending</span>
-                      </span>
-                    </td>
-                    <td>
-                      {{ item.div_user }}
                     </td>
                   </tr>
                 </tbody>
@@ -180,7 +175,7 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
+            <div class="mb-5">
               <table
                 class="table align-items-center table-white table-flush table-hover"
               >
@@ -195,7 +190,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in CARDS.results" :key="item.id">
+                  <tr v-for="item in CARDS.data" :key="item.id">
                     <td>
                       {{ item.erf.title }}
                     </td>
@@ -203,7 +198,7 @@
                       {{ item.talent.name }}
                     </td>
                     <td v-else>
-                      <span class="text-danger">Not Assigned</span>
+                      <span class="text-danger">Waiting Suggestion</span>
                     </td>
                   </tr>
                 </tbody>
@@ -237,7 +232,7 @@ export default {
       CARDS: 'candidate-cards/CANDIDATE_CARDS'
     })
   },
-  created() {
+  mounted() {
     this.getERFS()
     this.getCARDS()
   },
@@ -249,3 +244,9 @@ export default {
   }
 }
 </script>
+
+<style lang="css">
+.table td {
+  white-space: normal !important;
+}
+</style>
