@@ -26,7 +26,7 @@
           <div class="row">
             <div class="col-12 px-3">
               <div v-if="searchAlert" class="alert alert-success" role="alert">
-                <strong>Searched!</strong> Username list has been updated!
+                <strong>Searched!</strong> Talent list has been updated!
               </div>
             </div>
           </div>
@@ -35,7 +35,7 @@
               v-model="searchInput"
               type="text"
               class="form-control"
-              placeholder="Search username ..."
+              placeholder="Search talents ..."
               @keydown.enter="searchTalents"
             />
             <div class="input-group-append">
@@ -63,7 +63,7 @@
                     v-for="item in TALENTS.data"
                     :key="item.id"
                     :value="item.id"
-                    >{{ item.name }}</option
+                    >{{ item.name }} - {{ item.email }}</option
                   >
                 </select>
                 <p>
@@ -137,19 +137,21 @@ export default {
     clearForm() {
       Object.assign(this.$data, this.$options.data())
     },
-    searchTalents() {
-      this.SEARCH_TALENTS(this.searchInput)
-        .then((this.searchAlert = true))
-        .then(
-          setTimeout(() => {
-            this.searchAlert = false
-          }, 1000 * 10)
-        )
+    async searchTalents() {
+      try {
+        await this.SEARCH_TALENTS(this.searchInput)
+        this.searchAlert = true
+        setTimeout(() => {
+          this.searchAlert = false
+        }, 1000 * 10)
+      } catch (e) {
+        alert(e)
+      }
     },
     async patchCandidateCard() {
       const payload = {
-        talent: this.selectedTalent,
-        status: 2
+        talent_id: this.selectedTalent,
+        status_id: 2
       }
       const cardId = this.selectedCard
       try {

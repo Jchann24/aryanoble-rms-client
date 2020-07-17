@@ -38,7 +38,7 @@ export const actions = {
   },
 
   async SEARCH_TALENTS({ commit }, search) {
-    const data = await this.$axios.$get(`talents/?search=${search}`)
+    const data = await this.$axios.$get(`talents?name[like]=${search}%`)
     commit('SET_TALENTS', data)
   }
 }
