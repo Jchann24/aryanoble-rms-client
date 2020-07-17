@@ -13,8 +13,8 @@
               </p>
               <ul class="text-white">
                 <li>
-                  Click No Suggestion button to provide Talent Suggestion from
-                  Talent Pool.
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Perferendis, molestias.
                 </li>
               </ul>
             </div>
@@ -39,103 +39,108 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
-              <table
-                class="table align-items-center table-white table-flush table-hover"
-              >
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" class="sort">
-                      ERF Title
-                    </th>
-                    <th scope="col" class="sort">
-                      Candidate Username
-                    </th>
-                    <th scope="col" class="sort">
-                      Talent Suggestion
-                    </th>
-                    <th scope="col" class="sort">
-                      Status
-                    </th>
-                    <th scope="col" class="sort">
-                      PIC
-                    </th>
-
-                    <th></th>
-                    <th scope="col" class="sort">
-                      Created At
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="list">
-                  <tr v-for="item in CANDIDATE_CARDS.results" :key="item.id">
-                    <td>
-                      {{ item.erf.title }}
-                    </td>
-                    <td v-if="item.candidate">
-                      {{ item.candidate.username }}
-                    </td>
-                    <td v-else>
-                      <span class="text-uppercase text-danger">
-                        Not Assigned
-                      </span>
-                    </td>
-                    <td v-if="item.talent">
-                      <span class="text-uppercase">{{ item.talent.name }}</span>
-                    </td>
-                    <td v-else>
-                      <span class="text-uppercase text-info">
-                        No Suggestion
-                      </span>
-                    </td>
-                    <td class="text-uppercase">
-                      <span class="badge-md badge-warning">
-                        {{ item.status.id }} - {{ item.status.state }}
-                      </span>
-                    </td>
-                    <td>
-                      {{ item.pic }}
-                    </td>
-
-                    <td v-if="item.talent">
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-primary"
-                        data-toggle="modal"
-                        data-target="#modal-suggestion-detail"
-                        @click="selectSuggestion(item)"
-                      >
-                        Details & Response
-                      </button>
-                    </td>
-                    <td v-else>
-                      <button
-                        type="button"
-                        class="btn btn-sm btn-primary"
-                        disabled
-                      >
-                        Details & Response
-                      </button>
-                    </td>
-                    <td class="budget">
-                      {{
-                        item.created_at
-                          | moment('dddd, MMMM Do YYYY | hh:mm:ss')
-                      }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="card-body">
+              <div class="containter">
+                <div class="row">
+                  <div
+                    v-for="item in CANDIDATE_CARDS.data"
+                    :key="item.id"
+                    class="col-4"
+                  >
+                    <div class="card">
+                      <div class="card-header bg-default text-white">
+                        <div class="row">
+                          <div class="col">
+                            <h6
+                              class="text-uppercase text-white text-muted ls-1 mb-1"
+                            >
+                              {{
+                                item.created_at
+                                  | moment('dddd, MMMM Do YYYY | hh:mm:ss')
+                              }}
+                            </h6>
+                            <h5 class="h3 mb-0 text-white">
+                              {{ item.erf.title }}
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="">
+                          <table
+                            class="table table-white table-flush table-hover"
+                          >
+                            <tbody>
+                              <tr>
+                                <td>ID:</td>
+                                <td>{{ item.id }}</td>
+                              </tr>
+                              <tr>
+                                <td>Candidate Email :</td>
+                                <td v-if="item.candidate">
+                                  {{ item.candidate.email }}
+                                </td>
+                                <td v-else>
+                                  <span class="text-uppercase text-danger">
+                                    Not Assigned
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Talent Suggestion :</td>
+                                <td v-if="item.talent">
+                                  <button
+                                    type="button"
+                                    class="btn btn-sm btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#modal-suggestion-detail"
+                                    @click="selectSuggestion(item)"
+                                  >
+                                    Talent Detail & Response
+                                  </button>
+                                </td>
+                                <td v-else>
+                                  <button
+                                    type="button"
+                                    class="btn btn-sm btn-primary"
+                                    disabled
+                                  >
+                                    Details & Response
+                                  </button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>Status :</td>
+                                <td>
+                                  {{ item.status.id }} - {{ item.status.state }}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>ERF By :</td>
+                                <td>
+                                  {{ item.erf.div_user.name }}
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <button type="button" class="btn btn-block btn-primary">
+                          <span class="btn-inner--text">Full Detail</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div
-              v-if="CANDIDATE_CARDS.next || CANDIDATE_CARDS.previous"
-              class="card-footer"
-            >
+            <div v-if="CANDIDATE_CARDS.links" class="card-footer">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="CANDIDATE_CARDS.previous"
+                      v-if="CANDIDATE_CARDS.links.prev"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -152,7 +157,7 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="CANDIDATE_CARDS.next"
+                      v-if="CANDIDATE_CARDS.links.next"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -219,4 +224,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="css" scoped>
+.table td {
+  white-space: normal !important;
+}
+</style>

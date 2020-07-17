@@ -249,7 +249,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .table td {
   white-space: normal !important;
 }

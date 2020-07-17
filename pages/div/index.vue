@@ -245,7 +245,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .table td {
   white-space: normal !important;
 }

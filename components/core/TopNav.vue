@@ -103,7 +103,7 @@
                   <span
                     v-if="loggedInUser"
                     class="mb-0 text-sm font-weight-bold"
-                    >{{ loggedInUser.username }}</span
+                    >{{ loggedInUser.name }}</span
                   >
                 </div>
               </div>
