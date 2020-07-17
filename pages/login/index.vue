@@ -40,6 +40,8 @@
           <div class="col-lg-5 col-md-7">
             <div class="card bg-secondary border-0 mb-0">
               <div class="card-body px-lg-5 py-lg-5">
+                <div ref="loadingContainer"></div>
+
                 <div class="text-center text-muted mb-4">
                   <h4>
                     Recruitment<br />
@@ -117,7 +119,8 @@ export default {
     return {
       email: '',
       password: '',
-      errors: null
+      errors: null,
+      loading: false
     }
   },
   computed: {
@@ -142,20 +145,31 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$auth
-        .loginWith('local', {
-          data: {
-            email: this.email,
-            password: this.password
-          }
-        })
-        .then(() => {
-          this.$router.push('/')
-        })
-        .catch((e) => {
-          this.errors = e.response.data
-        })
+    async login() {
+      this.loading = true
+      const loader = this.$loading.show({
+        container: this.$refs.loadingContainer
+      })
+      try {
+        await this.$auth
+          .loginWith('local', {
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          })
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch((e) => {
+            this.errors = e.response.data
+          })
+      } catch (e) {
+        alert(e.response.data)
+      } finally {
+        this.loading = false
+        loader.hide()
+      }
     }
   }
 }
