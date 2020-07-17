@@ -46,15 +46,6 @@
                       ERF Title
                     </th>
                     <th scope="col" class="sort">
-                      Job Title
-                    </th>
-                    <th scope="col" class="sort">
-                      Division
-                    </th>
-                    <th scope="col" class="sort">
-                      Department
-                    </th>
-                    <th scope="col" class="sort">
                       Submitted At
                     </th>
                     <th scope="col" class="sort">
@@ -68,20 +59,8 @@
                     <td>
                       {{ item.title }}
                     </td>
-                    <td>
-                      {{ item.job_title }}
-                    </td>
-                    <td>
-                      {{ item.division }}
-                    </td>
-                    <td>
-                      {{ item.department }}
-                    </td>
                     <td class="budget">
-                      {{
-                        item.created_at
-                          | moment('dddd, MMMM Do YYYY | hh:mm:ss')
-                      }}
+                      {{ item.created_at | moment('ddd, DD-MM-YY | hh:mm') }}
                     </td>
                     <td>
                       {{ item.div_user.name }}

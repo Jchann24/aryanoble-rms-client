@@ -150,9 +150,6 @@
                       Title
                     </th>
                     <th scope="col" class="sort">
-                      Created At
-                    </th>
-                    <th scope="col" class="sort">
                       Submitted By
                     </th>
                   </tr>
@@ -161,12 +158,6 @@
                   <tr v-for="item in ERFS.data" :key="item.id">
                     <td>
                       {{ item.title }}
-                    </td>
-                    <td>
-                      {{
-                        item.created_at
-                          | moment('dddd, MMMM Do YYYY | hh:mm:ss')
-                      }}
                     </td>
                     <td>
                       {{ item.div_user.name }}

@@ -60,7 +60,7 @@
                   class="form-control"
                 >
                   <option
-                    v-for="item in TALENTS.results"
+                    v-for="item in TALENTS.data"
                     :key="item.id"
                     :value="item.id"
                     >{{ item.name }}</option

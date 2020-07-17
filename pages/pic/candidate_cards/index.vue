@@ -54,7 +54,7 @@
                       ERF Title
                     </th>
                     <th scope="col" class="sort">
-                      Candidate Username
+                      Candidate Email
                     </th>
                     <th scope="col" class="sort">
                       Talent Suggestion
@@ -72,12 +72,12 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in CANDIDATE_CARDS.results" :key="item.id">
+                  <tr v-for="item in CANDIDATE_CARDS.data" :key="item.id">
                     <td>
                       {{ item.erf.title }}
                     </td>
                     <td v-if="item.candidate">
-                      {{ item.candidate.username }}
+                      {{ item.candidate.email }}
                     </td>
                     <td v-else-if="item.status.id !== 3">
                       <span class="text-danger">Cannot Assign Account</span>
@@ -109,7 +109,7 @@
                     </td>
                     <td>{{ item.status.id }} - {{ item.status.state }}</td>
                     <td>
-                      {{ item.erf.div_user }}
+                      {{ item.erf.div_user.name }}
                     </td>
                     <td class="budget">
                       {{

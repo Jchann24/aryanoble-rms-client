@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="CANDIDATE_ACCOUNTS.data"
     id="modal-assign"
     class="modal fade"
     tabindex="-1"
@@ -60,7 +61,7 @@
                   class="form-control"
                 >
                   <option
-                    v-for="item in CANDIDATE_ACCOUNTS.results"
+                    v-for="item in CANDIDATE_ACCOUNTS.data"
                     :key="item.id"
                     :value="item.username"
                     >{{ item.username }}</option
@@ -100,7 +101,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'PICModalAssign',
   props: {
@@ -117,6 +118,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      CANDIDATE_ACCOUNTS: 'candidate-accounts/CANDIDATE_ACCOUNTS'
+    }),
     disabled() {
       return this.searchInput === ''
     },
