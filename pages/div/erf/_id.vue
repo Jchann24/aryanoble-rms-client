@@ -68,10 +68,10 @@
                           >
                           <div class="input-group">
                             <input
-                              v-model="ERF.submit_date"
+                              v-model="ERF.created_at"
                               class="form-control"
                               placeholder="Select date"
-                              type="date"
+                              type="datetime-local"
                               :readonly="readonly"
                             />
                           </div>
@@ -510,14 +510,28 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-age-range"
-                          >Age Range</label
+                          >Age Range From</label
                         >
                         <input
                           id="input-age-range"
-                          v-model="ERF.age_range"
+                          v-model="ERF.age_range_from"
+                          type="text"
+                          class="form-control"
+                          :readonly="readonly"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-age-range"
+                          >Age Range To</label
+                        >
+                        <input
+                          id="input-age-range"
+                          v-model="ERF.age_range_to"
                           type="text"
                           class="form-control"
                           :readonly="readonly"
@@ -580,8 +594,11 @@ export default {
 
   computed: {
     ...mapGetters({
-      ERF: 'erfs/ERF'
-    })
+      getErf: 'erfs/ERF'
+    }),
+    ERF() {
+      return this.getErf.data
+    }
   },
 
   created() {
