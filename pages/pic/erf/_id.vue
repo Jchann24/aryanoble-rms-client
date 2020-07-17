@@ -530,7 +530,7 @@
                         <input
                           id="input-age-range"
                           v-model="ERF.age_range_from"
-                          type="text"
+                          type="number"
                           class="form-control"
                           :readonly="readonly"
                         />
@@ -544,7 +544,7 @@
                         <input
                           id="input-age-range"
                           v-model="ERF.age_range_to"
-                          type="text"
+                          type="number"
                           class="form-control"
                           :readonly="readonly"
                         />

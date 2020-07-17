@@ -74,23 +74,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label class="form-control-label" for="input-date"
-                            >Date</label
-                          >
-                          <div class="input-group">
-                            <input
-                              v-model="ERF.submit_date"
-                              class="form-control"
-                              placeholder="Select date"
-                              type="date"
-                              :readonly="readonly"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
+                      <div class="col-lg-6"></div>
                     </div>
                     <div class="row">
                       <div class="col-lg-6">
@@ -532,18 +516,31 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-age-range"
-                          >Age Range</label
+                          >Age Range From</label
                         >
                         <input
                           id="input-age-range"
-                          v-model="ERF.age_range"
-                          type="text"
+                          v-model="ERF.age_range_from"
+                          type="number"
                           class="form-control"
                           :readonly="readonly"
-                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-age-range"
+                          >Age Range To</label
+                        >
+                        <input
+                          id="input-age-range"
+                          v-model="ERF.age_range_to"
+                          type="number"
+                          class="form-control"
+                          :readonly="readonly"
                         />
                       </div>
                     </div>
