@@ -27,7 +27,8 @@
           <div class="row">
             <div class="col-12 px-3">
               <div v-if="searchAlert" class="alert alert-success" role="alert">
-                <strong>Searched!</strong> Username list has been updated!
+                <strong>Searched!</strong> Candidate Account list has been
+                updated!
               </div>
             </div>
           </div>
@@ -36,7 +37,7 @@
               v-model="searchInput"
               type="text"
               class="form-control"
-              placeholder="Search username ..."
+              placeholder="Search account ..."
               @keydown.enter="searchAccounts"
             />
             <div class="input-group-append">
@@ -53,23 +54,23 @@
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <label for="username-select">Usernames</label>
+                <label for="account-select">Accounts</label>
 
                 <select
-                  id="username-select"
+                  id="account-select"
                   v-model="selectedAccount"
                   class="form-control"
                 >
                   <option
                     v-for="item in CANDIDATE_ACCOUNTS.data"
                     :key="item.id"
-                    :value="item.username"
-                    >{{ item.username }}</option
+                    :value="item.id"
+                    >{{ item.name }} - {{ item.email }}</option
                   >
                 </select>
                 <p>
                   <small class="text-warning"
-                    >If you cannot find the username, please use the search
+                    >If you cannot find the account, please use the search
                     above.</small
                   >
                 </p>
@@ -146,8 +147,8 @@ export default {
     },
     async patchCandidateCard() {
       const payload = {
-        candidate: this.selectedAccount,
-        status: 4
+        candidate_id: this.selectedAccount,
+        status_id: 4
       }
       const cardId = this.selectedCard
 

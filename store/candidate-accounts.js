@@ -41,7 +41,7 @@ export const actions = {
   },
 
   async SEARCH_CANDIDATE_ACCOUNTS({ commit }, search) {
-    const data = await this.$axios.$get(`users/?search=${search}`)
+    const data = await this.$axios.$get(`users/?name[like]=${search}%`)
     commit('SET_CANDIDATE_ACCOUNTS', data)
   }
 }
