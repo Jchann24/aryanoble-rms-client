@@ -77,11 +77,11 @@
                           >
                             <tbody>
                               <tr>
-                                <td>ID:</td>
+                                <td>I</td>
                                 <td>{{ item.id }}</td>
                               </tr>
                               <tr>
-                                <td>Candidate Email :</td>
+                                <td>Candidate Email</td>
                                 <td v-if="item.candidate">
                                   {{ item.candidate.email }}
                                 </td>
@@ -106,7 +106,7 @@
                                 </td>
                               </tr>
                               <tr>
-                                <td>Talent Suggestion :</td>
+                                <td>Talent Suggestion</td>
                                 <td v-if="item.talent">
                                   {{ item.talent.name }}
                                 </td>
@@ -123,13 +123,13 @@
                                 </td>
                               </tr>
                               <tr>
-                                <td>Status :</td>
+                                <td>Status</td>
                                 <td>
                                   {{ item.status.id }} - {{ item.status.state }}
                                 </td>
                               </tr>
                               <tr>
-                                <td>ERF By :</td>
+                                <td>ERF By</td>
                                 <td>
                                   {{ item.erf.div_user.name }}
                                 </td>

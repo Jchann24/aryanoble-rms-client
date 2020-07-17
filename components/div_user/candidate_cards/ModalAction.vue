@@ -38,7 +38,7 @@
               <h3 class="text-uppercase ls-1 text-white py-3 mb-0">
                 {{ selectedSuggestion.talent.source }}
               </h3>
-              <h5 class="text-white text-uppercase">
+              <h5 :class="state">
                 {{ selectedSuggestion.status.state }}
               </h5>
             </div>
@@ -157,14 +157,21 @@ export default {
       default: () => {}
     }
   },
+  computed: {
+    state() {
+      return this.selectedSuggestion.status.id === 100
+        ? 'badge badge-danger text-uppercase'
+        : 'text-white text-uppercase'
+    }
+  },
   methods: {
     ...mapActions({
       UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD',
       GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS'
     }),
-    async action(status) {
+    async action(statusId) {
       const payload = {
-        status
+        status_id: statusId
       }
       const cardId = this.selectedSuggestion.id
       try {

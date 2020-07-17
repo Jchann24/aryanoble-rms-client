@@ -323,7 +323,7 @@
                             <label
                               class="custom-control-label"
                               for="radio-working-hours-1"
-                              >Full - time</label
+                              >Full-Time</label
                             >
                           </div>
                           <div class="custom-control custom-radio">
@@ -339,7 +339,7 @@
                             <label
                               class="custom-control-label"
                               for="radio-working-hours-2"
-                              >Part - time</label
+                              >Part-Time</label
                             >
                           </div>
                         </div>

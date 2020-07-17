@@ -41,7 +41,7 @@
             </div>
             <div class="card-body">
               <div class="containter">
-                <div class="row">
+                <div v-if="CANDIDATE_CARDS.data" class="row">
                   <div
                     v-for="item in CANDIDATE_CARDS.data"
                     :key="item.id"
@@ -72,11 +72,11 @@
                           >
                             <tbody>
                               <tr>
-                                <td>ID:</td>
+                                <td>ID</td>
                                 <td>{{ item.id }}</td>
                               </tr>
                               <tr>
-                                <td>Candidate Email :</td>
+                                <td>Candidate Email</td>
                                 <td v-if="item.candidate">
                                   {{ item.candidate.email }}
                                 </td>
@@ -87,7 +87,7 @@
                                 </td>
                               </tr>
                               <tr>
-                                <td>Talent Suggestion :</td>
+                                <td>Talent Suggestion</td>
                                 <td v-if="item.talent">
                                   <button
                                     type="button"
@@ -105,18 +105,18 @@
                                     class="btn btn-sm btn-primary"
                                     disabled
                                   >
-                                    Details & Response
+                                    Talent Detail & Response
                                   </button>
                                 </td>
                               </tr>
                               <tr>
-                                <td>Status :</td>
+                                <td>Status</td>
                                 <td>
                                   {{ item.status.id }} - {{ item.status.state }}
                                 </td>
                               </tr>
                               <tr>
-                                <td>ERF By :</td>
+                                <td>ERF By</td>
                                 <td>
                                   {{ item.erf.div_user.name }}
                                 </td>
@@ -133,14 +133,36 @@
                     </div>
                   </div>
                 </div>
+                <div v-else class="row">
+                  <div class="col-4">
+                    <content-placeholders :rounded="true">
+                      <content-placeholders-img />
+                      <content-placeholders-heading />
+                    </content-placeholders>
+                  </div>
+                  <div class="col-4">
+                    <content-placeholders :rounded="true">
+                      <content-placeholders-img />
+                      <content-placeholders-heading />
+                    </content-placeholders>
+                  </div>
+                  <div class="col-4">
+                    <content-placeholders :rounded="true">
+                      <content-placeholders-img />
+                      <content-placeholders-heading />
+                    </content-placeholders>
+                  </div>
+                </div>
               </div>
             </div>
             <div v-if="CANDIDATE_CARDS.links" class="card-footer">
+              <div ref="loadingContainer"></div>
+
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="CANDIDATE_CARDS.links.prev"
+                      v-if="CANDIDATE_CARDS.links.prev && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -157,7 +179,7 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="CANDIDATE_CARDS.links.next"
+                      v-if="CANDIDATE_CARDS.links.next && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -195,7 +217,8 @@ export default {
       page: 1,
       prev: 'prev',
       next: 'next',
-      selectedSuggestion: null
+      selectedSuggestion: null,
+      loading: false
     }
   },
   computed: {
@@ -204,15 +227,27 @@ export default {
     })
   },
   created() {
-    this.GET_CANDIDATE_CARDS(this.page)
+    this.getCandidateCards(this.page)
   },
   methods: {
     ...mapActions({
       GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS',
       UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD'
     }),
-    getCandidateCards(page) {
-      this.GET_CANDIDATE_CARDS(page)
+    async getCandidateCards(page) {
+      this.loading = true
+      const loader = this.$loading.show({
+        container: this.$refs.loadingContainer
+      })
+      try {
+        await this.GET_CANDIDATE_CARDS(page)
+      } catch (e) {
+        this.page--
+        alert(e.response.data)
+      } finally {
+        this.loading = false
+        loader.hide()
+      }
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--

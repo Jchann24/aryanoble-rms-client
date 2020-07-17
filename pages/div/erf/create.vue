@@ -309,13 +309,13 @@
                               type="radio"
                               name="working-hours-radio"
                               class="custom-control-input"
-                              value="Full-time"
+                              value="Full-Time"
                               :disabled="readonly"
                             />
                             <label
                               class="custom-control-label"
                               for="radio-working-hours-1"
-                              >Full - time</label
+                              >Full-Time</label
                             >
                           </div>
                           <div class="custom-control custom-radio">
@@ -325,13 +325,13 @@
                               type="radio"
                               name="working-hours-radio"
                               class="custom-control-input"
-                              value="Part-time"
+                              value="Part-Time"
                               :disabled="readonly"
                             />
                             <label
                               class="custom-control-label"
                               for="radio-working-hours-2"
-                              >Part - time</label
+                              >Part-Time</label
                             >
                           </div>
                         </div>
