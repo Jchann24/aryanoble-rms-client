@@ -37,7 +37,7 @@
             <div class="card-header">
               <h1>Your Latest Submitted ERFs</h1>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="ERFS.data" class="table-responsive mb-5">
               <table class="table align-items-center table-white table-hover">
                 <thead class="bg-gradient-gray text-white">
                   <tr>
@@ -57,7 +57,7 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="erf in ERFS.results" :key="erf.id">
+                  <tr v-for="erf in ERFS.data" :key="erf.id">
                     <td>
                       {{ erf.title }}
                     </td>
@@ -84,12 +84,19 @@
                 </tbody>
               </table>
             </div>
-            <div v-if="ERFS.next || ERFS.previous" class="card-footer">
+            <div v-else class="col my-4 mx-4">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
+            </div>
+            <div v-if="ERFS.links" class="card-footer">
+              <div ref="loadingContainer"></div>
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="ERFS.previous"
+                      v-if="ERFS.links.prev && !loading"
                       class="page-link"
                       href="#!"
                       @click="
@@ -106,7 +113,7 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="ERFS.next"
+                      v-if="ERFS.links.next && !loading"
                       class="page-link"
                       href="#!"
                       @click="
@@ -140,7 +147,8 @@ export default {
       readonly: true,
       next: 'next',
       prev: 'prev',
-      errors: false
+      errors: false,
+      loading: false
     }
   },
   computed: {
@@ -159,8 +167,20 @@ export default {
       Object.assign(this.$data, this.$options.data())
     },
 
-    getERFS(page) {
-      this.GET_ERFS(page)
+    async getERFS(page) {
+      this.loading = true
+      const loader = this.$loading.show({
+        container: this.$refs.loadingContainer
+      })
+      try {
+        await this.GET_ERFS(page)
+      } catch (e) {
+        this.page--
+        alert(e.response.data)
+      } finally {
+        this.loading = false
+        loader.hide()
+      }
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--
