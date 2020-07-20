@@ -139,7 +139,7 @@ export default {
     })
   },
   created() {
-    this.GET_CANDIDATE_ACCOUNTS(this.page)
+    this.getCandidateAccounts(this.page)
   },
   methods: {
     ...mapActions({
