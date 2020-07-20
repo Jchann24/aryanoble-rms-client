@@ -224,7 +224,7 @@ export default {
         email
       }
       try {
-        await this.$axios.$post('email/', payload)
+        await this.$axios.$post('update-notification/', payload)
         this.toaster(email)
       } catch (e) {
         alert(e)
@@ -238,12 +238,12 @@ export default {
         email
       }
       const payload = {
-        status: 6
+        status_id: 6
       }
       const cardId = this.selectedCard.id
 
       try {
-        await this.$axios.$post('send-form/', receiver)
+        await this.$axios.$post('form-email/', receiver)
         await this.UPDATE_CANDIDATE_CARD({ payload, cardId })
         await this.GET_CANDIDATE_CARDS()
         this.toaster(email)
