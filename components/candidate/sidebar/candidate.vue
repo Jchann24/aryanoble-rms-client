@@ -11,6 +11,17 @@
         <span class="nav-link-text">Dashboard Candidate</span>
       </nuxt-link>
     </li>
+    <li class="nav-item">
+      <nuxt-link
+        to="/candidate/settings"
+        tag="a"
+        class="nav-link"
+        exact-active-class="active"
+      >
+        <i class="ni ni-settings text-default"></i>
+        <span class="nav-link-text">Settings</span>
+      </nuxt-link>
+    </li>
   </div>
 </template>
 

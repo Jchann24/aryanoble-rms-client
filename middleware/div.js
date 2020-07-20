@@ -1,5 +1,5 @@
 export default function({ app, redirect }) {
-  if (app.$auth.user.group_id !== 4) {
+  if (app.$auth.user.data.group_id !== 4) {
     return redirect('/')
   }
 }

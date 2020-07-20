@@ -80,7 +80,7 @@
             <!-- Card header -->
             <div class="card-header">
               <!-- Title -->
-              <h5 class="h3 mb-0">Progress track</h5>
+              <h5 class="h3 mb-0">Last Status</h5>
             </div>
             <!-- Card body -->
             <div class="card-body">
@@ -90,124 +90,22 @@
                   <div class="row align-items-center">
                     <div class="col-auto">
                       <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
+                      <div class="avatar rounded-circle bg-transparent">
                         <img
                           alt="Image placeholder"
-                          src="assets/img/theme/bootstrap.jpg"
+                          src="/img/candidate/edit-list.png"
                         />
-                      </a>
+                      </div>
                     </div>
                     <div class="col">
-                      <h5>Argon Design System</h5>
+                      <h5>
+                        State {{ card.status.id }} - {{ card.status.state }}
+                      </h5>
                       <div class="progress progress-xs mb-0">
                         <div
-                          class="progress-bar bg-orange"
+                          class="progress-bar bg-warning"
                           role="progressbar"
                           aria-valuenow="60"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          style="width: 60%;"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img
-                          alt="Image placeholder"
-                          src="assets/img/theme/angular.jpg"
-                        />
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Angular Now UI Kit PRO</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div
-                          class="progress-bar bg-green"
-                          role="progressbar"
-                          aria-valuenow="100"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          style="width: 100%;"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img
-                          alt="Image placeholder"
-                          src="assets/img/theme/sketch.jpg"
-                        />
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Black Dashboard</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div
-                          class="progress-bar bg-red"
-                          role="progressbar"
-                          aria-valuenow="72"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          style="width: 72%;"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img
-                          alt="Image placeholder"
-                          src="assets/img/theme/react.jpg"
-                        />
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>React Material Dashboard</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div
-                          class="progress-bar bg-teal"
-                          role="progressbar"
-                          aria-valuenow="90"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          style="width: 90%;"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item px-0">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <!-- Avatar -->
-                      <a href="#" class="avatar rounded-circle">
-                        <img
-                          alt="Image placeholder"
-                          src="assets/img/theme/vue.jpg"
-                        />
-                      </a>
-                    </div>
-                    <div class="col">
-                      <h5>Vue Paper UI Kit PRO</h5>
-                      <div class="progress progress-xs mb-0">
-                        <div
-                          class="progress-bar bg-green"
-                          role="progressbar"
-                          aria-valuenow="100"
                           aria-valuemin="0"
                           aria-valuemax="100"
                           style="width: 100%;"
@@ -257,7 +155,7 @@
                       ><i class="fa fa-user-tie"></i
                     ></span>
                     <span class="text-nowrap text-white">
-                      PIC : {{ card.pic }}
+                      PIC : {{ card.pic.name }}
                     </span>
                   </p>
                   <p class="mt-3 mb-0 text-sm">
@@ -272,165 +170,8 @@
               </div>
             </div>
           </div>
-          <div class="card">
-            <div class="card-header">
-              <div class="row align-items-center">
-                <div class="col-8">
-                  <h3 class="mb-0">Create new latest details</h3>
-                </div>
-                <div class="col-4 text-right">
-                  <a href="#!" class="btn btn-sm btn-primary">Settings</a>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <form>
-                <h6 class="heading-small text-muted mb-4">User information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-username"
-                          >Username</label
-                        >
-                        <input
-                          id="input-username"
-                          type="text"
-                          class="form-control"
-                          placeholder="Username"
-                          value="lucky.jesse"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-email"
-                          >Email address</label
-                        >
-                        <input
-                          id="input-email"
-                          type="email"
-                          class="form-control"
-                          placeholder="jesse@example.com"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-first-name"
-                          >First name</label
-                        >
-                        <input
-                          id="input-first-name"
-                          type="text"
-                          class="form-control"
-                          placeholder="First name"
-                          value="Lucky"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-last-name"
-                          >Last name</label
-                        >
-                        <input
-                          id="input-last-name"
-                          type="text"
-                          class="form-control"
-                          placeholder="Last name"
-                          value="Jesse"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="my-4" />
-                <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">
-                  Contact information
-                </h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-address"
-                          >Address</label
-                        >
-                        <input
-                          id="input-address"
-                          class="form-control"
-                          placeholder="Home Address"
-                          value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-city"
-                          >City</label
-                        >
-                        <input
-                          id="input-city"
-                          type="text"
-                          class="form-control"
-                          placeholder="City"
-                          value="New York"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country"
-                          >Country</label
-                        >
-                        <input
-                          id="input-country"
-                          type="text"
-                          class="form-control"
-                          placeholder="Country"
-                          value="United States"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country"
-                          >Postal code</label
-                        >
-                        <input
-                          id="input-postal-code"
-                          type="number"
-                          class="form-control"
-                          placeholder="Postal code"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="my-4" />
-                <!-- Description -->
-                <h6 class="heading-small text-muted mb-4">About me</h6>
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label">About Me</label>
-                    <textarea
-                      rows="4"
-                      class="form-control"
-                      placeholder="A few words about you ..."
-                    >
-A beautiful premium dashboard for Bootstrap 4.</textarea
-                    >
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
+          <edit-form v-if="!loggedInUser.user_detail" />
+          <detail-card v-else />
         </div>
       </div>
     </div>
@@ -439,12 +180,16 @@ A beautiful premium dashboard for Bootstrap 4.</textarea
 
 <script>
 import Quote from '@/components/core/Attributes/Quote'
+import EditForm from '@/components/candidate/index/EditForm'
+import DetailCard from '@/components/candidate/index/DetailCard'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   middleware: ['auth', 'candidate'],
   name: 'CandidateDashboard',
   components: {
-    Quote
+    Quote,
+    EditForm,
+    DetailCard
   },
   data() {
     return {
@@ -453,12 +198,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS'
+      CANDIDATE_CARDS: 'candidate-cards/CANDIDATE_CARDS',
+      loggedInUser: 'loggedInUser'
     })
   },
   async created() {
     await this.GET_CANDIDATE_CARDS()
-    this.card = this.CANDIDATE_CARDS.results[0]
+    this.card = this.CANDIDATE_CARDS.data[0]
   },
   methods: {
     ...mapActions({
