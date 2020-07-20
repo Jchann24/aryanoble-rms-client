@@ -51,7 +51,7 @@
                         Cards
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ CARDS.meta.total }} Responses
+                        >{{ CARDS.meta.total }} Responded
                       </span>
                     </div>
                     <div v-else class="col">

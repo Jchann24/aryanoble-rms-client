@@ -46,11 +46,11 @@
             </div>
             <div class="card-body">
               <div class="containter">
-                <div class="row">
+                <div v-if="CANDIDATE_CARDS.data" class="row">
                   <div
                     v-for="item in CANDIDATE_CARDS.data"
                     :key="item.id"
-                    class="col-4"
+                    class="col-12 col-md-6 col-xl-4"
                   >
                     <div class="card">
                       <div class="card-header bg-default text-white">
@@ -77,7 +77,7 @@
                           >
                             <tbody>
                               <tr>
-                                <td>I</td>
+                                <td>ID</td>
                                 <td>{{ item.id }}</td>
                               </tr>
                               <tr>
@@ -134,28 +134,43 @@
                                   {{ item.erf.div_user.name }}
                                 </td>
                               </tr>
-                              <tr>
-                                <td>
-                                  <!-- <nuxt-link> -->
-                                  <button
-                                    type="button"
-                                    class="btn btn-icon btn-primary"
-                                  >
-                                    <span class="btn-inner--text">Details</span>
-                                  </button>
-                                  <!-- </nuxt-link> -->
-                                </td>
-                              </tr>
                             </tbody>
                           </table>
                         </div>
                       </div>
+                      <div class="card-footer">
+                        <button type="button" class="btn btn-block btn-primary">
+                          <span class="btn-inner--text">Full Detail</span>
+                        </button>
+                      </div>
                     </div>
+                  </div>
+                </div>
+                <div v-else class="row">
+                  <div class="col-4">
+                    <content-placeholders :rounded="true">
+                      <content-placeholders-img />
+                      <content-placeholders-heading />
+                    </content-placeholders>
+                  </div>
+                  <div class="col-4">
+                    <content-placeholders :rounded="true">
+                      <content-placeholders-img />
+                      <content-placeholders-heading />
+                    </content-placeholders>
+                  </div>
+                  <div class="col-4">
+                    <content-placeholders :rounded="true">
+                      <content-placeholders-img />
+                      <content-placeholders-heading />
+                    </content-placeholders>
                   </div>
                 </div>
               </div>
             </div>
             <div v-if="CANDIDATE_CARDS.links" class="card-footer">
+              <div ref="loadingContainer"></div>
+
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
@@ -228,7 +243,7 @@ export default {
     })
   },
   created() {
-    this.GET_CANDIDATE_CARDS(this.page)
+    this.getCandidateCards(this.page)
   },
   methods: {
     ...mapActions({
@@ -239,8 +254,20 @@ export default {
     selectCard(id) {
       this.selectedCard = id
     },
-    getCandidateCards(page) {
-      this.GET_CANDIDATE_CARDS(page)
+    async getCandidateCards(page) {
+      this.loading = true
+      const loader = this.$loading.show({
+        container: this.$refs.loadingContainer
+      })
+      try {
+        await this.GET_CANDIDATE_CARDS(page)
+      } catch (e) {
+        this.page--
+        alert(e.response.data)
+      } finally {
+        this.loading = false
+        loader.hide()
+      }
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--

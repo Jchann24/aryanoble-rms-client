@@ -45,7 +45,7 @@
                   <div
                     v-for="item in CANDIDATE_CARDS.data"
                     :key="item.id"
-                    class="col-4"
+                    class="col-12 col-md-6 col-lg-4"
                   >
                     <div class="card">
                       <div class="card-header bg-default text-white">
