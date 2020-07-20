@@ -34,7 +34,7 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="CANDIDATE_ACCOUNTS.data" class="table-responsive mb-5">
               <table
                 class="table align-items-center table-white table-flush table-hover"
               >
@@ -42,9 +42,6 @@
                   <tr>
                     <th scope="col" class="sort">
                       Name
-                    </th>
-                    <th scope="col" class="sort">
-                      Username
                     </th>
                     <th scope="col" class="sort">
                       E-mail
@@ -55,19 +52,16 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in CANDIDATE_ACCOUNTS.results" :key="item.id">
+                  <tr v-for="item in CANDIDATE_ACCOUNTS.data" :key="item.id">
                     <td>
-                      {{ item.first_name }}
-                    </td>
-                    <td>
-                      {{ item.username }}
+                      {{ item.name }}
                     </td>
                     <td>
                       {{ item.email }}
                     </td>
                     <td class="budget">
                       {{
-                        item.date_joined
+                        item.created_at
                           | moment('dddd, MMMM Do YYYY | hh:mm:ss')
                       }}
                     </td>
@@ -75,15 +69,20 @@
                 </tbody>
               </table>
             </div>
-            <div
-              v-if="CANDIDATE_ACCOUNTS.next || CANDIDATE_ACCOUNTS.previous"
-              class="card-footer"
-            >
+            <div v-else class="col my-4 mx-4">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
+            </div>
+            <div v-if="CANDIDATE_ACCOUNTS.links" class="card-footer">
+              <div ref="loadingContainer"></div>
+
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
                   <li class="page-item">
                     <a
-                      v-if="CANDIDATE_ACCOUNTS.previous"
+                      v-if="CANDIDATE_ACCOUNTS.links.prev && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -100,7 +99,7 @@
                   </li>
                   <li class="page-item">
                     <a
-                      v-if="CANDIDATE_ACCOUNTS.next"
+                      v-if="CANDIDATE_ACCOUNTS.links.next && !loading"
                       class="page-link"
                       href="javascript:"
                       @click="
@@ -131,7 +130,8 @@ export default {
     return {
       page: 1,
       prev: 'prev',
-      next: 'next'
+      next: 'next',
+      loading: false
     }
   },
   computed: {
@@ -140,14 +140,25 @@ export default {
     })
   },
   created() {
-    this.GET_CANDIDATE_ACCOUNTS(this.page)
+    this.getCandidateAccounts(this.page)
   },
   methods: {
     ...mapActions({
       GET_CANDIDATE_ACCOUNTS: 'candidate-accounts/GET_CANDIDATE_ACCOUNTS'
     }),
-    getCandidateAccounts(page) {
-      this.GET_CANDIDATE_ACCOUNTS(page)
+    async getCandidateAccounts(page) {
+      this.loading = true
+      const loader = this.$loading.show({
+        container: this.$refs.loadingContainer
+      })
+      try {
+        await this.GET_CANDIDATE_ACCOUNTS(page)
+      } catch (e) {
+        this.page--
+      } finally {
+        this.loading = false
+        loader.hide()
+      }
     },
     changePage(change) {
       change === 'next' ? this.page++ : this.page--
