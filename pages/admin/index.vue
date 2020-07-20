@@ -17,13 +17,18 @@
                 <!-- Card body -->
                 <div class="card-body p-4">
                   <div class="row">
-                    <div class="col">
+                    <div v-if="CANDIDATE_ACCOUNTS.meta" class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Accounts
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ CANDIDATE_ACCOUNTS.count }} Candidates
+                        >{{ CANDIDATE_ACCOUNTS.meta.total }} Candidates
                       </span>
+                    </div>
+                    <div v-else class="col">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-heading />
+                      </content-placeholders>
                     </div>
                     <div class="col-auto">
                       <div
@@ -41,13 +46,18 @@
                 <!-- Card body -->
                 <div class="card-body p-4">
                   <div class="row">
-                    <div class="col">
+                    <div v-if="CANDIDATE_CARDS.meta" class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">
                         Assigned Cards
                       </h5>
                       <span class="h2 font-weight-bold mb-0"
-                        >{{ CANDIDATE_CARDS.count }} Candidates</span
+                        >{{ CANDIDATE_CARDS.meta.total }} Candidates</span
                       >
+                    </div>
+                    <div v-else class="col">
+                      <content-placeholders :rounded="true">
+                        <content-placeholders-heading />
+                      </content-placeholders>
                     </div>
                     <div class="col-auto">
                       <div
@@ -101,7 +111,7 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="CANDIDATE_CARDS.data" class="table-responsive mb-5">
               <table
                 class="table align-items-center table-white table-flush table-hover"
               >
@@ -122,15 +132,15 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in CANDIDATE_CARDS.results" :key="item.id">
+                  <tr v-for="item in CANDIDATE_CARDS.data" :key="item.id">
                     <td>
                       {{ item.erf.title }}
                     </td>
                     <td>
-                      {{ item.pic }}
+                      {{ item.pic.name }}
                     </td>
                     <td v-if="item.candidate">
-                      {{ item.candidate.first_name }}
+                      {{ item.candidate.name }}
                     </td>
                     <td v-else>
                       <span class="text-danger">No Candidate Assigned</span>
@@ -144,6 +154,12 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div v-else class="col my-4 mx-auto py-2 px-5">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
             </div>
           </div>
         </div>
@@ -159,14 +175,14 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive mb-5">
+            <div v-if="CANDIDATE_ACCOUNTS.data" class="table-responsive mb-5">
               <table
                 class="table align-items-center table-white table-flush table-hover"
               >
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort">
-                      Username
+                      Name
                     </th>
                     <th scope="col" class="sort">
                       Email
@@ -174,9 +190,9 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  <tr v-for="item in CANDIDATE_ACCOUNTS.results" :key="item.id">
+                  <tr v-for="item in CANDIDATE_ACCOUNTS.data" :key="item.id">
                     <td>
-                      {{ item.username }}
+                      {{ item.name }}
                     </td>
                     <td>
                       {{ item.email }}
@@ -184,6 +200,12 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div v-else class="col my-4 mx-auto py-2 px-5">
+              <content-placeholders :rounded="true">
+                <content-placeholders-heading />
+                <content-placeholders-text :lines="5" />
+              </content-placeholders>
             </div>
           </div>
         </div>
@@ -215,15 +237,11 @@ export default {
     })
   },
   created() {
-    this.getERFS()
-    this.getTALENTS()
-
     this.getCANDIDATE_CARDS()
     this.getCANDIDATE_ACCOUNTS()
   },
   methods: {
     ...mapActions({
-      getERFS: 'erfs/GET_ERFS',
       getTALENTS: 'talents/GET_TALENTS',
       getCANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS',
 
@@ -232,3 +250,9 @@ export default {
   }
 }
 </script>
+
+<style lang="css">
+.table td {
+  white-space: normal;
+}
+</style>
