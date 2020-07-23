@@ -3,16 +3,19 @@
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col-8">
-          <h3 class="mb-0">Create new latest details</h3>
+          <h3 v-if="!loggedInUser.user_detail" class="mb-0">
+            Create new latest details
+          </h3>
+          <h3 v-else class="mb-0">Update User Detail</h3>
         </div>
         <div class="col-4 text-right">
-          <nuxt-link to="/candidate/settings">
+          <nuxt-link v-if="settingsBtn" to="/candidate/settings">
             <a href="#!" class="btn btn-sm btn-primary">Settings</a>
           </nuxt-link>
         </div>
       </div>
     </div>
-    <div class="card-body">
+    <div v-if="form" class="card-body">
       <form @submit.prevent="saveDetail">
         <h6 class="heading-small text-muted mb-4">User information</h6>
         <div class="pl-lg-4">
@@ -209,11 +212,18 @@
             </p>
           </div>
           <button
-            v-if="!loading"
+            v-if="!loading && !loggedInUser.user_detail"
             class="btn btn-block btn-success"
             type="submit"
           >
             Submit
+          </button>
+          <button
+            v-else-if="!loading && loggedInUser.user_detail"
+            class="btn btn-block btn-success"
+            type="submit"
+          >
+            Update
           </button>
           <button v-else class="btn btn-block btn-success" disabled>
             Loading ...
@@ -239,26 +249,50 @@ export default {
   computed: {
     ...mapGetters({
       loggedInUser: 'loggedInUser'
-    })
+    }),
+    settingsBtn() {
+      return this.$route.name === 'candidate'
+    }
+  },
+  created() {
+    this.copyUserDetail()
   },
   methods: {
     ...mapActions({
       SAVE_USER_DETAIL: 'user-detail/SAVE_USER_DETAIL',
+      UPDATE_USER_DETAIL: 'user-detail/UPDATE_USER_DETAIL',
       GET_ME: 'GET_ME'
     }),
     async saveDetail() {
       this.loading = true
       this.error = false
-
-      try {
-        await this.SAVE_USER_DETAIL(this.form)
-        await this.GET_ME()
-        this.toaster_success('Latest Detail Saved!')
-      } catch (e) {
-        this.error = true
-        this.errors = e.response.data.errors
-      } finally {
-        this.loading = false
+      if (!this.loggedInUser.user_detail) {
+        try {
+          await this.SAVE_USER_DETAIL(this.form)
+          await this.GET_ME()
+          this.toaster_success('Latest Detail Saved!')
+        } catch (e) {
+          this.error = true
+          this.errors = e.response.data.errors
+        } finally {
+          this.loading = false
+        }
+      } else {
+        try {
+          const payload = this.form
+          const userDetailId = this.form.id
+          await this.UPDATE_USER_DETAIL({ payload, userDetailId })
+        } catch (e) {
+          this.error = true
+          this.errors = e.response.data.errors
+        } finally {
+          this.loading = false
+        }
+      }
+    },
+    copyUserDetail() {
+      if (this.loggedInUser.user_detail) {
+        this.form = JSON.parse(JSON.stringify(this.loggedInUser.user_detail))
       }
     },
     toaster_success(mess) {

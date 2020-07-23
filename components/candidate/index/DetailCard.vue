@@ -46,7 +46,7 @@
         Lastly, can I call you at this number {{ USER.user_detail.phone_num }} ?
         :)
       </p>
-      <p>
+      <p class="card-text">
         Thankyou! Can't wait to meet you in person! Good Luck! <br />
         <span class="text-danger"
           >and don't forget to change your account password if you haven't
@@ -77,5 +77,6 @@ export default {
 <style lang="css">
 .card-text {
   line-height: 1.75em;
+  font-size: 14px;
 }
 </style>

@@ -24,7 +24,8 @@
     "object-to-formdata": "^3.0.9",
     "vue-content-placeholders": "^0.2.1",
     "vue-loading-overlay": "^3.3.2",
-    "vue-moment": "^4.1.0"
+    "vue-moment": "^4.1.0",
+    "vue2-dropzone": "^3.6.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",
