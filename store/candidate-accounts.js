@@ -37,7 +37,7 @@ export const actions = {
     commit('SET_CANDIDATE_ACCOUNT', data)
   },
   async UPDATE_CANDIDATE_ACCOUNT({ commit }, { payload, accountId }) {
-    await this.$axios.$put(`users/${accountId}/`, payload)
+    await this.$axios.$patch(`users/${accountId}/`, payload)
   },
 
   async SEARCH_CANDIDATE_ACCOUNTS({ commit }, search) {

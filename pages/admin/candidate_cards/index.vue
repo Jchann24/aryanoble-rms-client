@@ -44,10 +44,13 @@
                   <div
                     v-for="item in CANDIDATE_CARDS.data"
                     :key="item.id"
-                    class="col-12 col-md-6 col-xl-4"
+                    class="col-12 col-md-6 col-xl-6"
                   >
-                    <div class="card">
-                      <div class="card-header bg-default text-white">
+                    <div class="card" style="min-height: 550px">
+                      <div
+                        class="card-header bg-default text-white"
+                        style="min-height:100px"
+                      >
                         <div class="row">
                           <div class="col">
                             <h6
@@ -61,6 +64,9 @@
                             <h5 class="h3 mb-0 text-white">
                               {{ item.erf.title }}
                             </h5>
+                          </div>
+                          <div class="col-1">
+                            <h1 class="text-white">{{ item.status.id }}</h1>
                           </div>
                         </div>
                       </div>
@@ -138,6 +144,15 @@
                         >
                           Actions
                         </button>
+                        <button
+                          type="button"
+                          class="btn btn-block btn-primary"
+                          data-toggle="modal"
+                          data-target="#modal-card-full-detail"
+                          @click="selectCardDetail(item)"
+                        >
+                          <span class="btn-inner--text">Full Detail</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -208,18 +223,21 @@
       </div>
     </div>
     <modal-actions :selected-card="selectedCard" />
+    <modal-full-card-detail :selected-card-detail="selectedCardDetail" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import ModalActions from '@/components/admin/candidate_cards/ModalActions'
+import ModalFullCardDetail from '@/components/_all/ModalFullCardDetail'
 
 export default {
   middleware: ['auth', 'admin'],
   name: 'AdminCandidateCards',
   components: {
-    ModalActions
+    ModalActions,
+    ModalFullCardDetail
   },
   data() {
     return {
@@ -227,7 +245,8 @@ export default {
       prev: 'prev',
       next: 'next',
       selectedCard: {},
-      loading: false
+      loading: false,
+      selectedCardDetail: {}
     }
   },
   computed: {
@@ -245,6 +264,10 @@ export default {
       GET_CANDIDATE_CARDS: 'candidate-cards/GET_CANDIDATE_CARDS',
       UPDATE_CANDIDATE_CARD: 'candidate-cards/UPDATE_CANDIDATE_CARD'
     }),
+
+    selectCardDetail(item) {
+      this.selectedCardDetail = item
+    },
 
     async getCandidateCards(page) {
       this.loading = true

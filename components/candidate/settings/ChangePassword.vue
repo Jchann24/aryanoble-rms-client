@@ -13,7 +13,7 @@
               >
               <input
                 id="input-old_password"
-                v-model="form.old_password"
+                v-model="form.oldPassword"
                 type="password"
                 class="form-control"
                 required
@@ -29,7 +29,7 @@
               >
               <input
                 id="input-new_password"
-                v-model="form.new_password"
+                v-model="form.newPassword"
                 type="text"
                 class="form-control"
                 required
@@ -45,7 +45,7 @@
               >
               <input
                 id="input-c_password"
-                v-model="form.c_password"
+                v-model="form.newPassword_confirmation"
                 type="text"
                 class="form-control"
                 required
@@ -61,10 +61,24 @@
             </p>
           </div>
         </div>
+        <div v-if="error" class="row">
+          <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+              {{ errors }}
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
-            <button class="btn btn-block btn-success">
+            <button
+              v-if="!loading"
+              class="btn btn-block btn-success"
+              @click="updatePassword"
+            >
               Change Password
+            </button>
+            <button v-else class="btn btn-block btn-success" disabled>
+              Loading ...
             </button>
           </div>
         </div>
@@ -74,11 +88,47 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'CandidateChangePassword',
   data() {
     return {
-      form: {}
+      form: {},
+      loading: false,
+      error: false,
+      errors: null
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'loggedInUser'
+    })
+  },
+  methods: {
+    async updatePassword() {
+      this.loading = true
+      try {
+        await this.$axios.$post(`password-change/${this.user.id}`, this.form)
+        this.toaster_success('Password Changed!')
+        this.clearForm()
+      } catch (e) {
+        this.error = true
+        this.errors = e.response.data.message
+      } finally {
+        this.loading = false
+      }
+    },
+    toaster_success(mess) {
+      this.$toast.show(`Success! ${mess}`, {
+        theme: 'bubble',
+        type: 'success',
+        position: 'top-right',
+        duration: 4000,
+        icon: 'done'
+      })
+    },
+    clearForm() {
+      Object.assign(this.$data, this.$options.data())
     }
   }
 }

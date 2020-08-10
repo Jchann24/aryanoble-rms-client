@@ -18,7 +18,7 @@
       </div>
     </div>
     <!-- Page content -->
-    <div v-if="card" class="container-fluid mt--6">
+    <div class="container-fluid mt--6">
       <div class="row">
         <div class="col-xl-4 order-xl-2">
           <div class="card card-profile">
@@ -50,23 +50,30 @@
             ></div>
             <div class="card-body pt-0 mt-4">
               <div class="text-center mt-3">
-                <h5 class="h3">
-                  {{ card.talent.name }}
-                </h5>
-                <div class="h5 font-weight-300">
-                  <i class="fa fa-calendar-alt mr-2"></i
-                  >{{ card.talent.dob | moment('DD - MM - YYYY') }}
+                <div v-if="card">
+                  <h5 class="h3">
+                    {{ card.talent.name }}
+                  </h5>
+                  <div class="h5 font-weight-300">
+                    <i class="fa fa-calendar-alt mr-2"></i
+                    >{{ card.talent.dob | moment('DD - MM - YYYY') }}
+                  </div>
+                  <div class="h5 mt-4">
+                    <i class="fa fa-at mr-2"></i>{{ card.talent.email }}
+                  </div>
+                  <div>
+                    <i class="fa fa-graduation-cap mr-2"></i
+                    >{{ card.talent.university }}
+                  </div>
+                  <div class="h5 mt-4">
+                    <i class="fa fa-exclamation-circle mr-2"></i>This data is
+                    taken from our talents database
+                  </div>
                 </div>
-                <div class="h5 mt-4">
-                  <i class="fa fa-at mr-2"></i>{{ card.talent.email }}
-                </div>
-                <div>
-                  <i class="fa fa-graduation-cap mr-2"></i
-                  >{{ card.talent.university }}
-                </div>
-                <div class="h5 mt-4">
-                  <i class="fa fa-exclamation-circle mr-2"></i>This data is
-                  taken from our talents database
+                <div v-else>
+                  <content-placeholders :rounded="true">
+                    <content-placeholders-heading />
+                  </content-placeholders>
                 </div>
               </div>
             </div>
@@ -112,18 +119,26 @@
                       </div>
                     </div>
                     <div class="col">
-                      <h5>
-                        State {{ card.status.id }} - {{ card.status.state }}
-                      </h5>
-                      <div class="progress progress-xs mb-0">
-                        <div
-                          class="progress-bar bg-warning"
-                          role="progressbar"
-                          aria-valuenow="60"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          style="width: 100%;"
-                        ></div>
+                      <div v-if="card">
+                        <h5>
+                          State {{ card.status.id }} - {{ card.status.state }}
+                        </h5>
+
+                        <div class="progress progress-xs mb-0">
+                          <div
+                            class="progress-bar bg-warning"
+                            role="progressbar"
+                            aria-valuenow="60"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            style="width: 100%;"
+                          ></div>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <content-placeholders :rounded="true">
+                          <content-placeholders-heading />
+                        </content-placeholders>
                       </div>
                     </div>
                   </div>
@@ -224,6 +239,16 @@
                       >
                     </p>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div v-else class="col-lg-6">
+              <div class="card" style="min-height: 200px">
+                <div class="card-body">
+                  <content-placeholders :rounded="true">
+                    <content-placeholders-heading />
+                    <content-placeholders-text :lines="3" />
+                  </content-placeholders>
                 </div>
               </div>
             </div>

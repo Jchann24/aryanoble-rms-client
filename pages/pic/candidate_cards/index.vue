@@ -4,12 +4,12 @@
       <div class="container-fluid">
         <div class="header-body">
           <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
+            <div class="col">
               <h6 class="h2 text-white d-inline-block mb-0">
                 Candidate Cards
               </h6>
               <p class="text-white">
-                All Created Candidate Cards by PIC TAs
+                All Created Candidate Cards Created by You
               </p>
               <ul class="text-white">
                 <li>
@@ -50,10 +50,13 @@
                   <div
                     v-for="item in CANDIDATE_CARDS.data"
                     :key="item.id"
-                    class="col-12 col-md-6 col-xl-4"
+                    class="col-12 col-md-6 col-xl-6"
                   >
-                    <div class="card">
-                      <div class="card-header bg-default text-white">
+                    <div class="card" style="min-height: 550px">
+                      <div
+                        class="card-header bg-default text-white"
+                        style="min-height:100px"
+                      >
                         <div class="row">
                           <div class="col">
                             <h6
@@ -67,6 +70,9 @@
                             <h5 class="h3 mb-0 text-white">
                               {{ item.erf.title }}
                             </h5>
+                          </div>
+                          <div class="col-1">
+                            <h1 class="text-white">{{ item.status.id }}</h1>
                           </div>
                         </div>
                       </div>
@@ -139,7 +145,13 @@
                         </div>
                       </div>
                       <div class="card-footer">
-                        <button type="button" class="btn btn-block btn-primary">
+                        <button
+                          type="button"
+                          class="btn btn-block btn-primary"
+                          data-toggle="modal"
+                          data-target="#modal-card-full-detail"
+                          @click="selectCardDetail(item)"
+                        >
                           <span class="btn-inner--text">Full Detail</span>
                         </button>
                       </div>
@@ -214,6 +226,7 @@
     <!-- Modal -->
     <modal-assign :selected-card="selectedCard" />
     <modal-suggest :selected-card="selectedCard" />
+    <modal-full-card-detail :selected-card-detail="selectedCardDetail" />
   </div>
 </template>
 
@@ -222,19 +235,22 @@ import { mapActions, mapGetters } from 'vuex'
 
 import ModalSuggest from '@/components/pic/candidate_cards/ModalSuggest'
 import ModalAssign from '@/components/pic/candidate_cards/ModalAssign'
+import ModalFullCardDetail from '@/components/_all/ModalFullCardDetail'
 export default {
   middleware: ['auth', 'pic'],
   name: 'PICCandidateCards',
   components: {
     ModalSuggest,
-    ModalAssign
+    ModalAssign,
+    ModalFullCardDetail
   },
   data() {
     return {
       page: 1,
       prev: 'prev',
       next: 'next',
-      selectedCard: 0
+      selectedCard: 0,
+      selectedCardDetail: {}
     }
   },
   computed: {
@@ -253,6 +269,9 @@ export default {
     }),
     selectCard(id) {
       this.selectedCard = id
+    },
+    selectCardDetail(item) {
+      this.selectedCardDetail = item
     },
     async getCandidateCards(page) {
       this.loading = true
