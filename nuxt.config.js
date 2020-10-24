@@ -42,7 +42,12 @@ export default {
       }
     ],
     script: [
-      { src: '/assets/vendor/jquery/dist/jquery.min.js', body: true },
+      {
+        src: 'https://code.jquery.com/jquery-3.5.1.min.js',
+        integrity: 'sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=',
+        crossorigin: 'anonymous',
+        body: true
+      },
       {
         src: '/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
         body: true
