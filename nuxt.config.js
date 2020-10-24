@@ -49,10 +49,6 @@ export default {
       },
       { src: '/assets/vendor/js-cookie/js.cookie.js', body: true },
       {
-        src: '/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js',
-        body: true
-      },
-      {
         src: '/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js',
         body: true
       },

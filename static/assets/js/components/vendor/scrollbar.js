@@ -4,10 +4,10 @@
 
 'use strict'
 
-var Scrollbar = (function() {
+const Scrollbar = (function() {
   // Variables
 
-  var $scrollbar = $('.scrollbar-inner')
+  const $scrollbar = $('.scrollbar-inner')
 
   // Methods
 
