@@ -39,20 +39,64 @@
                 <div class="row align-items-center">
                   <div class="col-6">
                     <h3 class="mb-0">Employee Request Form</h3>
+                    <div v-if="ERF.acceptance">
+                      <h4
+                        v-if="ERF.acceptance.acceptance == 1"
+                        class="badge badge-primary"
+                      >
+                        This ERF is accepted by LHC Leader
+                      </h4>
+                      <h4
+                        v-else-if="ERF.acceptance.acceptance == 0"
+                        class="badge badge-danger"
+                      >
+                        This ERF is rejected by LHC Leader
+                      </h4>
+                    </div>
+                    <div v-else>
+                      <h4 class="badge badge-warning">
+                        Waiting to be accepted by LHC Leader
+                      </h4>
+                    </div>
                   </div>
-
-                  <div class="col-6 text-right px-0">
-                    <a
-                      href="javascript:;"
-                      class="btn btn-primary"
-                      @click="newCard"
-                      >Make Candidate Card</a
+                  <div v-if="ERF.acceptance" class="col-6 text-right px-0">
+                    <div
+                      v-if="
+                        ERF.acceptance.acceptance > 0 &&
+                          ERF.acceptance.acceptance < 100
+                      "
                     >
-                    <!-- <a href="#!" class="btn btn-sm btn-danger">Close ERF</a> -->
+                      <a
+                        href="javascript:void(0);"
+                        class="btn btn-outline-danger"
+                        @click="rejectErf"
+                        >Reject ERF</a
+                      >
+                      <a
+                        href="javascript:;"
+                        class="btn btn-primary"
+                        @click="newCard"
+                        >Make Candidate Card</a
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="card-body">
+                <div v-if="ERF.acceptance">
+                  <div v-if="ERF.acceptance.acceptance == 0">
+                    <div class="alert alert-danger" role="alert">
+                      <strong>REJECTION NOTES: </strong>
+                      {{ ERF.acceptance.notes }}
+                    </div>
+                  </div>
+                  <div v-else-if="ERF.acceptance.acceptance == 1">
+                    <div class="alert alert-primary" role="alert">
+                      <strong>LHC LEADER NOTES: </strong>
+                      {{ ERF.acceptance.notes }}
+                    </div>
+                  </div>
+                </div>
                 <form>
                   <h6 class="heading-small text-muted mb-4">
                     Position Information
@@ -632,6 +676,9 @@ export default {
       this.createCard(payload)
         .then(() => this.$router.push('/pic/candidate_cards'))
         .catch((err) => alert(err))
+    },
+    rejectErf() {
+      console.log('rejectfire')
     }
   }
 }

@@ -116,7 +116,9 @@
           <div class="col-12">
             <form>
               <div class="form-group">
-                <label for="notesTextarea">Notes (optional)</label>
+                <label for="notesTextarea"
+                  >Notes (must be filled if you reject)</label
+                >
                 <textarea
                   id="notesTextarea"
                   v-model="form.notes"
@@ -135,18 +137,26 @@
           </div>
           <div class="col-12 text-right">
             <button
+              v-if="!loading"
               class="btn btn-danger m-2"
               :disabled="disabled"
               @click="saveReview(0)"
             >
               Reject
             </button>
+            <button v-else class="btn btn-danger m-2" disabled>
+              Loading ...
+            </button>
             <button
+              v-if="!loading"
               class="btn btn-primary m-2"
               :disabled="disabled"
               @click="saveReview(1)"
             >
               Proceed
+            </button>
+            <button v-else class="btn btn-success m-2" disabled>
+              Loading ...
             </button>
           </div>
         </div>
@@ -154,7 +164,7 @@
           <div v-if="erf.acceptance.acceptance == 1" class="row pb-9 mt-4">
             <div class="col-12">
               <div class="alert alert-success" role="alert">
-                Accepted! <br />
+                Successfully Accepted! <br />
                 Notes: <br />
                 {{ erf.acceptance.notes }}
               </div>
@@ -163,7 +173,7 @@
           <div v-if="erf.acceptance.acceptance == 0" class="row pb-9 mt-4">
             <div class="col-12">
               <div class="alert alert-danger" role="alert">
-                Rejected! <br />
+                Successfully Rejected! <br />
                 Notes: <br />
                 {{ erf.acceptance.notes }}
               </div>
@@ -195,7 +205,7 @@ export default {
       return this.erf.acceptance
     }
   },
-  mounted() {
+  created() {
     this.getReviewErf()
   },
   methods: {
@@ -207,7 +217,7 @@ export default {
         )
         this.erf = res.data
       } catch (e) {
-        alert(e.response.data.message)
+        this.$router.push('/')
       } finally {
         this.loading = false
       }
