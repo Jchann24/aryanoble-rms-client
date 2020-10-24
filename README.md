@@ -1,4 +1,4 @@
-# rms-client
+# rms-client powered by NuxtJS
 
 > rms-client
 
