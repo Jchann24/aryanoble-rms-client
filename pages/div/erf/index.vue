@@ -60,6 +60,31 @@
                   <tr v-for="erf in ERFS.data" :key="erf.id">
                     <td>
                       {{ erf.title }}
+                      <span
+                        v-if="!erf.acceptance"
+                        class="badge badge-lg badge-warning"
+                        >PENDING</span
+                      >
+                      <span
+                        v-else-if="erf.acceptance.acceptance == 1"
+                        class="badge badge-lg badge-info"
+                        >LEADER ACCEPTED</span
+                      >
+                      <span
+                        v-else-if="erf.acceptance.acceptance == 2"
+                        class="badge badge-lg badge-info"
+                        >PIC ACCEPTED</span
+                      >
+                      <span
+                        v-else-if="erf.acceptance.acceptance == 0"
+                        class="badge badge-lg badge-danger"
+                        >REJECTED BY LEADER</span
+                      >
+                      <span
+                        v-else-if="erf.acceptance.acceptance == 100"
+                        class="badge badge-lg badge-danger"
+                        >REJECTED BY PIC</span
+                      >
                     </td>
                     <td>
                       {{ erf.job_title }}

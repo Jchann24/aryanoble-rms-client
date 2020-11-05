@@ -52,6 +52,18 @@
                       >
                         This ERF is rejected by LHC Leader
                       </h4>
+                      <h4
+                        v-else-if="ERF.acceptance.acceptance == 100"
+                        class="badge badge-danger"
+                      >
+                        This ERF is rejected by PIC
+                      </h4>
+                      <h4
+                        v-else-if="ERF.acceptance.acceptance == 2"
+                        class="badge badge-primary"
+                      >
+                        This ERF is accepted by Leader and PIC
+                      </h4>
                     </div>
                     <div v-else>
                       <h4 class="badge badge-warning">
@@ -66,12 +78,15 @@
                           ERF.acceptance.acceptance < 100
                       "
                     >
-                      <a
-                        href="javascript:void(0);"
+                      <button
+                        v-if="ERF.acceptance.acceptance < 2"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#rejectModal"
                         class="btn btn-outline-danger"
-                        @click="rejectErf"
-                        >Reject ERF</a
                       >
+                        Reject ERF
+                      </button>
                       <a
                         href="javascript:;"
                         class="btn btn-primary"
@@ -92,6 +107,22 @@
                   </div>
                   <div v-else-if="ERF.acceptance.acceptance == 1">
                     <div class="alert alert-primary" role="alert">
+                      <strong>LHC LEADER NOTES: </strong>
+                      {{ ERF.acceptance.notes }}
+                    </div>
+                  </div>
+                </div>
+                <div v-if="ERF.acceptance">
+                  <div v-if="ERF.acceptance.acceptance == 100">
+                    <div class="alert alert-danger" role="alert">
+                      <strong>REJECTION NOTES BY PIC: </strong>
+                      {{ ERF.acceptance.notes_by_pic }}
+                    </div>
+                  </div>
+                  <div v-else-if="ERF.acceptance.acceptance == 2">
+                    <div class="alert alert-primary" role="alert">
+                      <strong>PIC NOTES: </strong>
+                      {{ ERF.acceptance.notes_by_pic }} <br />
                       <strong>LHC LEADER NOTES: </strong>
                       {{ ERF.acceptance.notes }}
                     </div>
@@ -633,6 +664,56 @@
         </div>
       </div>
     </client-only>
+    <div
+      id="rejectModal"
+      class="modal fade"
+      tabindex="-1"
+      aria-labelledby="rejectModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="rejectModalLabel" class="modal-title">
+              Reject Confirmation
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form @submit.prevent="rejectErf">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="message-text" class="col-form-label"
+                  >Rejection Notes:</label
+                >
+                <textarea v-model="reject_notes" class="form-control" required>
+                </textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                id="modalRejectClose"
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                @click="reject_notes = ''"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-danger">
+                Reject ERF
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -645,7 +726,8 @@ export default {
   data() {
     return {
       readonly: true,
-      erf_id: parseInt(this.$route.params.id)
+      erf_id: parseInt(this.$route.params.id),
+      reject_notes: ''
     }
   },
 
@@ -669,16 +751,43 @@ export default {
       createCard: 'candidate-cards/SAVE_CANDIDATE_CARD'
     }),
 
-    newCard() {
+    async newCard() {
       const payload = {
         erf_id: this.erf_id
       }
-      this.createCard(payload)
-        .then(() => this.$router.push('/pic/candidate_cards'))
-        .catch((err) => alert(err))
+      try {
+        await this.createCard(payload)
+        await this.updateAcceptance().then(() => {
+          this.$router.push('/pic/candidate_cards')
+        })
+      } catch (err) {
+        alert('Something went wrong')
+      }
     },
-    rejectErf() {
-      console.log('rejectfire')
+    async updateAcceptance() {
+      const form = {
+        notes: 'ERF Accepted',
+        acceptance: 2
+      }
+      try {
+        await this.$axios.$patch(`review-erf/${this.$route.params.id}`, form)
+      } catch (err) {
+        throw alert(err.response.data.message)
+      }
+    },
+    async rejectErf() {
+      const form = {
+        acceptance: 100,
+        notes: this.reject_notes
+      }
+
+      try {
+        await this.$axios.$patch(`review-erf/${this.$route.params.id}`, form)
+        await this.getERF(this.$route.params.id)
+        document.getElementById('modalRejectClose').click()
+      } catch (err) {
+        throw alert(err.response.data.message)
+      }
     }
   }
 }

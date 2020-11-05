@@ -32,15 +32,76 @@
                 <div class="row align-items-center">
                   <div class="col-8">
                     <h3 class="mb-0">Employee Request Form</h3>
+                    <div v-if="ERF.acceptance">
+                      <h4
+                        v-if="ERF.acceptance.acceptance == 1"
+                        class="badge badge-primary"
+                      >
+                        This ERF is accepted by LHC Leader
+                      </h4>
+                      <h4
+                        v-else-if="ERF.acceptance.acceptance == 0"
+                        class="badge badge-danger"
+                      >
+                        This ERF is rejected by LHC Leader
+                      </h4>
+                      <h4
+                        v-else-if="ERF.acceptance.acceptance == 100"
+                        class="badge badge-danger"
+                      >
+                        This ERF is rejected by PIC
+                      </h4>
+                      <h4
+                        v-else-if="ERF.acceptance.acceptance == 2"
+                        class="badge badge-primary"
+                      >
+                        This ERF is accepted by Leader and PIC
+                      </h4>
+                    </div>
+                    <div v-else>
+                      <h4 class="badge badge-warning">
+                        Waiting to be accepted by LHC Leader
+                      </h4>
+                    </div>
                   </div>
-                  <div class="col-4 text-right">
+                  <!-- <div class="col-4 text-right">
                     <a href="#!" class="btn btn-sm btn-danger"
                       >Request to Close</a
                     >
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="card-body">
+                <div v-if="ERF.acceptance">
+                  <div v-if="ERF.acceptance.acceptance == 0">
+                    <div class="alert alert-danger" role="alert">
+                      <strong>REJECTION NOTES: </strong>
+                      {{ ERF.acceptance.notes }}
+                    </div>
+                  </div>
+                  <div v-else-if="ERF.acceptance.acceptance == 1">
+                    <div class="alert alert-primary" role="alert">
+                      <strong>LHC LEADER NOTES: </strong>
+                      {{ ERF.acceptance.notes }}
+                    </div>
+                  </div>
+                </div>
+                <div v-if="ERF.acceptance">
+                  <div v-if="ERF.acceptance.acceptance == 100">
+                    <div class="alert alert-danger" role="alert">
+                      <strong>REJECTION NOTES BY PIC: </strong>
+                      {{ ERF.acceptance.notes_by_pic }}
+                    </div>
+                  </div>
+                  <div v-else-if="ERF.acceptance.acceptance == 2">
+                    <div class="alert alert-primary" role="alert">
+                      <strong>PIC NOTES: </strong>
+                      {{ ERF.acceptance.notes_by_pic }} <br />
+                      <strong>LHC LEADER NOTES: </strong>
+                      {{ ERF.acceptance.notes }}
+                    </div>
+                  </div>
+                </div>
                 <form>
                   <h6 class="heading-small text-muted mb-4">
                     Position Information
